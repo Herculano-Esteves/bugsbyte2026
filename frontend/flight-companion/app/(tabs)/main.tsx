@@ -18,7 +18,7 @@ import { router } from 'expo-router';
 
 export default function MainScreen() {
     const { mode, setMode } = useFlightMode();
-    const { setBoardingPass } = useBoardingPass();
+    const { boardingPass, setBoardingPass, clearBoardingPass } = useBoardingPass();
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [showScanner, setShowScanner] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -145,8 +145,6 @@ export default function MainScreen() {
                 arrivalTimezone: schedule.arr_timezone || '',
                 airTimeMinutes: airTimeMinutes,
             });
-
-            router.push('/(tabs)/prevoo');
         } catch (error: any) {
             console.error('Upload error:', error);
             Alert.alert('Error', error.message || 'Failed to parse barcode from image.');
@@ -195,22 +193,61 @@ export default function MainScreen() {
             <View style={styles.contentWrapper}>
 
                 {mode === 'AIR' ? (
-                    <View style={styles.scannerContainer}>
-                        <Text style={styles.scannerTitle}>Get ticket from:</Text>
-                        <View style={styles.buttonRow}>
-                            <TouchableOpacity style={styles.actionButton} onPress={openScanner}>
-                                <Ionicons name="camera-outline" size={36} color="#333" />
-                                <Text style={styles.actionButtonText}>Camera</Text>
-                            </TouchableOpacity>
+                    boardingPass ? (
+                        <TouchableOpacity
+                            style={styles.flightCard}
+                            onPress={() => router.push('/(tabs)/boardingpass')}
+                            activeOpacity={0.7}
+                        >
+                            <View style={styles.flightCardHeader}>
+                                <Text style={styles.flightCardCarrier}>{boardingPass.carrier}</Text>
+                                <Text style={styles.flightCardFlight}>{boardingPass.flightNumber}</Text>
+                            </View>
 
-                            <TouchableOpacity style={styles.actionButton} onPress={pickImage}>
-                                <Ionicons name="image-outline" size={36} color="#333" />
-                                <Text style={styles.actionButtonText}>File</Text>
+                            <View style={styles.flightCardRoute}>
+                                <Text style={styles.flightCardAirport}>{boardingPass.departureAirport}</Text>
+                                <View style={styles.flightCardLine} />
+                                <Ionicons name="airplane" size={18} color="#007AFF" />
+                                <View style={styles.flightCardLine} />
+                                <Text style={styles.flightCardAirport}>{boardingPass.arrivalAirport}</Text>
+                            </View>
+
+                            <View style={styles.flightCardDetails}>
+                                <Text style={styles.flightCardDetail}>Seat {boardingPass.seat}</Text>
+                                <Text style={styles.flightCardDetail}>{boardingPass.cabinClassName}</Text>
+                            </View>
+
+                            <Text style={styles.flightCardHint}>Tap for details</Text>
+
+                            <TouchableOpacity
+                                style={styles.rescanButton}
+                                onPress={(e) => {
+                                    e.stopPropagation();
+                                    clearBoardingPass();
+                                }}
+                            >
+                                <Ionicons name="refresh-outline" size={16} color="#d32f2f" />
+                                <Text style={styles.rescanText}>Scan new</Text>
                             </TouchableOpacity>
+                        </TouchableOpacity>
+                    ) : (
+                        <View style={styles.scannerContainer}>
+                            <Text style={styles.scannerTitle}>Get ticket from:</Text>
+                            <View style={styles.buttonRow}>
+                                <TouchableOpacity style={styles.actionButton} onPress={openScanner}>
+                                    <Ionicons name="camera-outline" size={36} color="#333" />
+                                    <Text style={styles.actionButtonText}>Camera</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.actionButton} onPress={pickImage}>
+                                    <Ionicons name="image-outline" size={36} color="#333" />
+                                    <Text style={styles.actionButtonText}>File</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                            {loading && <ActivityIndicator style={{ marginTop: 16 }} size="small" color="#d32f2f" />}
                         </View>
-
-                        {loading && <ActivityIndicator style={{ marginTop: 16 }} size="small" color="#d32f2f" />}
-                    </View>
+                    )
                 ) : (
                     <View style={[styles.contentBox, styles.grdBox]}>
                         <Text>Ground Content Here</Text>
@@ -405,5 +442,87 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: '#111',
+    },
+
+    flightCard: {
+        width: '100%',
+        maxWidth: 420,
+        padding: 24,
+        backgroundColor: '#fff',
+        borderRadius: 16,
+        borderWidth: 1.5,
+        borderColor: '#007AFF',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.12,
+        shadowRadius: 6,
+        elevation: 4,
+    },
+    flightCardHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        marginBottom: 16,
+    },
+    flightCardCarrier: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#555',
+    },
+    flightCardFlight: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#007AFF',
+    },
+    flightCardRoute: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 12,
+        marginBottom: 12,
+    },
+    flightCardAirport: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        color: '#222',
+    },
+    flightCardLine: {
+        height: 2,
+        width: 30,
+        backgroundColor: '#ddd',
+    },
+    flightCardDetails: {
+        flexDirection: 'row',
+        gap: 20,
+        marginBottom: 8,
+    },
+    flightCardDetail: {
+        fontSize: 14,
+        color: '#666',
+        fontWeight: '500',
+    },
+    flightCardHint: {
+        fontSize: 12,
+        color: '#aaa',
+        marginTop: 4,
+    },
+    rescanButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        marginTop: 16,
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#ffcdd2',
+        backgroundColor: '#fff5f5',
+    },
+    rescanText: {
+        fontSize: 13,
+        fontWeight: '600',
+        color: '#d32f2f',
     },
 });

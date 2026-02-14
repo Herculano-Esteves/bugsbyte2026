@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert, ActivityIndicator } from 'react-native';
 import { useFlightMode } from '../../context/FlightModeContext';
 import { CameraView, Camera } from "expo-camera";
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
-import { API_BASE_URL } from '../../constants/config';
-//import axios from 'axios';
+import { GO_API_BASE_URL } from '../../constants/config';
 
 export default function MainScreen() {
     const { mode, setMode } = useFlightMode();
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
-    const [scanned, setScanned] = useState(false);
     const [showScanner, setShowScanner] = useState(false);
     const [loading, setLoading] = useState(false);
+    const cameraRef = useRef<CameraView>(null);
 
     useEffect(() => {
         const getCameraPermissions = async () => {
@@ -23,67 +22,88 @@ export default function MainScreen() {
         getCameraPermissions();
     }, []);
 
-    const handleBarCodeScanned = async ({ type, data }: { type: string, data: string }) => {
-        setScanned(true);
-        setShowScanner(false);
-        console.log("--------------------------------------------------");
-        console.log("SCANNED DATA (Raw):", data);
-        console.log("--------------------------------------------------");
-        Alert.alert('Ticket Scanned!', `Type: ${type}\nData: ${data}`);
+    const handleCapturePhoto = async () => {
+        if (!cameraRef.current) return;
 
-        // Mock Backend Upload
-        // In reality, we would send this data to the backend to parse
-        uploadTicketData(data);
-    };
+        try {
+            const photo = await cameraRef.current.takePictureAsync({
+                quality: 0.8,
+                skipProcessing: true,
+            });
 
-    const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            quality: 1,
-        });
+            if (!photo) {
+                Alert.alert("Error", "Failed to capture photo.");
+                return;
+            }
 
-        if (!result.canceled) {
-            // Cannot easily scan barcode from image in Expo Go without native modules or cloud API
-            // Simulating a successful scan for now as a fallback
-            Alert.alert('Image Selected', 'Simulating scan from image...');
-            uploadTicketData("mock-ticket-data-from-image");
+            setShowScanner(false);
+            await uploadBarcodeImage(photo.uri);
+        } catch (error: any) {
+            console.error("Capture error:", error);
+            Alert.alert("Error", error.message || "Failed to capture photo.");
         }
     };
 
-    const uploadTicketData = async (data: string) => {
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 0.8,
+        });
+
+        if (!result.canceled && result.assets[0]) {
+            await uploadBarcodeImage(result.assets[0].uri);
+        }
+    };
+
+    const uploadBarcodeImage = async (imageUri: string) => {
         setLoading(true);
         try {
-            // Mocking request since backend likely expects a structured Ticket object
-            // and we only have raw string data.
-            console.log(`Uploading ticket data to ${API_BASE_URL}/api/tickets/upload (Mock)`);
-            console.log("Payload:", { raw_data: data });
+            const formData = new FormData();
+            formData.append('image', {
+                uri: imageUri,
+                type: 'image/jpeg',
+                name: 'barcode.jpg',
+            } as any);
 
-            // Uncomment when backend has a parsing endpoint or we parse it locally
-            // await axios.post(`${API_BASE_URL}/api/tickets/upload`, { raw_data: data });
+            const response = await fetch(`${GO_API_BASE_URL}/parse/barcode/image`, {
+                method: 'POST',
+                body: formData,
+            });
 
-            setTimeout(() => {
-                setLoading(false);
-                Alert.alert("Success", "Ticket processed successfully!");
-            }, 1500);
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(errorText);
+            }
 
-        } catch (error) {
-            console.log("Upload error:", error);
+            const boardingPass = await response.json();
+            console.log("Parsed boarding pass:", boardingPass);
+
+            Alert.alert(
+                "Boarding Pass",
+                `Passenger: ${boardingPass.passenger_name}\n` +
+                `Flight: ${boardingPass.flight_number}\n` +
+                `From: ${boardingPass.departure_airport}\n` +
+                `To: ${boardingPass.arrival_airport}\n` +
+                `Seat: ${boardingPass.seat}\n` +
+                `PNR: ${boardingPass.pnr}`
+            );
+        } catch (error: any) {
+            console.error("Upload error:", error);
+            Alert.alert("Error", error.message || "Failed to parse barcode from image.");
+        } finally {
             setLoading(false);
-            Alert.alert("Error", "Failed to upload ticket.");
         }
     };
 
     const openScanner = () => {
         if (hasPermission === null) {
-            Alert.alert("Requesting Request", "Requesting camera permission...");
+            Alert.alert("Requesting Permission", "Requesting camera permission...");
         }
         if (hasPermission === false) {
             Alert.alert("No Access", "Camera permission was denied.");
             return;
         }
-        setScanned(false);
         setShowScanner(true);
     };
 
@@ -137,14 +157,19 @@ export default function MainScreen() {
             >
                 <View style={styles.modalContainer}>
                     <CameraView
-                        onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-                        barcodeScannerSettings={{
-                            barcodeTypes: ["qr", "pdf417", "ean13", "code128"],
-                        }}
+                        ref={cameraRef}
                         style={StyleSheet.absoluteFillObject}
                     />
+                    <View style={styles.captureControls}>
+                        <TouchableOpacity
+                            style={styles.captureButton}
+                            onPress={handleCapturePhoto}
+                        >
+                            <View style={styles.captureButtonInner} />
+                        </TouchableOpacity>
+                    </View>
                     <TouchableOpacity style={styles.closeButton} onPress={() => setShowScanner(false)}>
-                        <Text style={styles.closeButtonText}>Close Scanner</Text>
+                        <Text style={styles.closeButtonText}>Close</Text>
                     </TouchableOpacity>
                 </View>
             </Modal>
@@ -193,12 +218,11 @@ const styles = StyleSheet.create({
     scannerContainer: {
         width: '80%',
         padding: 20,
-        backgroundColor: '#fffbe6', // Light yellow tint
+        backgroundColor: '#fffbe6',
         borderWidth: 2,
-        borderColor: '#fdd835', // Yellow border
+        borderColor: '#fdd835',
         borderRadius: 15,
         alignItems: 'center',
-        // Rough sketch style shadow
         shadowColor: '#000',
         shadowOffset: { width: 4, height: 4 },
         shadowOpacity: 0.1,
@@ -230,6 +254,27 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         justifyContent: 'flex-end',
         alignItems: 'center',
+    },
+    captureControls: {
+        position: 'absolute',
+        bottom: 120,
+        alignSelf: 'center',
+    },
+    captureButton: {
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        backgroundColor: 'rgba(255,255,255,0.3)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 3,
+        borderColor: 'white',
+    },
+    captureButtonInner: {
+        width: 54,
+        height: 54,
+        borderRadius: 27,
+        backgroundColor: 'white',
     },
     closeButton: {
         marginBottom: 50,

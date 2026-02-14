@@ -5,11 +5,19 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"image"
+	_ "image/jpeg"
+	_ "image/png"
 	"io"
 	"log"
 	"net/http"
 	"strings"
 	"unicode"
+
+	"github.com/makiuchi-d/gozxing"
+	"github.com/makiuchi-d/gozxing/aztec"
+	"github.com/makiuchi-d/gozxing/oned"
+	"github.com/makiuchi-d/gozxing/qrcode"
 )
 
 // ----------------------
@@ -47,14 +55,38 @@ type PKField struct {
 }
 
 // ----------------------
+// MIDDLEWARE
+// ----------------------
+
+func corsMiddleware(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+
+		next(w, r)
+	}
+}
+
+// ----------------------
 // HANDLERS
 // ----------------------
 
 func main() {
-	http.HandleFunc("/parse/barcode", handleBarcode)
-	http.HandleFunc("/parse/pkpass", handlePkPass)
+	http.HandleFunc("/parse/barcode", corsMiddleware(handleBarcode))
+	http.HandleFunc("/parse/pkpass", corsMiddleware(handlePkPass))
+	http.HandleFunc("/parse/barcode/image", corsMiddleware(handleBarcodeImage))
 
 	fmt.Println("Server starting on :8080...")
+	fmt.Println("  Endpoints:")
+	fmt.Println("    POST /parse/barcode        - Parse barcode text")
+	fmt.Println("    POST /parse/barcode/image   - Decode barcode from image")
+	fmt.Println("    POST /parse/pkpass          - Parse .pkpass file")
 	fmt.Println("  Ensure your phone and computer are on the same Wi-Fi.")
 	fmt.Println("  Use your computer's IP address (not localhost) in the Expo app.")
 	log.Fatal(http.ListenAndServe(":8080", nil))
@@ -109,6 +141,72 @@ func handlePkPass(w http.ResponseWriter, r *http.Request) {
 	data, err := parsePKPassFile(buf.Bytes(), header.Size)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error parsing pkpass: %v", err), http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
+}
+
+func handleBarcodeImage(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	r.ParseMultipartForm(10 << 20)
+
+	file, _, err := r.FormFile("image")
+	if err != nil {
+		http.Error(w, "Error retrieving image file", http.StatusBadRequest)
+		return
+	}
+	defer file.Close()
+
+	img, _, err := image.Decode(file)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Error decoding image: %v", err), http.StatusBadRequest)
+		return
+	}
+
+	bmp, err := gozxing.NewBinaryBitmapFromImage(img)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Error processing image: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	hints := map[gozxing.DecodeHintType]interface{}{
+		gozxing.DecodeHintType_TRY_HARDER: true,
+	}
+
+	readers := []gozxing.Reader{
+		qrcode.NewQRCodeReader(),
+		aztec.NewAztecReader(),
+		oned.NewCode128Reader(),
+		oned.NewEAN13Reader(),
+	}
+
+	var result *gozxing.Result
+	for _, reader := range readers {
+		r, err := reader.Decode(bmp, hints)
+		if err == nil {
+			result = r
+			break
+		}
+	}
+
+	if result == nil {
+		http.Error(w, "No barcode found in image", http.StatusBadRequest)
+		return
+	}
+
+	barcodeText := result.GetText()
+	fmt.Printf("Decoded barcode from image: %s\n", barcodeText)
+
+	data, err := parseIATABarcode(barcodeText)
+	if err != nil {
+		fmt.Printf("Error parsing decoded barcode: %v\nDecoded text: %s\n", err, barcodeText)
+		http.Error(w, fmt.Sprintf("Error parsing barcode: %v", err), http.StatusBadRequest)
 		return
 	}
 

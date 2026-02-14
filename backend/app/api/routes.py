@@ -52,3 +52,12 @@ async def get_trip(ticket_id: int):
     if not trip:
         raise HTTPException(status_code=404, detail="Ticket not found")
     return trip
+
+@router.get("/search")
+async def search_items(q: str):
+    """
+    Search for travel items by tags.
+    Query 'q' is a string of space-separated tags.
+    """
+    from app.logic.search_service import SearchService
+    return SearchService.search(q)

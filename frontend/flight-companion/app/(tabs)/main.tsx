@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert, ActivityIndicator } from 'react-native';
 import { useFlightMode } from '../../context/FlightModeContext';
+import { useBoardingPass, mapCabinClass } from '../../context/BoardingPassContext';
 import { CameraView, Camera } from "expo-camera";
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL, GO_API_BASE_URL } from '../../constants/config';
+import { router } from 'expo-router';
 
 export default function MainScreen() {
     const { mode, setMode } = useFlightMode();
+    const { setBoardingPass } = useBoardingPass();
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [showScanner, setShowScanner] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -21,6 +24,21 @@ export default function MainScreen() {
 
         getCameraPermissions();
     }, []);
+
+    const calculateAirTimeMinutes = (
+        depTime: string,
+        arrTime: string
+    ): number | null => {
+        try {
+            const dep = new Date(depTime);
+            const arr = new Date(arrTime);
+            const diffMs = arr.getTime() - dep.getTime();
+            if (diffMs <= 0) return null;
+            return Math.round(diffMs / 60000);
+        } catch {
+            return null;
+        }
+    };
 
     const handleCapturePhoto = async () => {
         if (!cameraRef.current) return;
@@ -62,7 +80,7 @@ export default function MainScreen() {
         try {
             console.log("Uploading image, base64 length:", base64Image.length);
 
-            // Step 1: Send image to Python backend for barcode decoding (pyzbar)
+            // Step 1: Send image to Python backend for barcode decoding
             const decodeResponse = await fetch(`${API_BASE_URL}/api/parse/barcode/image`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -92,15 +110,50 @@ export default function MainScreen() {
             const boardingPass = await parseResponse.json();
             console.log("Parsed boarding pass:", boardingPass);
 
-            Alert.alert(
-                "Boarding Pass",
-                `Passenger: ${boardingPass.passenger_name}\n` +
-                `Flight: ${boardingPass.flight_number}\n` +
-                `From: ${boardingPass.departure_airport}\n` +
-                `To: ${boardingPass.arrival_airport}\n` +
-                `Seat: ${boardingPass.seat}\n` +
-                `PNR: ${boardingPass.pnr}`
+            // Step 3: Fetch flight schedule from Python mock API
+            let schedule = { dep_time: '', arr_time: '', dep_timezone: '', arr_timezone: '' };
+            try {
+                const scheduleResponse = await fetch(
+                    `${API_BASE_URL}/api/flights/${encodeURIComponent(boardingPass.flight_number)}/schedule`
+                );
+                if (scheduleResponse.ok) {
+                    schedule = await scheduleResponse.json();
+                } else {
+                    console.warn("Failed to fetch schedule, continuing without times");
+                }
+            } catch (scheduleErr) {
+                console.warn("Schedule fetch error:", scheduleErr);
+            }
+
+            // Step 4: Calculate air time
+            const airTimeMinutes = calculateAirTimeMinutes(
+                schedule.dep_time,
+                schedule.arr_time
             );
+
+            // Step 5: Store in context
+            const cabinCode = boardingPass.cabin_class || '';
+            setBoardingPass({
+                passengerName: boardingPass.passenger_name || '',
+                pnr: boardingPass.pnr || '',
+                flightNumber: boardingPass.flight_number || '',
+                departureAirport: boardingPass.departure_airport || '',
+                arrivalAirport: boardingPass.arrival_airport || '',
+                seat: boardingPass.seat || '',
+                carrier: boardingPass.carrier || '',
+                cabinClassCode: cabinCode,
+                cabinClassName: mapCabinClass(cabinCode),
+                boardingZone: '',
+                departureTime: schedule.dep_time || '',
+                arrivalTime: schedule.arr_time || '',
+                departureTimezone: schedule.dep_timezone || '',
+                arrivalTimezone: schedule.arr_timezone || '',
+                airTimeMinutes: airTimeMinutes,
+            });
+
+            // Step 6: Navigate to Pre-Flight screen
+            router.push('/(tabs)/prevoo');
+
         } catch (error: any) {
             console.error("Upload error:", error);
             Alert.alert("Error", error.message || "Failed to parse barcode from image.");

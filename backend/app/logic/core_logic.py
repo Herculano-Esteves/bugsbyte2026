@@ -2,7 +2,7 @@ from typing import Optional
 from app.parsers.airport_parser import AirportParser
 from app.parsers.flight_parser import FlightParser
 from app.parsers.weather_parser import WeatherParser
-from app.models.schemas import Airport, Flight, Weather, Ticket
+from app.models.schemas import Airport, Flight, Weather, Ticket, FlightSchedule
 # Database & Logic Integration
 from app.database.ticket_repository import TicketRepository
 from app.database.trip_repository import TripRepository
@@ -25,6 +25,10 @@ class CoreLogic:
     @staticmethod
     def get_flight_status(flight_number: str) -> Flight:
         return FlightParser.parse_flight_status(flight_number)
+
+    @staticmethod
+    def get_flight_schedule(flight_number: str) -> FlightSchedule:
+        return FlightParser.get_flight_schedule(flight_number)
 
     @staticmethod
     def get_weather(location: str) -> Weather:

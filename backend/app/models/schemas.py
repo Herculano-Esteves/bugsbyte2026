@@ -21,6 +21,13 @@ class Flight(BaseModel):
     status: str  # "On Time", "Delayed", "Cancelled"
     gate: Optional[str] = None
 
+class FlightSchedule(BaseModel):
+    flight_number: str
+    dep_time: str
+    arr_time: str
+    dep_timezone: str
+    arr_timezone: str
+
 # --- Ticket Models ---
 # --- Ticket Nested Models ---
 class FlightEndpoint(BaseModel):

@@ -1,12 +1,15 @@
 import { Tabs, router } from 'expo-router';
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { FlightModeProvider } from '../../context/FlightModeContext';
+import { BoardingPassProvider } from '../../context/BoardingPassContext';
 
 
 export default function TabsLayoutWrapper() {
     return (
         <FlightModeProvider>
-            <TabsLayout />
+            <BoardingPassProvider>
+                <TabsLayout />
+            </BoardingPassProvider>
         </FlightModeProvider>
     );
 }

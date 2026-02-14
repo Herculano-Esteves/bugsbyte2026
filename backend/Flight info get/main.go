@@ -3,23 +3,12 @@ package main
 import (
 	"archive/zip"
 	"bytes"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"image"
-	_ "image/jpeg"
-	_ "image/png"
 	"io"
 	"log"
-	"math"
 	"net/http"
 	"strings"
-
-	"github.com/makiuchi-d/gozxing"
-	"github.com/makiuchi-d/gozxing/aztec"
-	"github.com/makiuchi-d/gozxing/oned"
-	"github.com/makiuchi-d/gozxing/qrcode"
-	xdraw "golang.org/x/image/draw"
 )
 
 // ----------------------
@@ -35,6 +24,7 @@ type UnifiedBoardingPass struct {
 	Arrival       string            `json:"arrival_airport"`
 	Date          string            `json:"date_julian,omitempty"`
 	Seat          string            `json:"seat"`
+	CabinClass    string            `json:"cabin_class"`
 	Carrier       string            `json:"carrier"`
 	RawData       map[string]string `json:"raw_extra_data,omitempty"`
 }
@@ -82,12 +72,10 @@ func corsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 func main() {
 	http.HandleFunc("/parse/barcode", corsMiddleware(handleBarcode))
 	http.HandleFunc("/parse/pkpass", corsMiddleware(handlePkPass))
-	http.HandleFunc("/parse/barcode/image", corsMiddleware(handleBarcodeImage))
 
 	fmt.Println("Server starting on :8080...")
 	fmt.Println("  Endpoints:")
 	fmt.Println("    POST /parse/barcode        - Parse barcode text")
-	fmt.Println("    POST /parse/barcode/image   - Decode barcode from image")
 	fmt.Println("    POST /parse/pkpass          - Parse .pkpass file")
 	fmt.Println("  Ensure your phone and computer are on the same Wi-Fi.")
 	fmt.Println("  Use your computer's IP address (not localhost) in the Expo app.")
@@ -150,113 +138,6 @@ func handlePkPass(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(data)
 }
 
-func handleBarcodeImage(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
-	var req struct {
-		Image string `json:"image"`
-	}
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		fmt.Printf("Error decoding JSON: %v\n", err)
-		http.Error(w, "Invalid JSON", http.StatusBadRequest)
-		return
-	}
-
-	// Handle both padded and unpadded base64 (Expo often omits padding)
-	imageData, err := base64.StdEncoding.DecodeString(req.Image)
-	if err != nil {
-		imageData, err = base64.RawStdEncoding.DecodeString(req.Image)
-		if err != nil {
-			fmt.Printf("Error decoding base64: %v\n", err)
-			http.Error(w, "Invalid base64 image data", http.StatusBadRequest)
-			return
-		}
-	}
-
-	fmt.Printf("Received image: %d bytes\n", len(imageData))
-
-	img, format, err := image.Decode(bytes.NewReader(imageData))
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Error decoding image: %v", err), http.StatusBadRequest)
-		return
-	}
-
-	bounds := img.Bounds()
-	w0, h0 := bounds.Dx(), bounds.Dy()
-	fmt.Printf("Image decoded: format=%s, size=%dx%d\n", format, w0, h0)
-
-	// Downscale large images — barcode detection works much better on smaller images
-	const maxDim = 1200
-	if w0 > maxDim || h0 > maxDim {
-		scale := float64(maxDim) / math.Max(float64(w0), float64(h0))
-		newW := int(float64(w0) * scale)
-		newH := int(float64(h0) * scale)
-		dst := image.NewRGBA(image.Rect(0, 0, newW, newH))
-		xdraw.BiLinear.Scale(dst, dst.Bounds(), img, bounds, xdraw.Src, nil)
-		img = dst
-		fmt.Printf("Downscaled to: %dx%d\n", newW, newH)
-	}
-
-	hints := map[gozxing.DecodeHintType]interface{}{
-		gozxing.DecodeHintType_TRY_HARDER: true,
-	}
-
-	readers := []gozxing.Reader{
-		aztec.NewAztecReader(),
-		qrcode.NewQRCodeReader(),
-		oned.NewCode128Reader(),
-		oned.NewEAN13Reader(),
-	}
-
-	type binarizerFactory func(source gozxing.LuminanceSource) gozxing.Binarizer
-	binarizers := []binarizerFactory{
-		gozxing.NewHybridBinarizer,
-		gozxing.NewGlobalHistgramBinarizer,
-	}
-
-	var result *gozxing.Result
-	luminance := gozxing.NewLuminanceSourceFromImage(img)
-
-	for _, makeBinarizer := range binarizers {
-		if result != nil {
-			break
-		}
-		for _, reader := range readers {
-			bmp, err := gozxing.NewBinaryBitmap(makeBinarizer(luminance))
-			if err != nil {
-				continue
-			}
-			r, err := reader.Decode(bmp, hints)
-			if err == nil {
-				result = r
-				break
-			}
-		}
-	}
-
-	if result == nil {
-		fmt.Println("No barcode found in image after trying all readers and binarizers")
-		http.Error(w, "No barcode found in image", http.StatusBadRequest)
-		return
-	}
-
-	barcodeText := result.GetText()
-	fmt.Printf("Decoded barcode from image: %s\n", barcodeText)
-
-	data, err := parseIATABarcode(barcodeText)
-	if err != nil {
-		fmt.Printf("Error parsing decoded barcode: %v\nDecoded text: %s\n", err, barcodeText)
-		http.Error(w, fmt.Sprintf("Error parsing barcode: %v", err), http.StatusBadRequest)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(data)
-}
-
 // ----------------------
 // LOGIC: IATA BCBP PARSER (SMART VERSION)
 // ----------------------
@@ -304,6 +185,7 @@ func parseIATABarcode(raw string) (*UnifiedBoardingPass, error) {
 	carrier := extract(36, 39)
 	flight := extract(39, 44)
 	date := extract(44, 47)
+	compartment := extract(47, 48)
 	seat := extract(48, 52)
 
 	pass := &UnifiedBoardingPass{
@@ -316,6 +198,7 @@ func parseIATABarcode(raw string) (*UnifiedBoardingPass, error) {
 		FlightNumber:  flight,
 		Date:          date,
 		Seat:          seat,
+		CabinClass:    compartment,
 		RawData: map[string]string{
 			"raw_string": raw,
 		},
@@ -390,6 +273,9 @@ func parsePKPassFile(data []byte, size int64) (*UnifiedBoardingPass, error) {
 			}
 			if strings.Contains(keyLower, "pnr") || strings.Contains(keyLower, "record") {
 				unified.PNR = valStr
+			}
+			if strings.Contains(keyLower, "class") || strings.Contains(keyLower, "cabin") || strings.Contains(labelLower, "class") {
+				unified.CabinClass = valStr
 			}
 		}
 	}

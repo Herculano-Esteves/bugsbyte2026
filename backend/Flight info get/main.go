@@ -9,27 +9,26 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"unicode"
 )
 
 // ----------------------
 // DATA STRUCTURES
 // ----------------------
 
-// UnifiedBoardingPass represents the extracted data in a clean format
 type UnifiedBoardingPass struct {
-	Source        string            `json:"source"` // "barcode" or "pkpass"
+	Source        string            `json:"source"`
 	PassengerName string            `json:"passenger_name"`
 	PNR           string            `json:"pnr"`
 	FlightNumber  string            `json:"flight_number"`
 	Departure     string            `json:"departure_airport"`
 	Arrival       string            `json:"arrival_airport"`
-	Date          string            `json:"date_julian,omitempty"` // Julian date for barcode
+	Date          string            `json:"date_julian,omitempty"`
 	Seat          string            `json:"seat"`
 	Carrier       string            `json:"carrier"`
 	RawData       map[string]string `json:"raw_extra_data,omitempty"`
 }
 
-// PKPass structures for JSON parsing
 type PKPass struct {
 	Description      string `json:"description"`
 	OrganizationName string `json:"organizationName"`
@@ -44,7 +43,7 @@ type PKPass struct {
 type PKField struct {
 	Key   string      `json:"key"`
 	Label string      `json:"label"`
-	Value interface{} `json:"value"` // Value can be string or number
+	Value interface{} `json:"value"`
 }
 
 // ----------------------
@@ -56,8 +55,8 @@ func main() {
 	http.HandleFunc("/parse/pkpass", handlePkPass)
 
 	fmt.Println("Server starting on :8080...")
-	fmt.Println("  POST /parse/barcode (JSON body: { \"barcode\": \"...\" })")
-	fmt.Println("  POST /parse/pkpass  (Multipart form file: \"file\")")
+	fmt.Println("  Ensure your phone and computer are on the same Wi-Fi.")
+	fmt.Println("  Use your computer's IP address (not localhost) in the Expo app.")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
@@ -77,6 +76,8 @@ func handleBarcode(w http.ResponseWriter, r *http.Request) {
 
 	data, err := parseIATABarcode(req.Barcode)
 	if err != nil {
+		// Log the error for debugging
+		fmt.Printf("Error parsing barcode: %v\nInput: %s\n", err, req.Barcode)
 		http.Error(w, fmt.Sprintf("Error parsing barcode: %v", err), http.StatusBadRequest)
 		return
 	}
@@ -91,9 +92,7 @@ func handlePkPass(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 10MB limit
 	r.ParseMultipartForm(10 << 20)
-
 	file, header, err := r.FormFile("file")
 	if err != nil {
 		http.Error(w, "Error retrieving file", http.StatusBadRequest)
@@ -101,7 +100,6 @@ func handlePkPass(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	// Read file into memory to use zip.NewReader (requires ReaderAt)
 	buf := bytes.NewBuffer(nil)
 	if _, err := io.Copy(buf, file); err != nil {
 		http.Error(w, "Error reading file", http.StatusInternalServerError)
@@ -119,72 +117,164 @@ func handlePkPass(w http.ResponseWriter, r *http.Request) {
 }
 
 // ----------------------
-// LOGIC: IATA BCBP PARSER
+// LOGIC: IATA BCBP PARSER (SMART VERSION)
 // ----------------------
 
-// parseIATABarcode parses a standard 60-char Mandatory IATA string
-// Format: M1NAME/SURNAME       E123456 YYZLHRAC 1234 100 C1234 00001 0
-// Note: This is a simplified parser for the Mandatory items of the first leg.
 func parseIATABarcode(raw string) (*UnifiedBoardingPass, error) {
-	// Basic validation
-	// Relaxed length check to allow for testing with shorter/partial strings
+	// 1. Basic Validation
 	if len(raw) < 20 {
-		return nil, fmt.Errorf("barcode too short to be valid IATA BCBP (min 20 chars)")
+		return nil, fmt.Errorf("barcode too short")
 	}
-
-	// We check for 'M' (Multiple) or 'S' (Single) but allow lowercase for easier testing
+	// Check for 'M' (Multiple) or 'S' (Single), case-insensitive for robustness
 	if !strings.HasPrefix(strings.ToUpper(raw), "M") && !strings.HasPrefix(strings.ToUpper(raw), "S") {
-		return nil, fmt.Errorf("barcode must start with 'M' (Multiple legs) or 'S' (Single leg)")
+		return nil, fmt.Errorf("barcode must start with 'M' or 'S'")
 	}
 
-	// IATA Standard Offsets (Mandatory Items - Length 60 approx)
-	// 0:1   Format Code (M)
-	// 1:2   Number of Legs (1)
-	// 2:22  Passenger Name (20 chars)
-	// 22:23 E-Ticket Indicator (1 char)
-	// 23:30 PNR Code (7 chars)
-	// 30:33 From City (3 chars)
-	// 33:36 To City (3 chars)
-	// 36:39 Operating Carrier (3 chars)
-	// 39:44 Flight Number (5 chars)
-	// 44:47 Date of Flight (Julian Date, 3 chars)
-	// 47:48 Compartment Code (1 char)
-	// 48:52 Seat Number (4 chars)
-	// 52:57 Check-in Sequence (5 chars)
-	// 57:58 Passenger Status (1 char)
+	// 2. Parse Variables
+	var (
+		name    string
+		pnr     string
+		from    string
+		to      string
+		carrier string
+		flight  string
+		date    string
+		seat    string
+	)
 
-	// Helper to safely slice
-	extract := func(start, end int) string {
-		if start >= len(raw) {
-			return ""
+	// 3. Anchor Search Logic
+	// Standard IATA fields are fixed width, but many airlines (like in your example)
+	// omit spaces for Name or PNR. We find the "From" and "To" airport codes (3+3 letters)
+	// and work backward to find the PNR and Name.
+
+	anchorIdx := -1
+	isAlpha := func(s string) bool {
+		for _, r := range s {
+			if !unicode.IsLetter(r) {
+				return false
+			}
 		}
-		if end > len(raw) {
-			end = len(raw)
-		}
-		return strings.TrimSpace(raw[start:end])
+		return true
 	}
 
+	// Scan for the Route (e.g., "GVALHR") starting after potential header
+	// The header "M1" + min name (2) + min PNR (5) = ~9 chars minimum
+	for i := 9; i < len(raw)-10; i++ {
+		// Look for 6 consecutive letters (From + To)
+		if i+6 <= len(raw) && isAlpha(raw[i:i+6]) {
+
+			// CONFIRMATION CHECK:
+			// The flight number usually follows closely (within 3-5 chars)
+			// The PNR usually precedes immediately or with spaces
+
+			// Let's assume this is the anchor and try to parse backwards
+			anchorIdx = i
+
+			from = raw[i : i+3]
+			to = raw[i+3 : i+6]
+
+			// --- BACKWARD PARSING (PNR & Name) ---
+
+			// 1. Find PNR End: Skip spaces immediately before "From"
+			pnrEnd := i
+			for pnrEnd > 0 && raw[pnrEnd-1] == ' ' {
+				pnrEnd--
+			}
+
+			// 2. Extract PNR: It is 7 chars long.
+			if pnrEnd >= 7 {
+				pnrStart := pnrEnd - 7
+				pnr = raw[pnrStart:pnrEnd]
+
+				// 3. Find Name End: Skip spaces immediately before PNR
+				nameEnd := pnrStart
+				// Sometimes there is an 'E' (E-ticket) before PNR, skip it if it looks like one
+				// But be careful not to skip part of the name.
+				// For now, just skip spaces.
+				for nameEnd > 2 && raw[nameEnd-1] == ' ' {
+					nameEnd--
+				}
+
+				// 4. Extract Name: Everything from index 2 to here
+				if nameEnd > 2 {
+					name = raw[2:nameEnd]
+				}
+			} else {
+				// Fallback if structure is too weird
+				anchorIdx = -1 // Reset and try next match?
+				continue
+			}
+
+			// --- FORWARD PARSING (Flight, Date, Seat) ---
+
+			cursor := i + 6 // After From/To
+
+			// Carrier: Next 3 chars
+			if cursor+3 <= len(raw) {
+				carrier = strings.TrimSpace(raw[cursor : cursor+3])
+				cursor += 3
+			}
+
+			// Flight Number: Next 5 chars
+			if cursor+5 <= len(raw) {
+				flight = strings.TrimSpace(raw[cursor : cursor+5])
+				cursor += 5
+			}
+
+			// Date: Next 3 chars (Julian)
+			if cursor+3 <= len(raw) {
+				date = raw[cursor : cursor+3]
+				cursor += 3
+			}
+
+			// Compartment: 1 char
+			cursor += 1
+
+			// Seat: Next 4 chars
+			if cursor+4 <= len(raw) {
+				seat = strings.TrimSpace(raw[cursor : cursor+4])
+			}
+
+			break // Found it, stop scanning
+		}
+	}
+
+	// 4. Fallback for Perfectly Standard IATA (if dynamic failed)
+	if anchorIdx == -1 {
+		extract := func(start, end int) string {
+			if start >= len(raw) {
+				return ""
+			}
+			if end > len(raw) {
+				end = len(raw)
+			}
+			return strings.TrimSpace(raw[start:end])
+		}
+		// Strict offsets
+		name = extract(2, 22)
+		pnr = extract(23, 30)
+		from = extract(30, 33)
+		to = extract(33, 36)
+		carrier = extract(36, 39)
+		flight = extract(39, 44)
+		date = extract(44, 47)
+		seat = extract(48, 52)
+	}
+
+	// 5. Construct Result
 	pass := &UnifiedBoardingPass{
 		Source:        "barcode",
-		PassengerName: extract(2, 22),
-		PNR:           extract(23, 30),
-		Departure:     extract(30, 33),
-		Arrival:       extract(33, 36),
-		Carrier:       extract(36, 39),
-		FlightNumber:  extract(39, 44),
-		Date:          extract(44, 47),
-		Seat:          extract(48, 52),
-	}
-
-	// Extra raw data for debugging
-	pass.RawData = map[string]string{
-		"format_code":        extract(0, 1),
-		"legs":               extract(1, 2),
-		"e_ticket":           extract(22, 23),
-		"compartment":        extract(47, 48),
-		"sequence":           extract(52, 57),
-		"status":             extract(57, 58),
-		"variable_field_raw": extract(58, len(raw)), // Airline specific data often follows
+		PassengerName: strings.TrimSpace(name),
+		PNR:           strings.TrimSpace(pnr),
+		Departure:     from,
+		Arrival:       to,
+		Carrier:       carrier,
+		FlightNumber:  flight,
+		Date:          date,
+		Seat:          seat,
+		RawData: map[string]string{
+			"raw_string": raw,
+		},
 	}
 
 	return pass, nil
@@ -218,36 +308,29 @@ func parsePKPassFile(data []byte, size int64) (*UnifiedBoardingPass, error) {
 	}
 	defer rc.Close()
 
-	// Parse JSON
 	var pk PKPass
 	if err := json.NewDecoder(rc).Decode(&pk); err != nil {
 		return nil, err
 	}
 
-	// Convert PKPass structure to UnifiedBoardingPass
-	// Note: PKPass fields are dynamic. Airlines use different keys (e.g., "flight", "fltNum").
-	// We iterate all fields to populate the map.
 	unified := &UnifiedBoardingPass{
 		Source:  "pkpass",
 		RawData: make(map[string]string),
 	}
 
-	// Helper to scan a list of fields and look for common keywords
 	processFields := func(fields []PKField) {
 		for _, f := range fields {
 			valStr := fmt.Sprintf("%v", f.Value)
 			keyLower := strings.ToLower(f.Key)
 			labelLower := strings.ToLower(f.Label)
 
-			// Populate RawData map for reference
 			unified.RawData[f.Key] = valStr
 
-			// Heuristic matching for main fields
 			if strings.Contains(keyLower, "flight") || strings.Contains(labelLower, "flight") {
 				unified.FlightNumber = valStr
 			}
 			if strings.Contains(keyLower, "gate") || strings.Contains(labelLower, "gate") {
-				unified.RawData["gate"] = valStr // Gate isn't standard in barcode, but good to have
+				unified.RawData["gate"] = valStr
 			}
 			if strings.Contains(keyLower, "seat") || strings.Contains(labelLower, "seat") {
 				unified.Seat = valStr
@@ -271,11 +354,6 @@ func parsePKPassFile(data []byte, size int64) (*UnifiedBoardingPass, error) {
 	processFields(pk.BoardingPass.SecondaryFields)
 	processFields(pk.BoardingPass.AuxiliaryFields)
 	processFields(pk.BoardingPass.BackFields)
-
-	// Fallback: If no explicit name field found, extracting from description might work
-	if unified.PassengerName == "" && strings.Contains(pk.Description, "Boarding Pass") {
-		// Sometimes description is just "Boarding Pass"
-	}
 
 	return unified, nil
 }

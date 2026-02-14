@@ -73,3 +73,23 @@ class Item(BaseModel):
     public_tags: List[str]
     hidden_tags: List[str]
 
+# --- User Models ---
+class UserCreate(BaseModel):
+    name: str
+    email: str
+    password: str
+    address: str
+    ticket_info: dict # JSON structure for ticket info
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+class UserResponse(BaseModel):
+    id: int
+    name: str
+    email: str
+    address: str
+    ticket_info: dict
+    sent_items: List[int] = []
+

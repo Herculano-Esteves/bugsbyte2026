@@ -1,14 +1,36 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, FlatList, Image, SafeAreaView, Platform, StatusBar, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet, TextInput, FlatList, Image, SafeAreaView, Platform, StatusBar, useColorScheme, Modal, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { mockArticles, Article } from '../../constants/mockSearchData';
 import { Colors } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+
+const ImageWithLoader = ({ uri, style }: { uri: string, style: any }) => {
+    const [loading, setLoading] = useState(true);
+    const colorScheme = useColorScheme();
+    const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+
+    return (
+        <View style={[style, { overflow: 'hidden', backgroundColor: theme.background }]}>
+            <Image
+                source={{ uri }}
+                style={{ width: '100%', height: '100%' }}
+                onLoadEnd={() => setLoading(false)}
+            />
+            {loading && (
+                <View style={[StyleSheet.absoluteFill, { justifyContent: 'center', alignItems: 'center' }]}>
+                    <ActivityIndicator size="small" color={theme.tint} />
+                </View>
+            )}
+        </View>
+    );
+};
 
 export default function SearchScreen() {
     const colorScheme = useColorScheme();
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredArticles, setFilteredArticles] = useState<Article[]>(mockArticles);
+    const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
     const handleSearch = (query: string) => {
         setSearchQuery(query);
@@ -28,8 +50,12 @@ export default function SearchScreen() {
     };
 
     const renderItem = ({ item }: { item: Article }) => (
-        <View style={[styles.card, { backgroundColor: theme.background, borderColor: colorScheme === 'dark' ? '#333' : '#eee' }]}>
-            <Image source={{ uri: item.image }} style={styles.cardImage} />
+        <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => setSelectedArticle(item)}
+            style={[styles.card, { backgroundColor: theme.background, borderColor: colorScheme === 'dark' ? '#333' : '#eee' }]}
+        >
+            <ImageWithLoader uri={item.image} style={styles.cardImage} />
             <View style={styles.textContainer}>
                 <Text style={[styles.cardTitle, { color: theme.text }]}>{item.title}</Text>
                 <View style={styles.tagsContainer}>
@@ -41,7 +67,7 @@ export default function SearchScreen() {
                 </View>
                 <Text style={[styles.cardText, { color: theme.icon }]} numberOfLines={2}>{item.text}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 
     return (
@@ -74,6 +100,37 @@ export default function SearchScreen() {
                     </View>
                 }
             />
+
+            <Modal
+                visible={selectedArticle !== null}
+                animationType="slide"
+                presentationStyle="pageSheet"
+                onRequestClose={() => setSelectedArticle(null)}
+            >
+                {selectedArticle && (
+                    <View style={[styles.modalContainer, { backgroundColor: theme.background }]}>
+                        <View style={styles.modalHeader}>
+                            <TouchableOpacity onPress={() => setSelectedArticle(null)} style={styles.closeButton}>
+                                <Ionicons name="close" size={28} color={theme.tint} />
+                            </TouchableOpacity>
+                        </View>
+                        <ScrollView contentContainerStyle={styles.modalContent}>
+                            <ImageWithLoader uri={selectedArticle.image} style={styles.modalImage} />
+                            <View style={styles.modalTextContainer}>
+                                <Text style={[styles.modalTitle, { color: theme.text }]}>{selectedArticle.title}</Text>
+                                <View style={styles.tagsContainer}>
+                                    {selectedArticle.tags.map((tag, index) => (
+                                        <View key={index} style={[styles.tagBadge, { backgroundColor: theme.tint + '20' }]}>
+                                            <Text style={[styles.tagText, { color: theme.tint }]}>#{tag}</Text>
+                                        </View>
+                                    ))}
+                                </View>
+                                <Text style={[styles.modalText, { color: theme.text }]}>{selectedArticle.text}</Text>
+                            </View>
+                        </ScrollView>
+                    </View>
+                )}
+            </Modal>
         </SafeAreaView>
     );
 }
@@ -162,5 +219,35 @@ const styles = StyleSheet.create({
     emptyText: {
         marginTop: 12,
         fontSize: 16,
+    },
+    modalContainer: {
+        flex: 1,
+    },
+    modalHeader: {
+        padding: 16,
+        alignItems: 'flex-end',
+    },
+    closeButton: {
+        padding: 8,
+    },
+    modalContent: {
+        paddingBottom: 40,
+    },
+    modalImage: {
+        width: '100%',
+        height: 250,
+    },
+    modalTextContainer: {
+        padding: 20,
+    },
+    modalTitle: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        marginBottom: 12,
+    },
+    modalText: {
+        fontSize: 16,
+        lineHeight: 24,
+        marginTop: 12,
     },
 });

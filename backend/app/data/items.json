@@ -575,5 +575,159 @@
       "compression",
       "turbine"
     ]
+  },
+  {
+    "id": 37,
+    "title": "Portugal",
+    "text": "Portugal is a captivating country on the western edge of Europe, blending ancient history, stunning coastlines, rolling vineyards, and a warm, welcoming culture that has drawn travelers for centuries. From the vibrant cities of Lisbon and Porto to remote Atlantic islands and sun-soaked southern shores, Portugal offers something for every kind of visitor—whether you're drawn to historic architecture, world-class wines, fresh seafood, or dramatic natural landscapes. The country's compact size makes it easy to explore multiple regions in one trip, and its people are known for their hospitality, often sharing stories over a glass of vinho verde or a plate of grilled sardines. Food is central to the experience, with classics like bacalhau prepared in countless creative ways, hearty cataplana stews bubbling with clams and chorizo, and the irresistible pastel de nata custard tarts that melt in your mouth. The landscape shifts beautifully from green northern hills to golden Algarve cliffs and volcanic Azores craters, while the mild climate, especially in spring and autumn, invites leisurely exploration without extreme heat or crowds.",
+    "image": "https://cdn.bunniktours.com.au/public/gallery_images/JPG%20IMAGES/Europe/Treasures%20of%20Portugal/2023%20-%20Portugal%20-%20Douro%20Valley%20-%20Zoe%20Francis-feature.jpg",
+    "public_tags": [
+      "Contries",
+      "Landscape",
+      "Wine",
+      "Cities"
+    ],
+    "hidden_tags": [
+      "vineyards",
+      "countyside",
+      "coastline",
+      "sunny",
+      "western",
+      "iberia"
+    ]
+  },
+  {
+    "id": 38,
+    "title": "Lisbon",
+    "text": "Lisbon, the hilly capital perched above the Tagus River, pulses with energy and charm, where yellow trams climb steep streets lined with pastel buildings and intricate azulejo tiles. Lose yourself in the winding alleys of Alfama, where fado singers pour emotion into haunting melodies late into the night, or ascend to São Jorge Castle for panoramic views over terracotta roofs and the glittering estuary. The Belém district showcases Portugal's golden Age of Discoveries with the ornate Jerónimos Monastery and the iconic Belém Tower, both UNESCO treasures, and no visit is complete without tasting those legendary pastéis de nata fresh from a historic bakery. Evenings buzz in Bairro Alto with lively bars spilling onto cobbled lanes, mixing old-world romance with youthful vibrancy.",
+    "image": "https://images.goway.com/production/styles/hero_s1_2xl/s3/hero/iStock-1137863101.jpg.webp?VersionId=TNqde4tjrqdi_HRPUjK4M.ozf0__Ik67&h=08f4e768&itok=_3r2F97l",
+    "public_tags": [
+      "City",
+      "Hills",
+      "River Tagus",
+      "Nightlife"
+    ],
+    "hidden_tags": [
+      "Natas",
+      "cobblestone",
+      "old",
+      "capital"
+    ]
+  },
+  {
+    "id": 39,
+    "title": "Porto",
+    "text": "Porto is a riverside gem that feels grand yet intimate, its steep banks draped in colorful houses and historic bridges. Wander the Ribeira waterfront with its tightly packed facades, then cross the soaring Dom Luís I Bridge for sweeping vistas, especially magical at sunset from the hilltop gardens. The city's soul shines through its azulejo masterpieces, particularly the breathtaking tile panels inside São Bento Station depicting epic Portuguese tales. Port wine remains the star, so venture to the cellars of Vila Nova de Gaia for tastings of the rich, ruby-hued fortified wine aged in vast oak barrels, or take a serene boat cruise along the Douro to admire terraced vineyards clinging to dramatic slopes. The bustling Bolhão Market bursts with fresh seafood, cheeses, and local produce, fueling days of discovery.",
+    "image": "https://www.revigorate.com/images/porto-portugal-europe.jpg",
+    "public_tags": [
+      "Ribera",
+      "Food",
+      "City"
+    ],
+    "hidden_tags": [
+      "Francesinha",
+      "Ribera",
+      "wine"
+    ]
+  },
+  {
+    "id": 40,
+    "title": "Azores (Açores)",
+    "text": "Out in the vast Atlantic, the Azores archipelago unfolds as nine volcanic islands of raw, untouched beauty, often likened to a greener, quieter Hawaii. São Miguel, the main gateway, captivates with the twin crater lakes of Sete Cidades shimmering in shades of blue and green beneath misty peaks, and the geothermal wonder of Furnas where hot springs bubble and traditional cozido dishes simmer underground. Hiking paths weave through ancient laurel forests, along dramatic coastal cliffs, and to hidden waterfalls, while the surrounding ocean teems with whales and dolphins visible on boat tours. Each island tells its own story—Pico's towering volcano rises above black-sand vineyards, Flores offers cascading waters and serene lagoons—creating a haven for nature lovers seeking peace, adventure, and landscapes that feel otherworldly.",
+    "image": "https://images.resosys.com/destinations/2/articles/pratical-information_en/inline/1688465434-s2-1231.jpg",
+    "public_tags": [
+      "Nature",
+      "lagoons. landscape"
+    ],
+    "hidden_tags": [
+      "Beauty",
+      "green",
+      "volcanic"
+    ]
+  },
+  {
+    "id": 41,
+    "title": "Madeira",
+    "text": "Madeira, rising sharply from the sea like a floating garden, delights with its subtropical climate and steep, terraced slopes bursting with bananas, vineyards, and exotic blooms. Funchal, the lively capital, invites strolls through its historic center and colorful markets overflowing with tropical fruits and Madeira wine, then a cable car ascent to Monte for sweeping ocean views followed by the exhilarating toboggan ride back down in woven baskets steered by locals. The island's levada walks follow ancient irrigation channels through lush laurel forests to thundering waterfalls and dizzying viewpoints like Cabo Girão, one of Europe's tallest sea cliffs. Natural volcanic pools at Porto Moniz provide refreshing swims in turquoise ocean-fed basins, while rugged trails climb to misty highlands, blending warm coastal vibes with invigorating mountain freshness.",
+    "image": "https://media.digitalnomads.world/wp-content/uploads/2021/08/20115713/Madeira-digital-nomads-1024x768.jpg",
+    "public_tags": [
+      "Nature",
+      "Cable car",
+      "Cliffs"
+    ],
+    "hidden_tags": [
+      "Cristiano Ronaldo",
+      "football",
+      "Bannanas"
+    ]
+  },
+  {
+    "id": 42,
+    "title": "Algarve",
+    "text": "The Algarve, Portugal's sunny southern coast, dazzles with golden cliffs, dramatic rock formations, and endless sandy beaches kissed by the Atlantic. In the west around Lagos, boat trips explore the sea caves and grottos of Ponta da Piedade, where turquoise waters carve fantastical shapes into sandstone. Broad beaches like Praia da Falésia or Praia da Rocha stretch for miles under reliable sunshine, perfect for relaxed days or invigorating walks, while the calmer eastern end near Tavira features the tranquil lagoons and barrier islands of Ria Formosa Natural Park, ideal for kayaking or spotting flamingos and other birds. Seaside eateries serve sizzling grilled fish and fragrant seafood rice dishes, and the region balances bustling resorts with peaceful whitewashed villages, offering the ultimate coastal escape.",
+    "image": "",
+    "public_tags": [
+      "Cliffs",
+      "Beach",
+      "Hot Beaches"
+    ],
+    "hidden_tags": [
+      "Seafood",
+      "luxury",
+      "sunny",
+      "coastal"
+    ]
+  },
+  {
+    "id": 43,
+    "title": "São Miguel",
+    "text": "São Miguel, the largest and most accessible of the Azores islands, serves as the perfect introduction to the archipelago's volcanic wonders, with lush green landscapes, dramatic crater lakes, and geothermal surprises around every bend. Ponta Delgada, the vibrant capital, offers a lively harborfront, charming historic streets, and excellent seafood restaurants where you can savor fresh fish and local cheeses. Head west to the iconic Sete Cidades crater, where twin lakes—one blue, one green—nestle beneath misty peaks, offering breathtaking viewpoints like Vista do Rei and Boca do Inferno, ideal for hikes along the rim or peaceful picnics. In the east, Furnas enchants with bubbling hot springs, fumaroles steaming from the earth, and the opportunity to taste cozido das Furnas, a traditional stew slow-cooked underground using geothermal heat. Relax in the thermal waters of Terra Nostra Park, surrounded by exotic gardens and towering trees, or swim in the warm ocean-fed pools at Ponta da Ferraria. Don't miss Lagoa do Fogo's serene caldera lake high in the mountains, often shrouded in clouds that part dramatically to reveal turquoise waters, and consider a whale-watching tour from Ponta Delgada to spot dolphins and massive cetaceans in the nutrient-rich Atlantic waters surrounding the island.",
+    "image": "https://byacores.com/wp-content/uploads/2019/11/lagoa-fogo-sao-miguel-acores.jpeg",
+    "public_tags": [
+      "Azores",
+      "Nature",
+      "Lagoon",
+      "Furnas"
+    ],
+    "hidden_tags": [
+      "Island",
+      "beauty",
+      "vulcanic"
+    ]
+  },
+  {
+    "id": 44,
+    "title": "Tercera",
+    "text": "Terceira, often called the cultural heart of the Azores, blends rich history with stunning natural beauty, its rolling hills dotted with cows and patchwork fields evoking an emerald countryside. Angra do Heroísmo, a UNESCO World Heritage Site, captivates with its baroque architecture, colorful gardens like Jardim Duque da Terceira, and historic forts overlooking the bay—stroll the old streets, visit the Sé Cathedral, and explore the maritime legacy that once made it a key stop for explorers. Venture inside the volcano at Algar do Carvão (reopened in recent years with an updated visitor center), a unique lava tube where sunlight filters through a skylight onto lush ferns growing deep underground. Catch sunrise or sunset from Miradouro da Serra do Cume for panoramic views over the island's largest caldera, or hike trails through laurel forests in the Serra de Santa Bárbara. Natural swimming pools at Biscoitos in the north offer refreshing dips in lava-rock basins with calm ocean access, while whale and dolphin watching tours reveal the Azores' status as a prime marine sanctuary. The island's festivals, especially in summer, fill the air with music and parades, and its renowned restaurants serve exceptional seafood, alcatra stews, and sweet pastries that highlight Terceira's culinary pride.",
+    "image": "https://asyaolson.com/wp-content/uploads/2024/07/Algar-do-Carvao-Cover.jpg",
+    "public_tags": [
+      "Azores",
+      "Barroque",
+      "Caves",
+      "Nature"
+    ],
+    "hidden_tags": [
+      "Military base",
+      "USA",
+      "Beauty",
+      "Island"
+    ]
+  },
+  {
+    "id": 45,
+    "title": "Pico",
+    "text": "Pico, dominated by Portugal's highest peak, delivers dramatic volcanic scenery, ancient vineyards, and a sense of raw adventure that sets it apart. Mount Pico rises imposingly to 2,351 meters, challenging hikers with a steep but rewarding ascent to the summit and Piquinho crater for sunrise views over the archipelago on clear days—guided night climbs add extra magic. The island's UNESCO-listed vineyard landscape features unique currais of black lava stone protecting vines from salty winds, producing crisp white wines best tasted at local wineries or the Museu do Vinho in Madalena. Explore Gruta das Torres, Europe's longest lava tube, on guided tours through its vast underground galleries formed by ancient eruptions. Whale and dolphin watching from Lajes do Pico or Madalena often yields spectacular sightings in the channel between Pico and Faial, while natural pools and black-sand beaches provide spots to unwind. Visit the Museu dos Baleeiros to learn about the island's whaling heritage, now turned to conservation, and wander charming villages like São Roque do Pico or savor fresh seafood in seaside eateries. Pico's rugged, windswept beauty rewards those seeking both adrenaline and tranquility amid its vineyards, mountains, and endless ocean horizons.",
+    "image": "https://byacores.com/wp-content/uploads/2018/09/pico.jpg",
+    "public_tags": [
+      "Mountain",
+      "Seafood",
+      "Peak",
+      "Wales"
+    ],
+    "hidden_tags": [
+      "Vulcanic",
+      "hike",
+      "climb"
+    ]
   }
 ]

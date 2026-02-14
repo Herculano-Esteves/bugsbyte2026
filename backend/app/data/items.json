@@ -4,79 +4,171 @@
     "title": "Visit Rio de Janeiro",
     "text": "Experience the vibrant culture, stunning beaches, and iconic landmarks of Rio de Janeiro. Don't miss the Christ the Redeemer statue.",
     "image": "https://example.com/rio.jpg",
-    "public_tags": ["rio", "brazil", "beach", "culture", "tourism"],
-    "hidden_tags": ["south america", "summer", "vacation"]
+    "public_tags": [
+      "rio",
+      "brazil",
+      "beach",
+      "culture",
+      "tourism"
+    ],
+    "hidden_tags": [
+      "south america",
+      "summer",
+      "vacation"
+    ]
   },
   {
     "id": 2,
     "title": "Paris Travel Guide",
     "text": "The ultimate guide to the City of Light. Discover the best museums, cafes, and romantic spots in Paris.",
     "image": "https://example.com/paris.jpg",
-    "public_tags": ["paris", "france", "europe", "museum", "romance"],
-    "hidden_tags": ["eiffel tower", "louvre", "food"]
+    "public_tags": [
+      "paris",
+      "france",
+      "europe",
+      "museum",
+      "romance"
+    ],
+    "hidden_tags": [
+      "eiffel tower",
+      "louvre",
+      "food"
+    ]
   },
   {
     "id": 3,
     "title": "Packing Tips for Long Flights",
     "text": "Master the art of packing for long-haul travel. Learn what to bring in your carry-on for a comfortable journey.",
     "image": "https://example.com/packing.jpg",
-    "public_tags": ["travel tips", "flights", "packing", "comfort"],
-    "hidden_tags": ["airplane", "luggage", "essentials"]
+    "public_tags": [
+      "travel tips",
+      "flights",
+      "packing",
+      "comfort"
+    ],
+    "hidden_tags": [
+      "airplane",
+      "luggage",
+      "essentials"
+    ]
   },
   {
     "id": 4,
     "title": "Top 10 Airports in the World",
     "text": "A ranking of the best airports based on passenger experience, amenities, and efficiency. Singapore Changi tops the list.",
     "image": "https://example.com/changi.jpg",
-    "public_tags": ["airport", "ranking", "travel", "luxury"],
-    "hidden_tags": ["singapore", "transit", "layover"]
+    "public_tags": [
+      "airport",
+      "ranking",
+      "travel",
+      "luxury"
+    ],
+    "hidden_tags": [
+      "singapore",
+      "transit",
+      "layover"
+    ]
   },
   {
     "id": 5,
     "title": "Budget Travel in Southeast Asia",
     "text": "Explore Thailand, Vietnam, and Cambodia without breaking the bank. Tips for cheap accommodation and street food.",
     "image": "https://example.com/asia.jpg",
-    "public_tags": ["budget", "asia", "backpacking", "food"],
-    "hidden_tags": ["thailand", "vietnam", "cheap"]
+    "public_tags": [
+      "budget",
+      "asia",
+      "backpacking",
+      "food"
+    ],
+    "hidden_tags": [
+      "thailand",
+      "vietnam",
+      "cheap"
+    ]
   },
   {
     "id": 6,
     "title": "New York City in Winter",
     "text": "NYC transforms into a winter wonderland. Skate at Rockefeller Center and enjoy the holiday lights.",
     "image": "https://example.com/nyc_winter.jpg",
-    "public_tags": ["nyc", "usa", "winter", "holiday"],
-    "hidden_tags": ["snow", "christmas", "shopping"]
+    "public_tags": [
+      "nyc",
+      "usa",
+      "winter",
+      "holiday"
+    ],
+    "hidden_tags": [
+      "snow",
+      "christmas",
+      "shopping"
+    ]
   },
   {
     "id": 7,
     "title": "Understanding Airport Security",
     "text": "How to breeze through TSA and security checks. What liquids you can bring and how to pack electronics.",
     "image": "https://example.com/security.jpg",
-    "public_tags": ["airport", "security", "tips", "rules"],
-    "hidden_tags": ["tsa", "liquids", "safety"]
+    "public_tags": [
+      "airport",
+      "security",
+      "tips",
+      "rules"
+    ],
+    "hidden_tags": [
+      "tsa",
+      "liquids",
+      "safety"
+    ]
   },
   {
     "id": 8,
     "title": "Tokyo: Traditional vs Modern",
     "text": "A journey through Tokyo's historic temples and futuristic neon districts. The perfect blend of old and new.",
     "image": "https://example.com/tokyo.jpg",
-    "public_tags": ["tokyo", "japan", "asia", "culture"],
-    "hidden_tags": ["sushi", "technology", "temples"]
+    "public_tags": [
+      "tokyo",
+      "japan",
+      "asia",
+      "culture"
+    ],
+    "hidden_tags": [
+      "sushi",
+      "technology",
+      "temples"
+    ]
   },
   {
     "id": 9,
     "title": "Flying Advice for First Timers",
     "text": "Nervous about your first flight? Here is everything you need to know from check-in to landing.",
     "image": "https://example.com/flight.jpg",
-    "public_tags": ["flight", "beginner", "advice", "fear"],
-    "hidden_tags": ["airplane", "check-in", "boarding"]
+    "public_tags": [
+      "flight",
+      "beginner",
+      "advice",
+      "fear"
+    ],
+    "hidden_tags": [
+      "airplane",
+      "check-in",
+      "boarding"
+    ]
   },
   {
     "id": 10,
     "title": "Best Coffee Shops in Rome",
     "text": "Where to find the best espresso in Rome. Avoid the tourist traps and drink like a local.",
     "image": "https://example.com/rome_coffee.jpg",
-    "public_tags": ["rome", "italy", "coffee", "food"],
-    "hidden_tags": ["espresso", "europe", "cafe"]
+    "public_tags": [
+      "rome",
+      "italy",
+      "coffee",
+      "food"
+    ],
+    "hidden_tags": [
+      "espresso",
+      "europe",
+      "cafe"
+    ]
   }
 ]

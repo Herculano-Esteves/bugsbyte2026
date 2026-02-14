@@ -66,3 +66,48 @@ Once running, visit:
 -   `app/parsers`: Modules for fetching data (Airports, Flights, etc.).
 -   `app/data`: Mock database layer.
 -   `app/models`: Pydantic schemas.
+
+## Database Reset (SQLite)
+
+The project uses a local SQLite database (`bugsbyte.db`). To reset it (delete all data and recreate tables):
+
+1.  **Open an interactive Python shell from the `backend/` directory:**
+    ```bash
+    cd backend
+    python3
+    ```
+
+2.  **Run the reset command:**
+    ```python
+    from app.database.connection import reset_database
+    reset_database()
+    exit()
+    ```
+
+    *Warning: This will permanently delete `bugsbyte.db` and all stored tickets.*
+
+## Testing
+
+The project uses `pytest` for testing.
+
+1.  **Install test dependencies:**
+    ```bash
+    pip install pytest
+    ```
+
+2.  **Run tests (from the `backend/` directory):**
+    ```bash
+    cd backend
+    python3 -m pytest
+    ```
+
+3.  **Run with verbose output:**
+    ```bash
+    python3 -m pytest -v
+    ```
+
+**What is tested:**
+-   Database initialization and reset logic.
+-   Ticket CRUD operations (Create, Read, Delete).
+-   Timezone conversion logic (UTC handling).
+

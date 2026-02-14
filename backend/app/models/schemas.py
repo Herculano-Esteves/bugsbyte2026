@@ -75,6 +75,7 @@ class Item(BaseModel):
 
 # --- User Models ---
 class UserCreate(BaseModel):
+    name: str
     email: str
     password: str
     address: str
@@ -86,6 +87,7 @@ class UserLogin(BaseModel):
 
 class UserResponse(BaseModel):
     id: int
+    name: str
     email: str
     address: str
     ticket_info: dict

@@ -12,9 +12,10 @@ class UserRepository:
         
         try:
             cursor.execute("""
-                INSERT INTO users (email, password, address, ticket_info, sent_items)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO users (name, email, password, address, ticket_info, sent_items)
+                VALUES (?, ?, ?, ?, ?, ?)
             """, (
+                user.name,
                 user.email,
                 user.password, # In a real app, hash this!
                 user.address,
@@ -26,6 +27,7 @@ class UserRepository:
             
             return UserResponse(
                 id=user_id,
+                name=user.name,
                 email=user.email,
                 address=user.address,
                 ticket_info=user.ticket_info,
@@ -61,6 +63,7 @@ class UserRepository:
         if row:
             return UserResponse(
                 id=row['id'],
+                name=row['name'],
                 email=row['email'],
                 address=row['address'],
                 ticket_info=json.loads(row['ticket_info']),

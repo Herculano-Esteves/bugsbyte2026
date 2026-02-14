@@ -12,6 +12,7 @@ def setup_db():
 
 def test_register_user():
     response = client.post("/api/auth/register", json={
+        "name": "Test User",
         "email": "test@example.com",
         "password": "securepassword",
         "address": "123 Test St",
@@ -19,6 +20,7 @@ def test_register_user():
     })
     assert response.status_code == 200
     data = response.json()
+    assert data["name"] == "Test User"
     assert data["email"] == "test@example.com"
     assert "id" in data
     assert data["sent_items"] == []

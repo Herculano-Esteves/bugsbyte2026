@@ -28,6 +28,7 @@ class UserLogic:
              
         return UserResponse(
                 id=user_data['id'],
+                name=user_data['name'],
                 email=user_data['email'],
                 address=user_data['address'],
                 ticket_info=json.loads(user_data['ticket_info']) if isinstance(user_data['ticket_info'], str) else user_data['ticket_info'],

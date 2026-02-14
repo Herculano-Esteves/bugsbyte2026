@@ -58,6 +58,7 @@ function TabsLayout() {
                 <Tabs.Screen name="inFlight" options={{ tabBarButton: () => null }} />
                 <Tabs.Screen name="search" options={{ tabBarButton: () => null }} />
                 <Tabs.Screen name="perfil" options={{ tabBarButton: () => null }} />
+                <Tabs.Screen name="boardingpass" options={{ tabBarButton: () => null }} />
             </Tabs>
         </>
     );

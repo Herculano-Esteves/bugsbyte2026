@@ -1,8 +1,177 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Alert, ActivityIndicator } from 'react-native';
 import { useFlightMode } from '../../context/FlightModeContext';
+import { useBoardingPass, mapCabinClass } from '../../context/BoardingPassContext';
+import { CameraView, Camera } from "expo-camera";
+import * as ImagePicker from 'expo-image-picker';
+import { Ionicons } from '@expo/vector-icons';
+import { API_BASE_URL, GO_API_BASE_URL } from '../../constants/config';
+import { router } from 'expo-router';
 
 export default function MainScreen() {
     const { mode, setMode } = useFlightMode();
+    const { setBoardingPass } = useBoardingPass();
+    const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+    const [showScanner, setShowScanner] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const cameraRef = useRef<CameraView>(null);
+
+    useEffect(() => {
+        const getCameraPermissions = async () => {
+            const { status } = await Camera.requestCameraPermissionsAsync();
+            setHasPermission(status === 'granted');
+        };
+
+        getCameraPermissions();
+    }, []);
+
+    const calculateAirTimeMinutes = (
+        depTime: string,
+        arrTime: string
+    ): number | null => {
+        try {
+            const dep = new Date(depTime);
+            const arr = new Date(arrTime);
+            const diffMs = arr.getTime() - dep.getTime();
+            if (diffMs <= 0) return null;
+            return Math.round(diffMs / 60000);
+        } catch {
+            return null;
+        }
+    };
+
+    const handleCapturePhoto = async () => {
+        if (!cameraRef.current) return;
+
+        try {
+            const photo = await cameraRef.current.takePictureAsync({
+                quality: 0.8,
+                base64: true,
+            });
+
+            if (!photo?.base64) {
+                Alert.alert("Error", "Failed to capture photo.");
+                return;
+            }
+
+            setShowScanner(false);
+            await uploadBarcodeImage(photo.base64);
+        } catch (error: any) {
+            console.error("Capture error:", error);
+            Alert.alert("Error", error.message || "Failed to capture photo.");
+        }
+    };
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 0.8,
+            base64: true,
+        });
+
+        if (!result.canceled && result.assets[0]?.base64) {
+            await uploadBarcodeImage(result.assets[0].base64);
+        }
+    };
+
+    const uploadBarcodeImage = async (base64Image: string) => {
+        setLoading(true);
+        try {
+            console.log("Uploading image, base64 length:", base64Image.length);
+
+            // Step 1: Send image to Python backend for barcode decoding
+            const decodeResponse = await fetch(`${API_BASE_URL}/api/parse/barcode/image`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image: base64Image }),
+            });
+
+            if (!decodeResponse.ok) {
+                const err = await decodeResponse.json().catch(() => ({ detail: "Failed to decode barcode" }));
+                throw new Error(err.detail || "Failed to decode barcode");
+            }
+
+            const decoded = await decodeResponse.json();
+            console.log("Barcode decoded:", decoded.barcode_type, decoded.barcode_text);
+
+            // Step 2: Send decoded text to Go backend for IATA boarding pass parsing
+            const parseResponse = await fetch(`${GO_API_BASE_URL}/parse/barcode`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ barcode: decoded.barcode_text }),
+            });
+
+            if (!parseResponse.ok) {
+                const errorText = await parseResponse.text();
+                throw new Error(errorText);
+            }
+
+            const boardingPass = await parseResponse.json();
+            console.log("Parsed boarding pass:", boardingPass);
+
+            // Step 3: Fetch flight schedule from Python mock API
+            let schedule = { dep_time: '', arr_time: '', dep_timezone: '', arr_timezone: '' };
+            try {
+                const scheduleResponse = await fetch(
+                    `${API_BASE_URL}/api/flights/${encodeURIComponent(boardingPass.flight_number)}/schedule`
+                );
+                if (scheduleResponse.ok) {
+                    schedule = await scheduleResponse.json();
+                } else {
+                    console.warn("Failed to fetch schedule, continuing without times");
+                }
+            } catch (scheduleErr) {
+                console.warn("Schedule fetch error:", scheduleErr);
+            }
+
+            // Step 4: Calculate air time
+            const airTimeMinutes = calculateAirTimeMinutes(
+                schedule.dep_time,
+                schedule.arr_time
+            );
+
+            // Step 5: Store in context
+            const cabinCode = boardingPass.cabin_class || '';
+            setBoardingPass({
+                passengerName: boardingPass.passenger_name || '',
+                pnr: boardingPass.pnr || '',
+                flightNumber: boardingPass.flight_number || '',
+                departureAirport: boardingPass.departure_airport || '',
+                arrivalAirport: boardingPass.arrival_airport || '',
+                seat: boardingPass.seat || '',
+                carrier: boardingPass.carrier || '',
+                cabinClassCode: cabinCode,
+                cabinClassName: mapCabinClass(cabinCode),
+                boardingZone: '',
+                departureTime: schedule.dep_time || '',
+                arrivalTime: schedule.arr_time || '',
+                departureTimezone: schedule.dep_timezone || '',
+                arrivalTimezone: schedule.arr_timezone || '',
+                airTimeMinutes: airTimeMinutes,
+            });
+
+            // Step 6: Navigate to Pre-Flight screen
+            router.push('/(tabs)/prevoo');
+
+        } catch (error: any) {
+            console.error("Upload error:", error);
+            Alert.alert("Error", error.message || "Failed to parse barcode from image.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const openScanner = () => {
+        if (hasPermission === null) {
+            Alert.alert("Requesting Permission", "Requesting camera permission...");
+        }
+        if (hasPermission === false) {
+            Alert.alert("No Access", "Camera permission was denied.");
+            return;
+        }
+        setShowScanner(true);
+    };
 
     return (
         <View style={styles.container}>
@@ -27,14 +196,49 @@ export default function MainScreen() {
             <Text style={styles.modeText}>Current Mode: {mode}</Text>
 
             {mode === 'AIR' ? (
-                <View style={styles.contentBox}>
-                    <Text>Air Content Here</Text>
+                <View style={styles.scannerContainer}>
+                    <Text style={styles.scannerTitle}>Get ticket from:</Text>
+                    <View style={styles.buttonRow}>
+                        <TouchableOpacity style={styles.actionButton} onPress={openScanner}>
+                            <Ionicons name="camera-outline" size={32} color="black" />
+                            <Text style={styles.actionButtonText}>Camera</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.actionButton} onPress={pickImage}>
+                            <Ionicons name="image-outline" size={32} color="black" />
+                            <Text style={styles.actionButtonText}>File</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {loading && <ActivityIndicator style={{ marginTop: 10 }} size="small" color="blue" />}
                 </View>
             ) : (
                 <View style={[styles.contentBox, styles.grdBox]}>
                     <Text>Ground Content Here</Text>
                 </View>
             )}
+
+            <Modal
+                visible={showScanner}
+                animationType="slide"
+                onRequestClose={() => setShowScanner(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <CameraView
+                        ref={cameraRef}
+                        style={StyleSheet.absoluteFillObject}
+                    />
+                    <View style={styles.captureControls}>
+                        <TouchableOpacity
+                            style={styles.captureButton}
+                            onPress={handleCapturePhoto}
+                        >
+                            <View style={styles.captureButtonInner} />
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity style={styles.closeButton} onPress={() => setShowScanner(false)}>
+                        <Text style={styles.closeButtonText}>Close</Text>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
         </View>
     );
 }
@@ -45,7 +249,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: 'white',
         borderWidth: 2,
-        borderColor: 'red', // Matching the sketch color/rough style
+        borderColor: 'red',
         borderRadius: 10,
         overflow: 'hidden',
         marginBottom: 40,
@@ -58,17 +262,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     activeModeButton: {
-        backgroundColor: '#ffebee', // Light red to indicate selection, optional
+        backgroundColor: '#ffebee',
     },
     modeButtonText: {
         fontSize: 24,
         fontWeight: 'bold',
         color: 'red',
-        fontFamily: 'System', // Hand-drawn look simulation not possible without font, using standard
+        fontFamily: 'System',
     },
-    activeModeButtonText: {
-        // color: 'darkred',
-    },
+    activeModeButtonText: {},
     separator: {
         width: 2,
         backgroundColor: 'red',
@@ -77,4 +279,77 @@ const styles = StyleSheet.create({
     modeText: { fontSize: 24, marginBottom: 40 },
     contentBox: { width: 200, height: 200, backgroundColor: '#e0f7fa', justifyContent: 'center', alignItems: 'center', borderRadius: 20 },
     grdBox: { backgroundColor: '#fbe9e7' },
+
+    // Scanner Styles
+    scannerContainer: {
+        width: '80%',
+        padding: 20,
+        backgroundColor: '#fffbe6',
+        borderWidth: 2,
+        borderColor: '#fdd835',
+        borderRadius: 15,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 4, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 0,
+        elevation: 4,
+    },
+    scannerTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color: '#333',
+    },
+    buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+    },
+    actionButton: {
+        alignItems: 'center',
+        padding: 10,
+    },
+    actionButtonText: {
+        marginTop: 5,
+        fontSize: 16,
+        fontWeight: '500',
+    },
+    modalContainer: {
+        flex: 1,
+        backgroundColor: 'black',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    captureControls: {
+        position: 'absolute',
+        bottom: 120,
+        alignSelf: 'center',
+    },
+    captureButton: {
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        backgroundColor: 'rgba(255,255,255,0.3)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 3,
+        borderColor: 'white',
+    },
+    captureButtonInner: {
+        width: 54,
+        height: 54,
+        borderRadius: 27,
+        backgroundColor: 'white',
+    },
+    closeButton: {
+        marginBottom: 50,
+        padding: 15,
+        backgroundColor: 'rgba(255,255,255,0.8)',
+        borderRadius: 10,
+    },
+    closeButtonText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
 });

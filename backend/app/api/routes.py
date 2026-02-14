@@ -1,7 +1,14 @@
 from fastapi import APIRouter, HTTPException, Depends
 from app.logic.core_logic import CoreLogic
+from app.models.schemas import Airport, Flight, Ticket, Weather, FlightSchedule, Item
+from pydantic import BaseModel
+import base64
+import re
+from io import BytesIO
+from PIL import Image
+import zxingcpp
 from typing import List
-from app.models.schemas import Airport, Flight, Ticket, Weather, Item
+
 
 router = APIRouter()
 
@@ -36,6 +43,13 @@ async def get_flight(flight_number: str):
     """
     return CoreLogic.get_flight_status(flight_number)
 
+@router.get("/flights/{flight_number}/schedule", response_model=FlightSchedule)
+async def get_flight_schedule(flight_number: str):
+    """
+    Fetch mock flight schedule (departure/arrival times and timezones).
+    """
+    return CoreLogic.get_flight_schedule(flight_number)
+
 @router.get("/weather", response_model=Weather)
 async def get_weather(location: str):
     """
@@ -61,6 +75,54 @@ async def get_trip(ticket_id: int):
         raise HTTPException(status_code=404, detail="Ticket not found")
     return trip
 
+
+class BarcodeImageRequest(BaseModel):
+    image: str
+
+
+@router.post("/parse/barcode/image")
+async def parse_barcode_image(req: BarcodeImageRequest):
+    """
+    Decode a barcode from a base64-encoded image using zxing-cpp.
+    Supports QR, Aztec, PDF417, DataMatrix, Code128, EAN-13, and more.
+    """
+    # Strip data URI prefix if present (e.g. "data:image/jpeg;base64,")
+    image_b64 = req.image
+    if image_b64.startswith("data:"):
+        image_b64 = re.sub(r"^data:[^;]+;base64,", "", image_b64)
+
+    try:
+        image_data = base64.b64decode(image_b64)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid base64 image data")
+
+    try:
+        img = Image.open(BytesIO(image_data))
+    except Exception:
+        raise HTTPException(status_code=400, detail="Could not decode image")
+
+    print(f"Image received: {img.size[0]}x{img.size[1]}, mode={img.mode}")
+
+    barcodes = zxingcpp.read_barcodes(img)
+
+    if not barcodes:
+        # Try converting to grayscale for better detection
+        gray = img.convert("L")
+        barcodes = zxingcpp.read_barcodes(gray)
+
+    if not barcodes:
+        raise HTTPException(status_code=400, detail="No barcode found in image")
+
+    barcode = barcodes[0]
+    barcode_text = barcode.text
+    barcode_type = barcode.format.name
+
+    print(f"Decoded barcode: type={barcode_type}, text={barcode_text}")
+
+    return {
+        "barcode_text": barcode_text,
+        "barcode_type": barcode_type,
+    }
 @router.get("/search")
 async def search_items(q: str):
     """

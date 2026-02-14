@@ -60,6 +60,18 @@ def create_tables(conn):
         FOREIGN KEY(ticket_id) REFERENCES tickets(id) ON DELETE CASCADE
     );
     """)
+
+    # Items Table (Search)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS items (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        text TEXT NOT NULL,
+        image TEXT NOT NULL,
+        public_tags TEXT NOT NULL, -- JSON List
+        hidden_tags TEXT NOT NULL -- JSON List
+    );
+    """)
     
     conn.commit()
 
@@ -69,7 +81,18 @@ def initialize_database():
     conn = get_db_connection()
     try:
         create_tables(conn)
-        print("[DB] Tables created successfully.")
+        
+        # Seed logic
+        from app.database.item_repository import ItemRepository
+        from app.parsers.item_parser import ItemParser
+        
+        if ItemRepository.is_empty():
+            print("[DB] Seeding items from JSON...")
+            items = ItemParser.load_items_from_json()
+            ItemRepository.load_items(items)
+            print(f"[DB] Seeded {len(items)} items.")
+            
+        print("[DB] Tables created and seeded successfully.")
     finally:
         conn.close()
 

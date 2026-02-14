@@ -23,15 +23,16 @@ Finds the best multi-modal route between two GPS coordinates.
 | `to_lat` | float | ✅ | Destination latitude |
 | `to_lon` | float | ✅ | Destination longitude |
 | `time` | string | ❌ | Departure time `HH:MM` (default: `08:00`) |
+| `date` | string | ❌ | Travel date `YYYY-MM-DD` (default: today) |
 
 #### Example Requests
 
 ```bash
-# Lisbon Oriente → Porto São Bento at 09:00
-curl "http://localhost:8000/api/transport/route?from_lat=38.7678&from_lon=-9.0990&to_lat=41.1496&to_lon=-8.6110&time=09:00"
+# Lisbon Oriente → Porto São Bento on Monday 2026-02-16 at 09:00
+curl "http://localhost:8000/api/transport/route?from_lat=38.7678&from_lon=-9.0990&to_lat=41.1496&to_lon=-8.6110&time=09:00&date=2026-02-16"
 
-# Alfama → Belém (within Lisbon) at 10:30
-curl "http://localhost:8000/api/transport/route?from_lat=38.7139&from_lon=-9.1305&to_lat=38.6975&to_lon=-9.2058&time=10:30"
+# Alfama → Belém (within Lisbon) on a Sunday
+curl "http://localhost:8000/api/transport/route?from_lat=38.7139&from_lon=-9.1305&to_lat=38.6975&to_lon=-9.2058&time=10:30&date=2026-02-15"
 
 # Campanhã → Aliados (within Porto) at 08:00
 curl "http://localhost:8000/api/transport/route?from_lat=41.1488&from_lon=-8.5856&to_lat=41.1492&to_lon=-8.6108&time=08:00"
@@ -195,12 +196,40 @@ curl "http://localhost:8000/api/transport/route?from_lat=41.1488&from_lon=-8.585
 
 | Code | Body | Cause |
 |---|---|---|
-| `404` | `{"detail": "No route found"}` | No path exists between the two points at that time |
+| `404` | `{"detail": "No route found"}` | No path exists between the two points at that time/date |
 | `503` | `{"detail": "Transport router not initialized..."}` | `transport.db` is missing |
+
+> **Tip**: If you get 404, try a different time — some services only run on weekdays.
+> Use `/api/transport/info` to check the valid date range.
 
 ---
 
-### 2. `GET /api/transport/stops/nearby` — Find Nearby Stops
+### 3. `GET /api/transport/info` — Schedule Metadata
+
+Returns info about the schedule data (valid date range, agencies, stop count).
+
+#### Example Request
+
+```bash
+curl "http://localhost:8000/api/transport/info"
+```
+
+#### Example Response
+
+```json
+{
+  "total_stops": 15753,
+  "schedule_date_from": "20210107",
+  "schedule_date_to": "20261212",
+  "agencies": ["CP", "FlixBus", "CarrisMet", "STCP"]
+}
+```
+
+Use `schedule_date_from` and `schedule_date_to` to validate user-selected travel dates.
+
+---
+
+### 4. `GET /api/transport/stops/nearby` — Find Nearby Stops
 
 Returns the closest stops to a GPS coordinate.
 

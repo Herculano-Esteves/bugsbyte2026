@@ -22,6 +22,7 @@ TransportRouter.route(origin, destination, depart_after) → RouteResult
 
 from __future__ import annotations
 
+import datetime
 import heapq
 import logging
 from typing import Dict, List, Optional, Set, Tuple
@@ -95,6 +96,7 @@ class TransportRouter:
         origin_lat: float, origin_lon: float,
         dest_lat: float, dest_lon: float,
         depart_after: str = "08:00",
+        date: datetime.date | str | None = None,
     ) -> RouteResult:
         """Find the best multi-modal route between two points.
 
@@ -103,11 +105,21 @@ class TransportRouter:
         origin_lat, origin_lon : start coordinates
         dest_lat, dest_lon     : destination coordinates
         depart_after           : earliest departure, "HH:MM" or "HH:MM:SS"
+        date                   : travel date (YYYY-MM-DD or date object).
+                                 Defaults to today.
 
         Returns
         -------
         RouteResult with ordered legs, or empty result if no path found.
         """
+        # Parse date
+        if date is None:
+            travel_date = datetime.date.today()
+        elif isinstance(date, str):
+            travel_date = datetime.date.fromisoformat(date)
+        else:
+            travel_date = date
+
         start_min = parse_gtfs_time(depart_after + ":00"
                                     if depart_after.count(":") < 2
                                     else depart_after)
@@ -191,7 +203,8 @@ class TransportRouter:
             # ── Expand: BOARD + RIDE ─────────────────────────────────────
             departures = self._sched.get_departures(
                 state.stop_id, state.arrival_min,
-                limit=MAX_DEPARTURES_PER_STOP
+                limit=MAX_DEPARTURES_PER_STOP,
+                date=travel_date,
             )
 
             for dep in departures:

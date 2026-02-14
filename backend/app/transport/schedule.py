@@ -4,22 +4,22 @@ Schedule query layer — timetable lookups against the transport DB.
 All time handling uses "minutes since midnight" internally for fast
 comparison. GTFS times > 24:00 (overnight services) are supported.
 
-Performance notes:
-    - get_departures uses the idx_st_stop_depart composite index
-    - get_trip_stops_after uses idx_st_trip and is cached per trip
-    - Trip metadata (route, agency) is cached after first lookup
+Date filtering:
+    - Uses calendar table (day-of-week rules + date ranges)
+    - Uses calendar_dates for exceptions (added/removed services)
+    - Valid service IDs are cached per date (one query per date)
 
 Public API
 ----------
-ScheduleService  — query object with built-in caching
+ScheduleService  — query object with caching
 parse_gtfs_time  — convert "HH:MM:SS" → minutes since midnight
 format_time      — convert minutes → "HH:MM"
 """
 
 from __future__ import annotations
 
-from functools import lru_cache
-from typing import Dict, List, Optional, Tuple
+import datetime
+from typing import Dict, List, Optional, Set, Tuple
 
 from app.transport.connection import transport_cursor
 from app.transport.models import Departure, TripStopEntry
@@ -62,13 +62,22 @@ def _minutes_to_time_str(minutes: float) -> str:
     return f"{h:02d}:{m:02d}:{s:02d}"
 
 
+# Day-of-week column names matching calendar table
+_DOW_COLUMNS = [
+    "monday", "tuesday", "wednesday", "thursday",
+    "friday", "saturday", "sunday",
+]
+
+
 # ─── ScheduleService ─────────────────────────────────────────────────────────
 
 class ScheduleService:
     """Query departures and trip sequences from the transport DB.
 
-    Includes LRU caches for trip metadata and trip stop sequences to
-    avoid redundant DB hits during Dijkstra expansion.
+    Includes caches for:
+    - Valid service IDs per date (calendar + exceptions)
+    - Trip metadata (route, agency, headsign)
+    - Trip stop sequences  
     """
 
     MAX_DEPARTURES = 15
@@ -78,6 +87,65 @@ class ScheduleService:
         self._trip_meta: Dict[str, Tuple[str, str, str, int]] = {}
         # Cache: trip_id → full list of TripStopEntry
         self._trip_stops: Dict[str, List[TripStopEntry]] = {}
+        # Cache: trip_id → service_id
+        self._trip_service: Dict[str, str] = {}
+        # Cache: date_str → set of valid service_ids
+        self._valid_services: Dict[str, Set[str]] = {}
+
+    # ── date / service filtering ────────────────────────────────────────
+
+    def get_valid_services(self, date: datetime.date) -> Set[str]:
+        """Get the set of service_ids that run on a given date.
+
+        Checks:
+        1. calendar table: date in [start_date, end_date] AND correct weekday
+        2. calendar_dates: exception_type=1 adds, exception_type=2 removes
+        """
+        date_key = date.strftime("%Y%m%d")
+
+        if date_key in self._valid_services:
+            return self._valid_services[date_key]
+
+        dow = date.weekday()  # 0 = Monday ... 6 = Sunday
+        dow_col = _DOW_COLUMNS[dow]
+        date_str = date.strftime("%Y%m%d")
+
+        valid: Set[str] = set()
+
+        with transport_cursor() as cur:
+            # 1. Regular calendar: service runs on this weekday within date range
+            cur.execute(f"""
+                SELECT service_id FROM calendar
+                WHERE {dow_col} = 1
+                  AND start_date <= ?
+                  AND end_date   >= ?
+            """, (date_str, date_str))
+            for row in cur:
+                valid.add(row["service_id"])
+
+            # 2. Calendar exceptions: type 1 = added, type 2 = removed
+            cur.execute("""
+                SELECT service_id, exception_type FROM calendar_dates
+                WHERE date = ?
+            """, (date_str,))
+            for row in cur:
+                sid = row["service_id"]
+                if int(row["exception_type"]) == 1:
+                    valid.add(sid)        # service added for this date
+                elif int(row["exception_type"]) == 2:
+                    valid.discard(sid)    # service removed for this date
+
+        self._valid_services[date_key] = valid
+        return valid
+
+    def get_data_date_range(self) -> Tuple[str, str]:
+        """Return (earliest_date, latest_date) covered by the schedule data."""
+        with transport_cursor() as cur:
+            cur.execute("SELECT MIN(start_date), MAX(end_date) FROM calendar")
+            row = cur.fetchone()
+            if row and row["MIN(start_date)"]:
+                return (row["MIN(start_date)"], row["MAX(end_date)"])
+        return ("unknown", "unknown")
 
     # ── trip metadata (cached) ──────────────────────────────────────────
 
@@ -92,6 +160,7 @@ class ScheduleService:
                     COALESCE(t.route_id, '')      AS route_id,
                     COALESCE(t.agency_id, '')     AS agency_id,
                     COALESCE(t.trip_headsign, '') AS trip_headsign,
+                    COALESCE(t.service_id, '')    AS service_id,
                     COALESCE(r.route_type, 3)     AS route_type
                 FROM trips t
                 LEFT JOIN routes r ON t.route_id = r.route_id
@@ -102,27 +171,39 @@ class ScheduleService:
         if row:
             meta = (row["route_id"], row["agency_id"],
                     row["trip_headsign"], int(row["route_type"] or 3))
+            self._trip_service[trip_id] = row["service_id"]
         else:
             meta = ("", "", "", 3)
+            self._trip_service[trip_id] = ""
 
         self._trip_meta[trip_id] = meta
         return meta
+
+    def _get_trip_service(self, trip_id: str) -> str:
+        """Get the service_id for a trip (cached alongside metadata)."""
+        if trip_id not in self._trip_service:
+            self._get_trip_meta(trip_id)  # populates _trip_service
+        return self._trip_service.get(trip_id, "")
 
     # ── departures from a stop ──────────────────────────────────────────
 
     def get_departures(self, stop_id: str,
                        after_minutes: float,
-                       limit: int | None = None) -> List[Departure]:
+                       limit: int | None = None,
+                       date: datetime.date | None = None) -> List[Departure]:
         """Get upcoming departures from a stop after a given time.
 
-        Uses the composite index idx_st_stop_depart for fast range scan.
+        If `date` is provided, only returns trips whose service runs
+        on that date (checked against calendar + calendar_dates).
         """
         limit = limit or self.MAX_DEPARTURES
         after_str = _minutes_to_time_str(after_minutes)
-
-        # Use a window: after_time → after_time + 2 hours
-        # This avoids scanning all departures for a stop
         window_end_str = _minutes_to_time_str(after_minutes + 120)
+
+        # Pre-compute valid services for this date
+        valid_services: Optional[Set[str]] = None
+        if date is not None:
+            valid_services = self.get_valid_services(date)
 
         with transport_cursor() as cur:
             cur.execute("""
@@ -133,17 +214,23 @@ class ScheduleService:
                   AND departure_time <= ?
                 ORDER BY departure_time
                 LIMIT ?
-            """, (stop_id, after_str, window_end_str, limit))
+            """, (stop_id, after_str, window_end_str, limit * 5))
+            # Fetch extra rows (limit*5) because some will be filtered by date
 
             results: List[Departure] = []
             seen_trips: set = set()
 
             for row in cur:
                 trip_id = row["trip_id"]
-                # Deduplicate: one departure per trip
                 if trip_id in seen_trips:
                     continue
                 seen_trips.add(trip_id)
+
+                # Date filter: check if this trip's service runs today
+                if valid_services is not None:
+                    service_id = self._get_trip_service(trip_id)
+                    if service_id and service_id not in valid_services:
+                        continue
 
                 dep_min = parse_gtfs_time(row["departure_time"])
                 if dep_min < 0:
@@ -164,6 +251,9 @@ class ScheduleService:
                     route_type=route_type,
                 ))
 
+                if len(results) >= limit:
+                    break
+
             return results
 
     # ── ride a trip forward (cached) ────────────────────────────────────
@@ -172,10 +262,8 @@ class ScheduleService:
                             after_sequence: int) -> List[TripStopEntry]:
         """Get all stops on a trip AFTER the given stop_sequence.
 
-        Results are cached per trip_id — the full stop list is fetched
-        once, then sliced for subsequent calls.
+        Results are cached per trip_id.
         """
-        # Check cache first
         if trip_id not in self._trip_stops:
             with transport_cursor() as cur:
                 cur.execute("""
@@ -196,11 +284,12 @@ class ScheduleService:
                     if parse_gtfs_time(row["arrival_time"]) >= 0
                 ]
 
-        # Filter from cache
         return [ts for ts in self._trip_stops[trip_id]
                 if ts.stop_sequence > after_sequence]
 
     def clear_cache(self) -> None:
-        """Clear all caches (call between route queries if memory is a concern)."""
+        """Clear all caches."""
         self._trip_meta.clear()
         self._trip_stops.clear()
+        self._trip_service.clear()
+        self._valid_services.clear()

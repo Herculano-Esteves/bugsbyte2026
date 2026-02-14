@@ -116,6 +116,7 @@ async def get_transport_route(
     to_lat: float,
     to_lon: float,
     time: str = "08:00",
+    date: str = "",
 ):
     """
     Find the best multi-modal route between two points.
@@ -124,6 +125,7 @@ async def get_transport_route(
         from_lat, from_lon: origin coordinates
         to_lat, to_lon: destination coordinates  
         time: departure time in HH:MM format (default: 08:00)
+        date: travel date in YYYY-MM-DD format (default: today)
     """
     from app.transport.router import TransportRouter
     from app.transport.geo import StopIndex
@@ -137,7 +139,11 @@ async def get_transport_route(
             detail="Transport router not initialized. Is transport.db present?"
         )
 
-    result = _transport_router.route(from_lat, from_lon, to_lat, to_lon, time)
+    travel_date = date if date else None  # None → defaults to today in router
+
+    result = _transport_router.route(
+        from_lat, from_lon, to_lat, to_lon, time, date=travel_date
+    )
 
     if not result.legs:
         raise HTTPException(status_code=404, detail="No route found")
@@ -203,3 +209,25 @@ async def get_nearby_stops(lat: float, lon: float, k: int = 10):
         )
         for stop, dist in results
     ]
+
+
+@router.get("/transport/info")
+async def get_transport_info():
+    """
+    Get transport data metadata: valid date range and stop count.
+    """
+    from main import _stop_index
+    from app.transport.schedule import ScheduleService
+
+    if _stop_index is None:
+        raise HTTPException(status_code=503, detail="Transport not initialized.")
+
+    sched = ScheduleService()
+    date_from, date_to = sched.get_data_date_range()
+
+    return {
+        "total_stops": _stop_index.size,
+        "schedule_date_from": date_from,
+        "schedule_date_to": date_to,
+        "agencies": ["CP", "FlixBus", "CarrisMet", "STCP"],
+    }

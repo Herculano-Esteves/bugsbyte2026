@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useFlightMode } from '../../context/FlightModeContext';
+import AirportMap from '../../components/AirportMap';
 
 export default function MainScreen() {
     const { mode, setMode } = useFlightMode();
@@ -23,33 +24,56 @@ export default function MainScreen() {
                 </TouchableOpacity>
             </View>
 
-            <Text style={styles.title}>Main Screen</Text>
-            <Text style={styles.modeText}>Current Mode: {mode}</Text>
+            <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+                {mode === 'AIR' ? (
+                    <View style={styles.contentContainer}>
+                        <Text style={styles.title}>In-Flight Mode</Text>
+                        <View style={styles.contentBox}>
+                            <Text>Air Content Here</Text>
+                        </View>
+                    </View>
+                ) : (
+                    <View style={styles.grdContainer}>
+                        {/* Airport Map Box */}
+                        <View style={styles.mapBox}>
+                            <Text style={styles.boxTitle}>Airport Locator</Text>
+                            <View style={styles.mapWrapper}>
+                                <AirportMap />
+                            </View>
+                        </View>
 
-            {mode === 'AIR' ? (
-                <View style={styles.contentBox}>
-                    <Text>Air Content Here</Text>
-                </View>
-            ) : (
-                <View style={[styles.contentBox, styles.grdBox]}>
-                    <Text>Ground Content Here</Text>
-                </View>
-            )}
+                        {/* Placeholder for more content */}
+                        <View style={styles.contentBox}>
+                            <Text style={styles.boxTitle}>More Ground Content</Text>
+                            <Text>Additional features will go here...</Text>
+                        </View>
+
+                        <View style={styles.contentBox}>
+                            <Text style={styles.boxTitle}>Another Section</Text>
+                            <Text>More content...</Text>
+                        </View>
+                    </View>
+                )}
+            </ScrollView>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#fff', alignItems: 'center', paddingTop: 60 },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
     header: {
         flexDirection: 'row',
         backgroundColor: 'white',
         borderWidth: 2,
-        borderColor: 'red', // Matching the sketch color/rough style
+        borderColor: 'red',
         borderRadius: 10,
         overflow: 'hidden',
-        marginBottom: 40,
-        width: '80%',
+        marginTop: 60,
+        marginHorizontal: 40,
+        marginBottom: 20,
         height: 60,
     },
     modeButton: {
@@ -58,13 +82,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     activeModeButton: {
-        backgroundColor: '#ffebee', // Light red to indicate selection, optional
+        backgroundColor: '#ffebee',
     },
     modeButtonText: {
         fontSize: 24,
         fontWeight: 'bold',
         color: 'red',
-        fontFamily: 'System', // Hand-drawn look simulation not possible without font, using standard
     },
     activeModeButtonText: {
         // color: 'darkred',
@@ -73,8 +96,48 @@ const styles = StyleSheet.create({
         width: 2,
         backgroundColor: 'red',
     },
-    title: { fontSize: 32, fontWeight: 'bold', marginBottom: 20 },
-    modeText: { fontSize: 24, marginBottom: 40 },
-    contentBox: { width: 200, height: 200, backgroundColor: '#e0f7fa', justifyContent: 'center', alignItems: 'center', borderRadius: 20 },
-    grdBox: { backgroundColor: '#fbe9e7' },
+    scrollView: {
+        flex: 1,
+    },
+    scrollContent: {
+        padding: 20,
+    },
+    contentContainer: {
+        alignItems: 'center',
+    },
+    grdContainer: {
+        gap: 20,
+    },
+    title: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        marginBottom: 20
+    },
+    mapBox: {
+        backgroundColor: '#fff',
+        borderRadius: 12,
+        padding: 16,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    boxTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 12,
+        color: '#333',
+    },
+    mapWrapper: {
+        height: 400,
+        borderRadius: 8,
+        overflow: 'hidden',
+    },
+    contentBox: {
+        backgroundColor: '#f5f5f5',
+        borderRadius: 12,
+        padding: 16,
+        minHeight: 100,
+    },
 });

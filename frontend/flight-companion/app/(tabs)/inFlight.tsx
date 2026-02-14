@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function BaggageScreen() {
+export default function InFlightScreen() {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Bagagem</Text>
+            <Text style={styles.text}>In Flight</Text>
         </View>
     );
 }

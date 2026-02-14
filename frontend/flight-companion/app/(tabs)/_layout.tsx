@@ -1,46 +1,62 @@
 import { Tabs, router } from 'expo-router';
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { FlightModeProvider } from '../../context/FlightModeContext';
 
 
-export default function TabsLayout() {
+export default function TabsLayoutWrapper() {
     return (
-        <Tabs
-            screenOptions={{
-                headerShown: false,
-                tabBarStyle: { position: 'absolute', bottom: 0, height: 80, backgroundColor: 'transparent' },
-                tabBarShowLabel: false,
-            }}
-            tabBar={(props) => (
-                <View style={styles.tabBarContainer}>
-                    <View style={styles.blurBackground} />
+        <FlightModeProvider>
+            <TabsLayout />
+        </FlightModeProvider>
+    );
+}
 
-                    {/* Tabs esquerda */}
-                    <View style={styles.tabsLeft}>
-                        <TabButton label="Pré-voo" icon="✈️" onPress={() => props.navigation.navigate('prevoo')} />
-                        <TabButton label="Durante" icon="🛫" onPress={() => props.navigation.navigate('durante')} />
+function TabsLayout() {
+    const handleCenterPress = () => {
+        router.push('/(tabs)/main');
+    };
+
+    return (
+        <>
+            <Tabs
+                screenOptions={{
+                    headerShown: false,
+                    tabBarStyle: { position: 'absolute', bottom: 0, height: 80, backgroundColor: 'transparent' },
+                    tabBarShowLabel: false,
+                }}
+                tabBar={(props) => (
+                    <View style={styles.tabBarContainer}>
+                        <View style={styles.blurBackground} />
+
+                        {/* Tabs esquerda */}
+                        <View style={styles.tabsLeft}>
+                            <TabButton label="Pré-voo" icon="✈️" onPress={() => props.navigation.navigate('prevoo')} />
+                            <TabButton label="In Flight" icon="🛫" onPress={() => props.navigation.navigate('inFlight')} />
+                        </View>
+
+                        {/* Botão central MAIOR - Home */}
+                        <TouchableOpacity
+                            style={styles.centerButton}
+                            onPress={handleCenterPress}
+                        >
+                            <Text style={styles.centerIcon}>🌐</Text>
+                        </TouchableOpacity>
+
+                        {/* Tabs direita */}
+                        <View style={styles.tabsRight}>
+                            <TabButton label="Search" icon="🔍" onPress={() => props.navigation.navigate('search')} />
+                            <TabButton label="Perfil" icon="👤" onPress={() => props.navigation.navigate('perfil')} />
+                        </View>
                     </View>
-
-                    {/* Botão central MAIOR - Home */}
-                    <TouchableOpacity
-                        style={styles.centerButton}
-                        onPress={() => router.navigate('/')}
-                    >
-                        <Text style={styles.centerIcon}>🌐</Text>
-                    </TouchableOpacity>
-
-                    {/* Tabs direita */}
-                    <View style={styles.tabsRight}>
-                        <TabButton label="Bagagem" icon="🧳" onPress={() => props.navigation.navigate('bagagem')} />
-                        <TabButton label="Perfil" icon="👤" onPress={() => props.navigation.navigate('perfil')} />
-                    </View>
-                </View>
-            )}
-        >
-            <Tabs.Screen name="prevoo" options={{ tabBarButton: () => null }} />
-            <Tabs.Screen name="durante" options={{ tabBarButton: () => null }} />
-            <Tabs.Screen name="bagagem" options={{ tabBarButton: () => null }} />
-            <Tabs.Screen name="perfil" options={{ tabBarButton: () => null }} />
-        </Tabs>
+                )}
+            >
+                <Tabs.Screen name="main" options={{ tabBarButton: () => null }} />
+                <Tabs.Screen name="prevoo" options={{ tabBarButton: () => null }} />
+                <Tabs.Screen name="inFlight" options={{ tabBarButton: () => null }} />
+                <Tabs.Screen name="search" options={{ tabBarButton: () => null }} />
+                <Tabs.Screen name="perfil" options={{ tabBarButton: () => null }} />
+            </Tabs>
+        </>
     );
 }
 

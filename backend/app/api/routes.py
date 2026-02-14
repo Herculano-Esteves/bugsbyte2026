@@ -1,14 +1,23 @@
 from fastapi import APIRouter, HTTPException, Depends
 from app.logic.core_logic import CoreLogic
-from app.models.schemas import Airport, Flight, Ticket, Weather, FlightSchedule
+from app.models.schemas import Airport, Flight, Ticket, Weather, FlightSchedule, Item
 from pydantic import BaseModel
 import base64
 import re
 from io import BytesIO
 from PIL import Image
 import zxingcpp
+from typing import List
+
 
 router = APIRouter()
+
+@router.get("/items", response_model=List[Item])
+async def get_all_items():
+    """
+    Fetch all content items (articles, tips, etc.).
+    """
+    return CoreLogic.get_all_items()
 
 @router.get("/health")
 async def health_check():
@@ -114,3 +123,44 @@ async def parse_barcode_image(req: BarcodeImageRequest):
         "barcode_text": barcode_text,
         "barcode_type": barcode_type,
     }
+@router.get("/search")
+async def search_items(q: str):
+    """
+    Search for travel items by tags.
+    Query 'q' is a string of space-separated tags.
+    """
+    from app.logic.search_service import SearchService
+    return SearchService.search(q)
+
+
+# --- User Routes ---
+from app.models.schemas import UserCreate, UserLogin, UserResponse
+from app.logic.user_logic import UserLogic
+
+@router.post("/auth/register", response_model=UserResponse)
+async def register_user(user: UserCreate):
+    """
+    Register a new user.
+    """
+    return UserLogic.register_user(user)
+
+@router.post("/auth/login", response_model=UserResponse)
+async def login_user(credentials: UserLogin):
+    """
+    Login a user.
+    """
+    return UserLogic.login_user(credentials)
+
+@router.post("/auth/logout/{user_id}")
+async def logout_user(user_id: int):
+    """
+    Logout a user and reset their sent items history.
+    """
+    return UserLogic.logout_user(user_id)
+
+@router.get("/user/{user_id}", response_model=UserResponse)
+async def get_user_details(user_id: int):
+    """
+    Get user details.
+    """
+    return UserLogic.get_user(user_id)

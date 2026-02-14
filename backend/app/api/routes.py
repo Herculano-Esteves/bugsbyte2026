@@ -115,8 +115,8 @@ async def get_transport_route(
     from_lon: float,
     to_lat: float,
     to_lon: float,
-    time: str = "08:00",
-    date: str = "",
+    time: str,
+    date: str,
 ):
     """
     Find the best multi-modal route between two points.
@@ -124,8 +124,8 @@ async def get_transport_route(
     Query params:
         from_lat, from_lon: origin coordinates
         to_lat, to_lon: destination coordinates  
-        time: departure time in HH:MM format (default: 08:00)
-        date: travel date in YYYY-MM-DD format (default: today)
+        time: departure time in HH:MM format (required)
+        date: travel date in YYYY-MM-DD format (required)
     """
     from app.transport.router import TransportRouter
     from app.transport.geo import StopIndex
@@ -139,10 +139,8 @@ async def get_transport_route(
             detail="Transport router not initialized. Is transport.db present?"
         )
 
-    travel_date = date if date else None  # None → defaults to today in router
-
     result = _transport_router.route(
-        from_lat, from_lon, to_lat, to_lon, time, date=travel_date
+        from_lat, from_lon, to_lat, to_lon, time, date=date
     )
 
     if not result.legs:

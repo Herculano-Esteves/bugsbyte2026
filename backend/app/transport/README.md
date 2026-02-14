@@ -22,8 +22,8 @@ Finds the best multi-modal route between two GPS coordinates.
 | `from_lon` | float | ✅ | Origin longitude |
 | `to_lat` | float | ✅ | Destination latitude |
 | `to_lon` | float | ✅ | Destination longitude |
-| `time` | string | ❌ | Departure time `HH:MM` (default: `08:00`) |
-| `date` | string | ❌ | Travel date `YYYY-MM-DD` (default: today) |
+| `time` | string | ✅ | Departure time `HH:MM` |
+| `date` | string | ✅ | Travel date `YYYY-MM-DD` |
 
 #### Example Requests
 
@@ -192,6 +192,8 @@ curl "http://localhost:8000/api/transport/route?from_lat=41.1488&from_lon=-8.585
 | `stcp_*` | STCP Porto bus/tram stop |
 | `flix_*` | FlixBus intercity bus stop |
 
+Overnight trips: if you depart at or after 22:00, the router also considers early morning trips (00:00–06:00) from the next day.
+
 #### Error Responses
 
 | Code | Body | Cause |
@@ -219,7 +221,7 @@ curl "http://localhost:8000/api/transport/info"
 ```json
 {
   "total_stops": 15753,
-  "schedule_date_from": "20210107",
+  "schedule_date_from": "20251214",
   "schedule_date_to": "20261212",
   "agencies": ["CP", "FlixBus", "CarrisMet", "STCP"]
 }

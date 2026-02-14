@@ -29,7 +29,7 @@ from typing import Dict, List, Optional, Set, Tuple
 
 from app.transport.geo import StopIndex, haversine_meters
 from app.transport.models import (
-    LegMode, RouteLeg, RouteResult, Stop, route_type_to_mode,
+    Departure, LegMode, RouteLeg, RouteResult, Stop, route_type_to_mode,
 )
 from app.transport.schedule import ScheduleService, format_time, parse_gtfs_time
 
@@ -206,6 +206,35 @@ class TransportRouter:
                 limit=MAX_DEPARTURES_PER_STOP,
                 date=travel_date,
             )
+
+            # Overnight support: if current time is ≥ 22:00, also look
+            # for early-morning departures (00:00–06:00 on the next day).
+            # GTFS uses times >24:00 for overnight, but some agencies
+            # encode them as 00:xx–06:xx on the next day's service.
+            if state.arrival_min >= 1320:  # 22:00
+                import datetime as _dt
+                next_day = travel_date + _dt.timedelta(days=1)
+                early_morning_deps = self._sched.get_departures(
+                    state.stop_id,
+                    after_minutes=0.0,  # from midnight
+                    limit=MAX_DEPARTURES_PER_STOP,
+                    date=next_day,
+                )
+                # Adjust times: add 1440 min (24h) so they sort after today's
+                for d in early_morning_deps:
+                    if d.departure_minutes < 360:  # only up to 06:00
+                        adjusted = Departure(
+                            trip_id=d.trip_id,
+                            stop_id=d.stop_id,
+                            departure_time=d.departure_time,
+                            departure_minutes=d.departure_minutes + 1440,
+                            stop_sequence=d.stop_sequence,
+                            route_id=d.route_id,
+                            agency_id=d.agency_id,
+                            trip_headsign=d.trip_headsign,
+                            route_type=d.route_type,
+                        )
+                        departures.append(adjusted)
 
             for dep in departures:
                 # Wait time at the stop

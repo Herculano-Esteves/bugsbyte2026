@@ -91,15 +91,37 @@ class ScheduleService:
         self._trip_service: Dict[str, str] = {}
         # Cache: date_str → set of valid service_ids
         self._valid_services: Dict[str, Set[str]] = {}
+        # Services that have NO calendar data at all → always allowed
+        self._uncalendared: Optional[Set[str]] = None
 
     # ── date / service filtering ────────────────────────────────────────
+
+    def _get_uncalendared_services(self) -> Set[str]:
+        """Identify services that have no calendar or calendar_dates entries.
+
+        These services are treated as always-active because we have no
+        schedule data to restrict them. Common for CarrisMet and STCP.
+        """
+        if self._uncalendared is not None:
+            return self._uncalendared
+
+        with transport_cursor() as cur:
+            cur.execute("""
+                SELECT DISTINCT service_id FROM trips
+                WHERE service_id NOT IN (SELECT service_id FROM calendar)
+                  AND service_id NOT IN (SELECT DISTINCT service_id FROM calendar_dates)
+            """)
+            self._uncalendared = {row["service_id"] for row in cur}
+
+        return self._uncalendared
 
     def get_valid_services(self, date: datetime.date) -> Set[str]:
         """Get the set of service_ids that run on a given date.
 
-        Checks:
-        1. calendar table: date in [start_date, end_date] AND correct weekday
+        Logic:
+        1. calendar: date in [start_date, end_date] AND correct weekday
         2. calendar_dates: exception_type=1 adds, exception_type=2 removes
+        3. Services with NO calendar data at all → always included
         """
         date_key = date.strftime("%Y%m%d")
 
@@ -134,6 +156,9 @@ class ScheduleService:
                     valid.add(sid)        # service added for this date
                 elif int(row["exception_type"]) == 2:
                     valid.discard(sid)    # service removed for this date
+
+        # 3. Services with no calendar data at all → always valid
+        valid |= self._get_uncalendared_services()
 
         self._valid_services[date_key] = valid
         return valid
@@ -293,3 +318,4 @@ class ScheduleService:
         self._trip_stops.clear()
         self._trip_service.clear()
         self._valid_services.clear()
+        self._uncalendared = None

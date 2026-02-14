@@ -1,2 +1,3 @@
 # bugsbyte2026
 Team project for a hackathon
+This project will be an app for the mobile platform with the objective of helping users at airports and at the flight with the information they need to have a better experience. the backend will use python and it will parse any available information from the airport and the flight. It will also parse the ticket and it's information about the weather and the plane. A database will be used to store the parsed information from the airports and the information about the airplanes will be parsed in real time. Data will be stored in the frontend because in the plane there wont be any internet connection. The app will have a chatbot that will help the user with any questions they may have only when they have wifi.

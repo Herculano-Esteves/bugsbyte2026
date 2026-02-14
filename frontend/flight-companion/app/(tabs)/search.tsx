@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, FlatList, Image, SafeAreaView, Platform, StatusBar, useColorScheme, Modal, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import axios from 'axios';
 import { mockArticles, Article } from '../../constants/mockSearchData';
 import { Colors } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+import { API_BASE_URL } from '../../constants/config';
 
 const ImageWithLoader = ({ uri, style }: { uri: string, style: any }) => {
     const [loading, setLoading] = useState(true);
@@ -29,18 +31,46 @@ export default function SearchScreen() {
     const colorScheme = useColorScheme();
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredArticles, setFilteredArticles] = useState<Article[]>(mockArticles);
+    const [allArticles, setAllArticles] = useState<Article[]>([]);
+    const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
     const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchArticles = async () => {
+            try {
+                const response = await axios.get(`${API_BASE_URL}/api/items`);
+                const items = response.data.map((item: any) => ({
+                    id: item.id,
+                    title: item.title,
+                    text: item.text,
+                    image: item.image,
+                    tags: item.public_tags,
+                    hiddenTags: item.hidden_tags,
+                }));
+                setAllArticles(items);
+                setFilteredArticles(items);
+            } catch (error) {
+                console.log('Error fetching articles, falling back to mock data:', error);
+                setAllArticles(mockArticles);
+                setFilteredArticles(mockArticles);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchArticles();
+    }, []);
 
     const handleSearch = (query: string) => {
         setSearchQuery(query);
         if (!query.trim()) {
-            setFilteredArticles(mockArticles);
+            setFilteredArticles(allArticles);
             return;
         }
 
         const lowerCaseQuery = query.toLowerCase();
-        const filtered = mockArticles.filter(article => {
+        const filtered = allArticles.filter(article => {
             const titleMatch = article.title.toLowerCase().includes(lowerCaseQuery);
             const tagMatch = article.tags.some(tag => tag.toLowerCase().includes(lowerCaseQuery));
             const hiddenTagMatch = article.hiddenTags.some(tag => tag.toLowerCase().includes(lowerCaseQuery));
@@ -69,6 +99,14 @@ export default function SearchScreen() {
             </View>
         </TouchableOpacity>
     );
+
+    if (loading) {
+        return (
+            <SafeAreaView style={[styles.container, { backgroundColor: theme.background, justifyContent: 'center', alignItems: 'center' }]}>
+                <ActivityIndicator size="large" color={theme.tint} />
+            </SafeAreaView>
+        );
+    }
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>

@@ -63,3 +63,13 @@ class AirplanePosition(BaseModel):
     speed_kmh: float
     heading: float
     timestamp: datetime
+
+# --- Item (Search) Models ---
+class Item(BaseModel):
+    id: int
+    title: str
+    text: str
+    image: str
+    public_tags: List[str]
+    hidden_tags: List[str]
+

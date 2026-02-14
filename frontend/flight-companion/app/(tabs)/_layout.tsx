@@ -35,12 +35,11 @@ function TabsLayout() {
                         </View>
 
                         {/* Botão central MAIOR - Home */}
-                        <TouchableOpacity
-                            style={styles.centerButton}
-                            onPress={handleCenterPress}
-                        >
-                            <Text style={styles.centerIcon}>🌐</Text>
-                        </TouchableOpacity>
+                        <TabButton
+                            label="PosFlight"
+                            icon="🛬"
+                            onPress={() => router.push('/(tabs)/posFlight')}
+                        />
 
                         {/* Tabs direita */}
                         <View style={styles.tabsRight}>
@@ -51,7 +50,7 @@ function TabsLayout() {
                 )}
             >
                 <Tabs.Screen name="main" options={{ tabBarButton: () => null }} />
-                <Tabs.Screen name="prevoo" options={{ tabBarButton: () => null }} />
+                <Tabs.Screen name="posFlight" options={{ tabBarButton: () => null }} />
                 <Tabs.Screen name="inFlight" options={{ tabBarButton: () => null }} />
                 <Tabs.Screen name="search" options={{ tabBarButton: () => null }} />
                 <Tabs.Screen name="perfil" options={{ tabBarButton: () => null }} />

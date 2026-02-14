@@ -1,35 +1,94 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs, router } from 'expo-router';
+import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function TabsLayout() {
+    return (
+        <Tabs
+            screenOptions={{
+                headerShown: false,
+                tabBarStyle: { position: 'absolute', bottom: 0, height: 80, backgroundColor: 'transparent' },
+                tabBarShowLabel: false,
+            }}
+            tabBar={(props) => (
+                <View style={styles.tabBarContainer}>
+                    <View style={styles.blurBackground} />
 
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+                    {/* Tabs esquerda */}
+                    <View style={styles.tabsLeft}>
+                        <TabButton label="Pré-voo" icon="✈️" onPress={() => props.navigation.navigate('prevoo')} />
+                        <TabButton label="Durante" icon="🛫" onPress={() => props.navigation.navigate('durante')} />
+                    </View>
+
+                    {/* Botão central MAIOR - Home */}
+                    <TouchableOpacity
+                        style={styles.centerButton}
+                        onPress={() => router.navigate('/')}
+                    >
+                        <Text style={styles.centerIcon}>🌐</Text>
+                    </TouchableOpacity>
+
+                    {/* Tabs direita */}
+                    <View style={styles.tabsRight}>
+                        <TabButton label="Bagagem" icon="🧳" onPress={() => props.navigation.navigate('bagagem')} />
+                        <TabButton label="Perfil" icon="👤" onPress={() => props.navigation.navigate('perfil')} />
+                    </View>
+                </View>
+            )}
+        >
+            <Tabs.Screen name="prevoo" options={{ tabBarButton: () => null }} />
+            <Tabs.Screen name="durante" options={{ tabBarButton: () => null }} />
+            <Tabs.Screen name="bagagem" options={{ tabBarButton: () => null }} />
+            <Tabs.Screen name="perfil" options={{ tabBarButton: () => null }} />
+        </Tabs>
+    );
 }
+
+function TabButton({ label, icon, onPress }: { label: string, icon: string, onPress: () => void }) {
+    return (
+        <TouchableOpacity onPress={onPress} style={styles.tabButton}>
+            <Text style={styles.tabIcon}>{icon}</Text>
+            <Text style={styles.tabLabel}>{label}</Text>
+        </TouchableOpacity>
+    );
+}
+
+const styles = StyleSheet.create({
+    tabBarContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        height: 90,
+        paddingHorizontal: 20,
+        position: 'absolute',
+        bottom: 20,
+        left: 20,
+        right: 20,
+        borderRadius: 30,
+        overflow: 'hidden',
+    },
+    blurBackground: {
+        backgroundColor: 'rgba(255, 255, 255, 0.9)', // Semi-transparent white fallback
+        ...StyleSheet.absoluteFillObject
+    },
+    tabsLeft: { flexDirection: 'row', gap: 30 },
+    tabsRight: { flexDirection: 'row', gap: 30 },
+    centerButton: {
+        width: 80,
+        height: 80,
+        borderRadius: 40,
+        backgroundColor: '#007AFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: -40,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 10,
+    },
+    centerIcon: { fontSize: 40, color: 'white' },
+    tabButton: { alignItems: 'center' },
+    tabIcon: { fontSize: 28 },
+    tabLabel: { fontSize: 12, marginTop: 4 },
+});

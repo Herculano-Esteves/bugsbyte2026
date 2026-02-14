@@ -1,12 +1,13 @@
-from typing import Optional
+from typing import Optional, List
 from app.parsers.airport_parser import AirportParser
 from app.parsers.flight_parser import FlightParser
 from app.parsers.weather_parser import WeatherParser
-from app.models.schemas import Airport, Flight, Weather, Ticket
+from app.models.schemas import Airport, Flight, Weather, Ticket, Item
 # Database & Logic Integration
 from app.database.ticket_repository import TicketRepository
 from app.database.trip_repository import TripRepository
-from app.database.models import TicketDB, TripDB
+from app.database.item_repository import ItemRepository
+from app.database.models import TicketDB, TripDB, ItemDB
 from app.logic.trip_service import TripService
 
 class CoreLogic:
@@ -85,4 +86,24 @@ class CoreLogic:
         # 2. Get Trip (cached or new)
         trip = TripService.get_or_create_trip(ticket_id)
         return trip
+
+    @staticmethod
+    def get_all_items() -> List[Item]:
+        """
+        Fetches all items from the database and converts them to the Item schema.
+        Handles JSON parsing of tags.
+        """
+        import json
+        items_db = ItemRepository.get_all_items()
+        items = []
+        for item_db in items_db:
+            items.append(Item(
+                id=item_db.id,
+                title=item_db.title,
+                text=item_db.text,
+                image=item_db.image,
+                public_tags=json.loads(item_db.public_tags),
+                hidden_tags=json.loads(item_db.hidden_tags)
+            ))
+        return items
 

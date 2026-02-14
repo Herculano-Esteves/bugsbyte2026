@@ -1,8 +1,16 @@
 from fastapi import APIRouter, HTTPException, Depends
 from app.logic.core_logic import CoreLogic
-from app.models.schemas import Airport, Flight, Ticket, Weather
+from typing import List
+from app.models.schemas import Airport, Flight, Ticket, Weather, Item
 
 router = APIRouter()
+
+@router.get("/items", response_model=List[Item])
+async def get_all_items():
+    """
+    Fetch all content items (articles, tips, etc.).
+    """
+    return CoreLogic.get_all_items()
 
 @router.get("/health")
 async def health_check():

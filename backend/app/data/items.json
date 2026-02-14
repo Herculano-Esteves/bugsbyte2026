@@ -174,7 +174,7 @@
   {
     "id": 11,
     "title": "TAP Air Portugal",
-    "text": "TAP Air Portugal is the flag carrier and national airline of Portugal, officially known as TAP – Transportes Aéreos Portugueses. Founded in 1945 and headquartered in Lisbon, it serves as a key connector between Europe, Africa, North America, and South America, with a strong focus on routes to Brazil and other Lusophone countries.\n\nAs a proud member of the Star Alliance since 2005, TAP operates an average of around 2,500 weekly flights to over 85–90 destinations in dozens of countries. Its main hub is Lisbon Humberto Delgado Airport, with secondary hubs in Porto and Madeira (Funchal).\n\nThe airline boasts a modern, primarily all-Airbus fleet of approximately 100–101 aircraft (including TAP Express regional operations), with a few additional planes on order. Key models include the fuel-efficient Airbus A330-900neo (for long-haul, with lie-flat business class seats and enhanced comfort), A321neo/LR (great for transatlantic efficiency), and the A320 family for short/medium-haul routes. The average fleet age is currently around 10.9 years (as of early 2026), reflecting ongoing modernization efforts that have kept the fleet relatively young and eco-friendly compared to many legacy carriers.\n\nTAP is well-known for its competitive pricing on transatlantic flights, comfortable seating (including Recaro seats in many cabins for better recline and adjustable headrests), a solid in-flight entertainment selection, and the popular Portugal Stopover program, which lets passengers add a free multi-day visit to Lisbon or Porto on qualifying international tickets.\n\nOverall, TAP Air Portugal combines Portuguese hospitality with reliable service, making it a go-to choice for affordable yet comfortable travel across the Atlantic and beyond!",
+    "text": "TAP Air Portugal is the flag carrier and national airline of Portugal, officially known as TAP – Transportes Aéreos Portugueses. Founded in 1945 and headquartered in Lisbon, it serves as a key connector between Europe, Africa, North America, and South America, with a strong focus on routes to Brazil and other Lusophone countries.\n\nAs a proud member of the Star Alliance since 2005, TAP operates an average of around 2,500 weekly flights to over 85–90 destinations in dozens of countries. Its main hub is Lisbon Humberto Delgado Airport, with secondary hubs in Porto and Madeira (Funchal).\n\nThe airline boasts a modern, primarily all-Airbus fleet of approximately 100–101 aircraft (including TAP Express regional operations), with a few additional planes on order. Key models include the fuel-efficient Airbus A330-900neo (for long-haul, with lie-flat business class seats and enhanced comfort), A321neo/LR (great for transatlantic efficiency), and the A320 family for short/medium-haul routes. The average fleet age is currently around 10.9 years (as of early 2026), reflecting ongoing modernization efforts that have kept the fleet relatively young and eco-friendly compared to many legacy carriers.\n\nTAP is well-known for its competitive pricing on transatlantic flights, comfortable seating (including Recaro seats in many cabins for better recline and adjustable headrests), a solid in-flight entertainment selection, and the popular Portugal Stopover program, which lets passengers add a free multi-day visit to Lisbon or Porto on qualifying international tickets.\n\nOverall, TAP Air Portugal combines Portuguese hospitality with reliable service, making it a go-to choice for affordable yet comfortable travel across the Atlantic and beyond!\n\nFleet: 13, 14, 16, 17, 18, 19, 20, 23, 24",
     "image": "https://www.aosabordovento.com/wp-content/media_files/2013/08/TAP-logotipo.jpg",
     "public_tags": [
       "Carriers",
@@ -188,7 +188,7 @@
   {
     "id": 12,
     "title": "SATA/Azores Airlines",
-    "text": "Azores Airlines (formerly known as SATA Internacional) is the international arm of Grupo SATA, the main airline group of the Azores archipelago in Portugal. Operating alongside its sister company SATA Air Açores, it serves as the primary gateway connecting the nine Azores islands to mainland Portugal, Europe, North America, and selected other destinations.\nAs part of the SATA Group (founded in 1941), Azores Airlines focuses on longer-haul routes with a modern fleet of around 9 Airbus A320-family aircraft (including A320neo, A321neo, and A321LR models), offering fuel-efficient operations and comfortable transatlantic travel. The airline is well-known for its direct links from Ponta Delgada (São Miguel) to cities such as Lisbon, Porto, Faro, Boston, Toronto, New York, and several European hubs like Madrid, Barcelona, and London.\nAzores Airlines stands out for its competitive fares on North Atlantic routes, reliable service with a Portuguese touch, and strong emphasis on connecting the Azores diaspora and tourism markets. It complements SATA Air Açores (which handles short inter-island hops with turboprop Dash 8 aircraft), creating a seamless network that supports both local mobility within the archipelago and global access to the islands.\nTogether, the two carriers operate over 800 weekly flights to/from the Azores in peak summer periods, making them essential for the region's economy, tourism, and connectivity. Azores Airlines delivers a practical, value-driven flying experience ideal for travelers heading to or from this unique mid-Atlantic destination.",
+    "text": "Azores Airlines (formerly known as SATA Internacional) is the international arm of Grupo SATA, the main airline group of the Azores archipelago in Portugal. Operating alongside its sister company SATA Air Açores, it serves as the primary gateway connecting the nine Azores islands to mainland Portugal, Europe, North America, and selected other destinations.\nAs part of the SATA Group (founded in 1941), Azores Airlines focuses on longer-haul routes with a modern fleet of around 9 Airbus A320-family aircraft (including A320neo, A321neo, and A321LR models), offering fuel-efficient operations and comfortable transatlantic travel. The airline is well-known for its direct links from Ponta Delgada (São Miguel) to cities such as Lisbon, Porto, Faro, Boston, Toronto, New York, and several European hubs like Madrid, Barcelona, and London.\nAzores Airlines stands out for its competitive fares on North Atlantic routes, reliable service with a Portuguese touch, and strong emphasis on connecting the Azores diaspora and tourism markets. It complements SATA Air Açores (which handles short inter-island hops with turboprop Dash 8 aircraft), creating a seamless network that supports both local mobility within the archipelago and global access to the islands.\nTogether, the two carriers operate over 800 weekly flights to/from the Azores in peak summer periods, making them essential for the region's economy, tourism, and connectivity. Azores Airlines delivers a practical, value-driven flying experience ideal for travelers heading to or from this unique mid-Atlantic destination.\n\nFleet: 22, 21, 19, 18, 16, 15",
     "image": "https://comply365.com/wp-content/uploads/sata-blog.png",
     "public_tags": [
       "Carrier",
@@ -329,6 +329,32 @@
     ],
     "hidden_tags": [
       "Aircraft_Q200"
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Embraer E190",
+    "text": "Regional narrow-body jet known for its efficiency on medium-haul routes and spacious cabin. Max speed: Mach 0.82 (~872 km/h). Typical cruise speed: Mach 0.78 (~829–833 km/h). Service ceiling: 41,000 ft (12,497 m). Typical range: 2,400–2,450 nm (4,445–4,537 km). Passengers: 96–114 seats (typical two-class). Special features: Fly-by-wire controls, full glass cockpit with side-stick, widest single-aisle cabin in its class for better passenger comfort, high commonality with E-Jet family for reduced training/maintenance costs, and excellent short-field performance.",
+    "image": "https://www.embraer.com/media/1bkhjr2u/commercial-e190-2.jpg?v=1db1efc60b8b070",
+    "public_tags": [
+      "Aircraft",
+      "Turbofan"
+    ],
+    "hidden_tags": [
+      "Aircraft_E190"
+    ]
+  },
+  {
+    "id": 24,
+    "title": "Embraer E195",
+    "text": "Largest in the first-generation E-Jet series, stretched for higher capacity on regional/medium-haul operations. Max speed: Mach 0.82 (~876 km/h). Typical cruise speed: Mach 0.78 (~833 km/h). Service ceiling: 41,000 ft (12,500 m). Typical range: 2,300–2,850 nm (4,260–5,278 km). Passengers: 108–124 seats (typical two-class). Special features: Fly-by-wire technology reducing pilot workload, spacious four-abreast cabin with no middle seat feel, high dispatch reliability, and optimized for low-cost/high-frequency routes with good economics.",
+    "image": "https://www.embraer.com/media/yyfb1vsi/e2-expand-your-network.webp?v=1db3c2c7c0fcf00",
+    "public_tags": [
+      "Aircraft",
+      "Turbofan"
+    ],
+    "hidden_tags": [
+      "Aircraft_E195"
     ]
   }
 ]

@@ -44,3 +44,15 @@ class TripDB(BaseModel):
     flight_complications: str
     food_menu: str
 
+class ItemDB(BaseModel):
+    """
+    Represents a searchable content item (e.g. Travel Guide, Tip).
+    """
+    id: Optional[int] = None
+    title: str
+    text: str
+    image: str
+    public_tags: str # Stored as JSON list of strings
+    hidden_tags: str # Stored as JSON list of strings
+
+

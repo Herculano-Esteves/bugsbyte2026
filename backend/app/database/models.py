@@ -30,3 +30,17 @@ class TicketDB(BaseModel):
     price: float
     purchase_date_utc: Optional[str] = None
     passenger_name: str
+
+class TripDB(BaseModel):
+    """
+    Represents a Trip, aggregating a Ticket with extra flight info.
+    """
+    id: Optional[int] = None
+    ticket_id: int
+    
+    # Stored as JSON strings
+    weather_forecast: str 
+    path_coordinates: str
+    flight_complications: str
+    food_menu: str
+

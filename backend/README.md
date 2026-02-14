@@ -77,11 +77,9 @@ The project uses a local SQLite database (`bugsbyte.db`). To reset it (delete al
     python3
     ```
 
-2.  **Run the reset command:**
-    ```python
-    from app.database.connection import reset_database
-    reset_database()
-    exit()
+2.  **Run the reset command (one-liner):**
+    ```bash
+    python3 -c "from app.database.connection import reset_database; reset_database()"
     ```
 
     *Warning: This will permanently delete `bugsbyte.db` and all stored tickets.*
@@ -110,4 +108,3 @@ The project uses `pytest` for testing.
 -   Database initialization and reset logic.
 -   Ticket CRUD operations (Create, Read, Delete).
 -   Timezone conversion logic (UTC handling).
-

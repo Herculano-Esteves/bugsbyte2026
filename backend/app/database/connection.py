@@ -8,6 +8,7 @@ DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__)
 def get_db_connection():
     """Establishes a connection to the SQLite database."""
     conn = sqlite3.connect(DB_PATH)
+    conn.execute("PRAGMA foreign_keys = ON") # Enable Foreign Keys
     conn.row_factory = sqlite3.Row  # Access columns by name
     return conn
 
@@ -42,6 +43,21 @@ def create_tables(conn):
         price REAL NOT NULL,
         purchase_date_utc TEXT,
         passenger_name TEXT
+    );
+    """)
+
+    # Trip Table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS trips (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ticket_id INTEGER NOT NULL,
+        
+        weather_forecast TEXT NOT NULL,
+        path_coordinates TEXT NOT NULL,
+        flight_complications TEXT NOT NULL,
+        food_menu TEXT NOT NULL,
+        
+        FOREIGN KEY(ticket_id) REFERENCES tickets(id) ON DELETE CASCADE
     );
     """)
     

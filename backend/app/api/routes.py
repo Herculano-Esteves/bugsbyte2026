@@ -38,6 +38,17 @@ async def get_weather(location: str):
 @router.post("/tickets/upload")
 async def upload_ticket(ticket: Ticket):
     """
-    Upload a ticket (mock processing).
+    Upload a ticket (Saves to DB).
     """
     return CoreLogic.process_ticket(ticket)
+
+@router.get("/trips/{ticket_id}")
+async def get_trip(ticket_id: int):
+    """
+    Get full trip details (Weather, Path, etc.) for a specific ticket.
+    Generates mock data if not already present.
+    """
+    trip = CoreLogic.get_trip_details(ticket_id)
+    if not trip:
+        raise HTTPException(status_code=404, detail="Ticket not found")
+    return trip

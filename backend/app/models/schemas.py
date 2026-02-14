@@ -22,11 +22,29 @@ class Flight(BaseModel):
     gate: Optional[str] = None
 
 # --- Ticket Models ---
+# --- Ticket Nested Models ---
+class FlightEndpoint(BaseModel):
+    airport_code: str
+    time: str
+    timezone: str
+
+class AirplaneDetails(BaseModel):
+    model: str
+    plate: str
+
+# --- Ticket Models ---
 class Ticket(BaseModel):
-    passenger_name: str
-    flight_number: str
+    passenger_name: Optional[str] = "Unknown"
+    company: str
     seat: str
-    class_type: str  # "Economy", "Business"
+    price: float
+    date_of_purchased: Optional[str] = None
+    class_type: Optional[str] = "Economy"
+    
+    # Nested structures
+    departure: FlightEndpoint
+    arrival: FlightEndpoint
+    airplane: AirplaneDetails
 
 # --- Weather Models ---
 class Weather(BaseModel):

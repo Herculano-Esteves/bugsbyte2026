@@ -75,17 +75,20 @@ export default function SearchScreen() {
 
     const handleSearch = (query: string) => {
         setSearchQuery(query);
-        if (!query.trim()) {
+        const terms = query.trim().toLowerCase().split(/\s+/).filter(t => t.length > 0);
+
+        if (terms.length === 0) {
             setFilteredArticles(allArticles);
             return;
         }
 
-        const lowerCaseQuery = query.toLowerCase();
         const filtered = allArticles.filter(article => {
-            const titleMatch = article.title.toLowerCase().includes(lowerCaseQuery);
-            const tagMatch = article.tags.some(tag => tag.toLowerCase().includes(lowerCaseQuery));
-            const hiddenTagMatch = article.hiddenTags.some(tag => tag.toLowerCase().includes(lowerCaseQuery));
-            return titleMatch || tagMatch || hiddenTagMatch;
+            return terms.every(term => {
+                const titleMatch = article.title.toLowerCase().includes(term);
+                const tagMatch = article.tags.some(tag => tag.toLowerCase().includes(term));
+                const hiddenTagMatch = article.hiddenTags.some(tag => tag.toLowerCase().includes(term));
+                return titleMatch || tagMatch || hiddenTagMatch;
+            });
         });
         setFilteredArticles(filtered);
     };

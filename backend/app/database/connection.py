@@ -73,6 +73,18 @@ def create_tables(conn):
     );
     """)
     
+    # Users Table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL,
+        address TEXT,
+        ticket_info TEXT, -- JSON
+        sent_items TEXT DEFAULT '[]' -- JSON List of Item IDs
+    );
+    """)
+
     conn.commit()
 
 def initialize_database():

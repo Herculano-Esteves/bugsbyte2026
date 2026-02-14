@@ -69,3 +69,36 @@ async def search_items(q: str):
     """
     from app.logic.search_service import SearchService
     return SearchService.search(q)
+
+
+# --- User Routes ---
+from app.models.schemas import UserCreate, UserLogin, UserResponse
+from app.logic.user_logic import UserLogic
+
+@router.post("/auth/register", response_model=UserResponse)
+async def register_user(user: UserCreate):
+    """
+    Register a new user.
+    """
+    return UserLogic.register_user(user)
+
+@router.post("/auth/login", response_model=UserResponse)
+async def login_user(credentials: UserLogin):
+    """
+    Login a user.
+    """
+    return UserLogic.login_user(credentials)
+
+@router.post("/auth/logout/{user_id}")
+async def logout_user(user_id: int):
+    """
+    Logout a user and reset their sent items history.
+    """
+    return UserLogic.logout_user(user_id)
+
+@router.get("/user/{user_id}", response_model=UserResponse)
+async def get_user_details(user_id: int):
+    """
+    Get user details.
+    """
+    return UserLogic.get_user(user_id)

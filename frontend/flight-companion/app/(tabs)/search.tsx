@@ -35,11 +35,18 @@ export default function SearchScreen() {
     const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
     const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
     const [loading, setLoading] = useState(true);
+    const [debugLogs, setDebugLogs] = useState<string[]>([]);
+
+    const addLog = (message: string) => {
+        setDebugLogs(prev => [`[${new Date().toLocaleTimeString()}] ${message}`, ...prev]);
+    };
 
     useEffect(() => {
         const fetchArticles = async () => {
+            addLog(`Fetching from: ${API_BASE_URL}/api/items`);
             try {
-                const response = await axios.get(`${API_BASE_URL}/api/items`);
+                const response = await axios.get(`${API_BASE_URL}/api/items`, { timeout: 5000 });
+                addLog(`Success! Status: ${response.status}`);
                 const items = response.data.map((item: any) => ({
                     id: item.id,
                     title: item.title,
@@ -50,8 +57,12 @@ export default function SearchScreen() {
                 }));
                 setAllArticles(items);
                 setFilteredArticles(items);
-            } catch (error) {
+                addLog(`Loaded ${items.length} items from backend.`);
+            } catch (error: any) {
                 console.log('Error fetching articles, falling back to mock data:', error);
+                const errorMsg = error.message || 'Unknown error';
+                addLog(`Error: ${errorMsg}`);
+                addLog('Falling back to mock data.');
                 setAllArticles(mockArticles);
                 setFilteredArticles(mockArticles);
             } finally {
@@ -100,10 +111,23 @@ export default function SearchScreen() {
         </TouchableOpacity>
     );
 
+    const renderDebugInfo = () => (
+        <View style={[styles.debugContainer, { backgroundColor: theme.background, borderColor: theme.icon }]}>
+            <Text style={[styles.debugTitle, { color: theme.text }]}>Debug Info</Text>
+            <Text style={[styles.debugText, { color: theme.text }]}>API URL: {API_BASE_URL}</Text>
+            <View style={styles.logsContainer}>
+                {debugLogs.map((log, index) => (
+                    <Text key={index} style={[styles.logText, { color: theme.icon }]}>{log}</Text>
+                ))}
+            </View>
+        </View>
+    );
+
     if (loading) {
         return (
             <SafeAreaView style={[styles.container, { backgroundColor: theme.background, justifyContent: 'center', alignItems: 'center' }]}>
                 <ActivityIndicator size="large" color={theme.tint} />
+                <Text style={{ marginTop: 20, color: theme.text }}>Connecting to {API_BASE_URL}...</Text>
             </SafeAreaView>
         );
     }
@@ -137,6 +161,7 @@ export default function SearchScreen() {
                         <Text style={[styles.emptyText, { color: theme.icon }]}>No matches found</Text>
                     </View>
                 }
+                ListFooterComponent={renderDebugInfo}
             />
 
             <Modal
@@ -287,5 +312,29 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 24,
         marginTop: 12,
+    },
+    debugContainer: {
+        marginTop: 20,
+        padding: 16,
+        borderTopWidth: 1,
+        borderTopColor: '#ccc',
+    },
+    debugTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 8,
+    },
+    debugText: {
+        fontSize: 14,
+        marginBottom: 4,
+    },
+    logsContainer: {
+        marginTop: 8,
+        maxHeight: 150,
+    },
+    logText: {
+        fontSize: 12,
+        fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
+        marginBottom: 2,
     },
 });

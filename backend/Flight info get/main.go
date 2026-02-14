@@ -3,6 +3,7 @@ package main
 import (
 	"archive/zip"
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"image"
@@ -10,14 +11,15 @@ import (
 	_ "image/png"
 	"io"
 	"log"
+	"math"
 	"net/http"
 	"strings"
-	"unicode"
 
 	"github.com/makiuchi-d/gozxing"
 	"github.com/makiuchi-d/gozxing/aztec"
 	"github.com/makiuchi-d/gozxing/oned"
 	"github.com/makiuchi-d/gozxing/qrcode"
+	xdraw "golang.org/x/image/draw"
 )
 
 // ----------------------
@@ -154,25 +156,48 @@ func handleBarcodeImage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	r.ParseMultipartForm(10 << 20)
-
-	file, _, err := r.FormFile("image")
-	if err != nil {
-		http.Error(w, "Error retrieving image file", http.StatusBadRequest)
+	var req struct {
+		Image string `json:"image"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		fmt.Printf("Error decoding JSON: %v\n", err)
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
-	defer file.Close()
 
-	img, _, err := image.Decode(file)
+	// Handle both padded and unpadded base64 (Expo often omits padding)
+	imageData, err := base64.StdEncoding.DecodeString(req.Image)
+	if err != nil {
+		imageData, err = base64.RawStdEncoding.DecodeString(req.Image)
+		if err != nil {
+			fmt.Printf("Error decoding base64: %v\n", err)
+			http.Error(w, "Invalid base64 image data", http.StatusBadRequest)
+			return
+		}
+	}
+
+	fmt.Printf("Received image: %d bytes\n", len(imageData))
+
+	img, format, err := image.Decode(bytes.NewReader(imageData))
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error decoding image: %v", err), http.StatusBadRequest)
 		return
 	}
 
-	bmp, err := gozxing.NewBinaryBitmapFromImage(img)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Error processing image: %v", err), http.StatusInternalServerError)
-		return
+	bounds := img.Bounds()
+	w0, h0 := bounds.Dx(), bounds.Dy()
+	fmt.Printf("Image decoded: format=%s, size=%dx%d\n", format, w0, h0)
+
+	// Downscale large images — barcode detection works much better on smaller images
+	const maxDim = 1200
+	if w0 > maxDim || h0 > maxDim {
+		scale := float64(maxDim) / math.Max(float64(w0), float64(h0))
+		newW := int(float64(w0) * scale)
+		newH := int(float64(h0) * scale)
+		dst := image.NewRGBA(image.Rect(0, 0, newW, newH))
+		xdraw.BiLinear.Scale(dst, dst.Bounds(), img, bounds, xdraw.Src, nil)
+		img = dst
+		fmt.Printf("Downscaled to: %dx%d\n", newW, newH)
 	}
 
 	hints := map[gozxing.DecodeHintType]interface{}{
@@ -180,22 +205,40 @@ func handleBarcodeImage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	readers := []gozxing.Reader{
-		qrcode.NewQRCodeReader(),
 		aztec.NewAztecReader(),
+		qrcode.NewQRCodeReader(),
 		oned.NewCode128Reader(),
 		oned.NewEAN13Reader(),
 	}
 
+	type binarizerFactory func(source gozxing.LuminanceSource) gozxing.Binarizer
+	binarizers := []binarizerFactory{
+		gozxing.NewHybridBinarizer,
+		gozxing.NewGlobalHistgramBinarizer,
+	}
+
 	var result *gozxing.Result
-	for _, reader := range readers {
-		r, err := reader.Decode(bmp, hints)
-		if err == nil {
-			result = r
+	luminance := gozxing.NewLuminanceSourceFromImage(img)
+
+	for _, makeBinarizer := range binarizers {
+		if result != nil {
 			break
+		}
+		for _, reader := range readers {
+			bmp, err := gozxing.NewBinaryBitmap(makeBinarizer(luminance))
+			if err != nil {
+				continue
+			}
+			r, err := reader.Decode(bmp, hints)
+			if err == nil {
+				result = r
+				break
+			}
 		}
 	}
 
 	if result == nil {
+		fmt.Println("No barcode found in image after trying all readers and binarizers")
 		http.Error(w, "No barcode found in image", http.StatusBadRequest)
 		return
 	}
@@ -223,147 +266,50 @@ func parseIATABarcode(raw string) (*UnifiedBoardingPass, error) {
 	if len(raw) < 20 {
 		return nil, fmt.Errorf("barcode too short")
 	}
-	// Check for 'M' (Multiple) or 'S' (Single), case-insensitive for robustness
-	if !strings.HasPrefix(strings.ToUpper(raw), "M") && !strings.HasPrefix(strings.ToUpper(raw), "S") {
+	upper := strings.ToUpper(string(raw[0]))
+	if upper != "M" && upper != "S" {
 		return nil, fmt.Errorf("barcode must start with 'M' or 'S'")
 	}
 
-	// 2. Parse Variables
-	var (
-		name    string
-		pnr     string
-		from    string
-		to      string
-		carrier string
-		flight  string
-		date    string
-		seat    string
-	)
+	// IATA BCBP (Bar Coded Boarding Pass) uses fixed-width fields:
+	//   [0]      Format code ('M' or 'S')
+	//   [1]      Number of legs
+	//   [2-21]   Passenger name (20 chars)
+	//   [22]     Electronic ticket indicator (1 char)
+	//   [23-29]  PNR / Booking reference (7 chars)
+	//   [30-32]  From airport IATA code (3 chars)
+	//   [33-35]  To airport IATA code (3 chars)
+	//   [36-38]  Operating carrier designator (3 chars)
+	//   [39-43]  Flight number (5 chars)
+	//   [44-46]  Date of flight, Julian (3 chars)
+	//   [47]     Compartment code (1 char)
+	//   [48-51]  Seat number (4 chars)
+	//   [52-56]  Check-in sequence number (5 chars)
+	//   [57]     Passenger status (1 char)
 
-	// 3. Anchor Search Logic
-	// Standard IATA fields are fixed width, but many airlines (like in your example)
-	// omit spaces for Name or PNR. We find the "From" and "To" airport codes (3+3 letters)
-	// and work backward to find the PNR and Name.
-
-	anchorIdx := -1
-	isAlpha := func(s string) bool {
-		for _, r := range s {
-			if !unicode.IsLetter(r) {
-				return false
-			}
+	extract := func(start, end int) string {
+		if start >= len(raw) {
+			return ""
 		}
-		return true
+		if end > len(raw) {
+			end = len(raw)
+		}
+		return strings.TrimSpace(raw[start:end])
 	}
 
-	// Scan for the Route (e.g., "GVALHR") starting after potential header
-	// The header "M1" + min name (2) + min PNR (5) = ~9 chars minimum
-	for i := 9; i < len(raw)-10; i++ {
-		// Look for 6 consecutive letters (From + To)
-		if i+6 <= len(raw) && isAlpha(raw[i:i+6]) {
+	name := extract(2, 22)
+	pnr := extract(23, 30)
+	from := extract(30, 33)
+	to := extract(33, 36)
+	carrier := extract(36, 39)
+	flight := extract(39, 44)
+	date := extract(44, 47)
+	seat := extract(48, 52)
 
-			// CONFIRMATION CHECK:
-			// The flight number usually follows closely (within 3-5 chars)
-			// The PNR usually precedes immediately or with spaces
-
-			// Let's assume this is the anchor and try to parse backwards
-			anchorIdx = i
-
-			from = raw[i : i+3]
-			to = raw[i+3 : i+6]
-
-			// --- BACKWARD PARSING (PNR & Name) ---
-
-			// 1. Find PNR End: Skip spaces immediately before "From"
-			pnrEnd := i
-			for pnrEnd > 0 && raw[pnrEnd-1] == ' ' {
-				pnrEnd--
-			}
-
-			// 2. Extract PNR: It is 7 chars long.
-			if pnrEnd >= 7 {
-				pnrStart := pnrEnd - 7
-				pnr = raw[pnrStart:pnrEnd]
-
-				// 3. Find Name End: Skip spaces immediately before PNR
-				nameEnd := pnrStart
-				// Sometimes there is an 'E' (E-ticket) before PNR, skip it if it looks like one
-				// But be careful not to skip part of the name.
-				// For now, just skip spaces.
-				for nameEnd > 2 && raw[nameEnd-1] == ' ' {
-					nameEnd--
-				}
-
-				// 4. Extract Name: Everything from index 2 to here
-				if nameEnd > 2 {
-					name = raw[2:nameEnd]
-				}
-			} else {
-				// Fallback if structure is too weird
-				anchorIdx = -1 // Reset and try next match?
-				continue
-			}
-
-			// --- FORWARD PARSING (Flight, Date, Seat) ---
-
-			cursor := i + 6 // After From/To
-
-			// Carrier: Next 3 chars
-			if cursor+3 <= len(raw) {
-				carrier = strings.TrimSpace(raw[cursor : cursor+3])
-				cursor += 3
-			}
-
-			// Flight Number: Next 5 chars
-			if cursor+5 <= len(raw) {
-				flight = strings.TrimSpace(raw[cursor : cursor+5])
-				cursor += 5
-			}
-
-			// Date: Next 3 chars (Julian)
-			if cursor+3 <= len(raw) {
-				date = raw[cursor : cursor+3]
-				cursor += 3
-			}
-
-			// Compartment: 1 char
-			cursor += 1
-
-			// Seat: Next 4 chars
-			if cursor+4 <= len(raw) {
-				seat = strings.TrimSpace(raw[cursor : cursor+4])
-			}
-
-			break // Found it, stop scanning
-		}
-	}
-
-	// 4. Fallback for Perfectly Standard IATA (if dynamic failed)
-	if anchorIdx == -1 {
-		extract := func(start, end int) string {
-			if start >= len(raw) {
-				return ""
-			}
-			if end > len(raw) {
-				end = len(raw)
-			}
-			return strings.TrimSpace(raw[start:end])
-		}
-		// Strict offsets
-		name = extract(2, 22)
-		pnr = extract(23, 30)
-		from = extract(30, 33)
-		to = extract(33, 36)
-		carrier = extract(36, 39)
-		flight = extract(39, 44)
-		date = extract(44, 47)
-		seat = extract(48, 52)
-	}
-
-	// 5. Construct Result
 	pass := &UnifiedBoardingPass{
 		Source:        "barcode",
-		PassengerName: strings.TrimSpace(name),
-		PNR:           strings.TrimSpace(pnr),
+		PassengerName: name,
+		PNR:           pnr,
 		Departure:     from,
 		Arrival:       to,
 		Carrier:       carrier,

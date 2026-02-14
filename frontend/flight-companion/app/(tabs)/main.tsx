@@ -4,7 +4,7 @@ import { useFlightMode } from '../../context/FlightModeContext';
 import { CameraView, Camera } from "expo-camera";
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
-import { GO_API_BASE_URL } from '../../constants/config';
+import { API_BASE_URL, GO_API_BASE_URL } from '../../constants/config';
 
 export default function MainScreen() {
     const { mode, setMode } = useFlightMode();
@@ -28,16 +28,16 @@ export default function MainScreen() {
         try {
             const photo = await cameraRef.current.takePictureAsync({
                 quality: 0.8,
-                skipProcessing: true,
+                base64: true,
             });
 
-            if (!photo) {
+            if (!photo?.base64) {
                 Alert.alert("Error", "Failed to capture photo.");
                 return;
             }
 
             setShowScanner(false);
-            await uploadBarcodeImage(photo.uri);
+            await uploadBarcodeImage(photo.base64);
         } catch (error: any) {
             console.error("Capture error:", error);
             Alert.alert("Error", error.message || "Failed to capture photo.");
@@ -49,34 +49,47 @@ export default function MainScreen() {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             quality: 0.8,
+            base64: true,
         });
 
-        if (!result.canceled && result.assets[0]) {
-            await uploadBarcodeImage(result.assets[0].uri);
+        if (!result.canceled && result.assets[0]?.base64) {
+            await uploadBarcodeImage(result.assets[0].base64);
         }
     };
 
-    const uploadBarcodeImage = async (imageUri: string) => {
+    const uploadBarcodeImage = async (base64Image: string) => {
         setLoading(true);
         try {
-            const formData = new FormData();
-            formData.append('image', {
-                uri: imageUri,
-                type: 'image/jpeg',
-                name: 'barcode.jpg',
-            } as any);
+            console.log("Uploading image, base64 length:", base64Image.length);
 
-            const response = await fetch(`${GO_API_BASE_URL}/parse/barcode/image`, {
+            // Step 1: Send image to Python backend for barcode decoding (pyzbar)
+            const decodeResponse = await fetch(`${API_BASE_URL}/api/parse/barcode/image`, {
                 method: 'POST',
-                body: formData,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image: base64Image }),
             });
 
-            if (!response.ok) {
-                const errorText = await response.text();
+            if (!decodeResponse.ok) {
+                const err = await decodeResponse.json().catch(() => ({ detail: "Failed to decode barcode" }));
+                throw new Error(err.detail || "Failed to decode barcode");
+            }
+
+            const decoded = await decodeResponse.json();
+            console.log("Barcode decoded:", decoded.barcode_type, decoded.barcode_text);
+
+            // Step 2: Send decoded text to Go backend for IATA boarding pass parsing
+            const parseResponse = await fetch(`${GO_API_BASE_URL}/parse/barcode`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ barcode: decoded.barcode_text }),
+            });
+
+            if (!parseResponse.ok) {
+                const errorText = await parseResponse.text();
                 throw new Error(errorText);
             }
 
-            const boardingPass = await response.json();
+            const boardingPass = await parseResponse.json();
             console.log("Parsed boarding pass:", boardingPass);
 
             Alert.alert(

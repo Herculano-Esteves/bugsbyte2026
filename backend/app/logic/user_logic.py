@@ -2,6 +2,7 @@ from app.models.schemas import UserCreate, UserLogin, UserResponse
 from app.database.user_repository import UserRepository
 from fastapi import HTTPException
 import json
+import bcrypt
 
 class UserLogic:
     @staticmethod
@@ -22,8 +23,7 @@ class UserLogic:
         if not user_data:
             raise HTTPException(status_code=401, detail="Invalid email or password")
             
-        # In a real app, verify hash. Here we just compare strings
-        if user_data['password'] != credentials.password:
+        if not bcrypt.checkpw(credentials.password.encode('utf-8'), user_data['password'].encode('utf-8')):
              raise HTTPException(status_code=401, detail="Invalid email or password")
              
         return UserResponse(

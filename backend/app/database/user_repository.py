@@ -1,6 +1,7 @@
 import sqlite3
 import json
 from typing import Optional, List
+import bcrypt
 from app.database.connection import get_db_connection
 from app.models.schemas import UserCreate, UserResponse
 
@@ -11,13 +12,14 @@ class UserRepository:
         cursor = conn.cursor()
         
         try:
+            hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
             cursor.execute("""
                 INSERT INTO users (name, email, password, address, ticket_info, sent_items)
                 VALUES (?, ?, ?, ?, ?, ?)
             """, (
                 user.name,
                 user.email,
-                user.password, # In a real app, hash this!
+                hashed_password.decode('utf-8'),
                 user.address,
                 json.dumps(user.ticket_info),
                 json.dumps([])

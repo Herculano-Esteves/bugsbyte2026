@@ -185,67 +185,48 @@ async def get_transport_route(
     date: str,
 ):
     """
-    Find the best multi-modal route between two points.
-    
-    Query params:
-        from_lat, from_lon: origin coordinates
-        to_lat, to_lon: destination coordinates  
-        time: departure time in HH:MM format (required)
-        date: travel date in YYYY-MM-DD format (required)
+    Generate a Google Maps Deep Link for the route.
+    Replacing the old Dijkstra pathfinder.
     """
-    from app.transport.router import TransportRouter
-    from app.transport.geo import StopIndex
+    from app.logic.google_maps import get_google_maps_link
+    from datetime import datetime
 
-    # Get the singleton instances from app state
-    from main import _transport_router, _stop_index
+    # Parse departure time
+    try:
+        dt_str = f"{date} {time}"
+        departure_dt = datetime.strptime(dt_str, "%Y-%m-%d %H:%M")
+    except ValueError:
+        departure_dt = None
 
-    if _transport_router is None or _stop_index is None:
-        raise HTTPException(
-            status_code=503,
-            detail="Transport router not initialized. Is transport.db present?"
-        )
+    # Generate Deep Link
+    deep_link = get_google_maps_link(from_lat, from_lon, to_lat, to_lon, departure_dt)
 
-    result = _transport_router.route(
-        from_lat, from_lon, to_lat, to_lon, time, date=date
-    )
-
-    if not result.legs:
-        raise HTTPException(status_code=404, detail="No route found")
-
-    # Convert dataclasses to Pydantic schemas
+    # Return a "dummy" result that carries the link
+    # The frontend should ideally look for this link in 'summary' or 'instructions'
+    # or we can update the frontend to handle this specific response structure.
+    # For now, we fit it into the existing schema.
     return RouteResultSchema(
         legs=[
             RouteLegSchema(
-                mode=leg.mode.value,
-                from_stop=StopSchema(
-                    stop_id=leg.from_stop.stop_id,
-                    stop_name=leg.from_stop.stop_name,
-                    lat=leg.from_stop.lat,
-                    lon=leg.from_stop.lon,
-                ),
-                to_stop=StopSchema(
-                    stop_id=leg.to_stop.stop_id,
-                    stop_name=leg.to_stop.stop_name,
-                    lat=leg.to_stop.lat,
-                    lon=leg.to_stop.lon,
-                ),
-                departure_time=leg.departure_time,
-                arrival_time=leg.arrival_time,
-                duration_minutes=leg.duration_minutes,
-                agency=leg.agency,
-                trip_headsign=leg.trip_headsign,
-                route_name=leg.route_name,
-                instructions=leg.instructions,
+                mode="BUS",
+                from_stop=StopSchema(stop_id="origin", stop_name="Origin", lat=from_lat, lon=from_lon),
+                to_stop=StopSchema(stop_id="dest", stop_name="Destination", lat=to_lat, lon=to_lon),
+                departure_time=time,
+                arrival_time="",
+                duration_minutes=0,
+                agency="Google Maps",
+                trip_headsign=" Navigate",
+                route_name="GO",
+                instructions="Open Google Maps for route"
             )
-            for leg in result.legs
         ],
-        total_duration_minutes=result.total_duration_minutes,
-        total_transfers=result.total_transfers,
-        departure_time=result.departure_time,
-        arrival_time=result.arrival_time,
-        origin_name=result.origin_name,
-        destination_name=result.destination_name,
-        summary=result.summary,
+        total_duration_minutes=0,
+        total_transfers=0,
+        departure_time=time,
+        arrival_time="",
+        origin_name="Origin",
+        destination_name="Destination",
+        summary=deep_link  # <--- The Magic Link is here
     )
 
 

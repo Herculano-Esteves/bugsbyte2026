@@ -173,27 +173,29 @@ export default function RouteResultCard({ saved, onRemove }: Props) {
         <Text style={styles.chevron}>{expanded ? '▲' : '▼'}</Text>
       </TouchableOpacity>
 
-      {/* Summary bar */}
-      <View style={styles.summaryBar}>
-        <View style={styles.summaryItem}>
-          <Text style={styles.summaryIcon}>🕐</Text>
-          <Text style={styles.summaryText}>
-            {result.departure_time} – {result.arrival_time}
-          </Text>
+      {/* Summary bar — only show if it's a real route (not a deep link) */}
+      {!result.summary.startsWith('http') && (
+        <View style={styles.summaryBar}>
+          <View style={styles.summaryItem}>
+            <Text style={styles.summaryIcon}>🕐</Text>
+            <Text style={styles.summaryText}>
+              {result.departure_time} – {result.arrival_time}
+            </Text>
+          </View>
+          <View style={styles.summaryItem}>
+            <Text style={styles.summaryIcon}>⏱</Text>
+            <Text style={styles.summaryText}>
+              {formatDuration(result.total_duration_minutes)}
+            </Text>
+          </View>
+          <View style={styles.summaryItem}>
+            <Text style={styles.summaryIcon}>🔄</Text>
+            <Text style={styles.summaryText}>
+              {result.total_transfers} transfer{result.total_transfers !== 1 ? 's' : ''}
+            </Text>
+          </View>
         </View>
-        <View style={styles.summaryItem}>
-          <Text style={styles.summaryIcon}>⏱</Text>
-          <Text style={styles.summaryText}>
-            {formatDuration(result.total_duration_minutes)}
-          </Text>
-        </View>
-        <View style={styles.summaryItem}>
-          <Text style={styles.summaryIcon}>🔄</Text>
-          <Text style={styles.summaryText}>
-            {result.total_transfers} transfer{result.total_transfers !== 1 ? 's' : ''}
-          </Text>
-        </View>
-      </View>
+      )}
 
       {/* Date + remove row */}
       <View style={styles.dateRow}>
@@ -208,13 +210,33 @@ export default function RouteResultCard({ saved, onRemove }: Props) {
       {/* Expanded timeline */}
       {expanded && (
         <View style={styles.timeline}>
-          {result.legs.map((leg, i) => (
-            <LegRow
-              key={`${saved.id}-${i}`}
-              leg={leg}
-              isLast={i === result.legs.length - 1}
-            />
-          ))}
+          {result.summary.startsWith('http') ? (
+            <View style={styles.deepLinkContainer}>
+
+              {/* Origin & Destination Pins */}
+              <View style={styles.deepLinkStops}>
+                <StopPin stop={query.from} />
+                <Text style={styles.arrowText}>→</Text>
+                <StopPin stop={query.to} />
+              </View>
+
+              <TouchableOpacity
+                style={styles.googleMapsBtn}
+                onPress={() => Linking.openURL(result.summary)}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.googleMapsBtnText}>Open in Google Maps 🗺️</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            result.legs.map((leg, i) => (
+              <LegRow
+                key={`${saved.id}-${i}`}
+                leg={leg}
+                isLast={i === result.legs.length - 1}
+              />
+            ))
+          )}
         </View>
       )}
     </View>
@@ -224,6 +246,7 @@ export default function RouteResultCard({ saved, onRemove }: Props) {
 // ── Styles ──────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
+  // ... existing styles ...
   card: {
     backgroundColor: '#fff',
     borderRadius: 20,
@@ -234,6 +257,42 @@ const styles = StyleSheet.create({
     shadowRadius: 16,
     elevation: 5,
     overflow: 'hidden',
+  },
+  deepLinkContainer: {
+    padding: 12,
+    alignItems: 'center',
+    gap: 10,
+  },
+  deepLinkHint: {
+    fontSize: 14,
+    color: '#71717a',
+    textAlign: 'center',
+    marginBottom: 4,
+  },
+  deepLinkStops: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    width: '100%',
+    marginBottom: 0,
+  },
+  googleMapsBtn: {
+    backgroundColor: '#34a853', // Google Maps Green
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    width: '100%',
+    alignItems: 'center',
+    shadowColor: '#34a853',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  googleMapsBtnText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '700',
   },
   cardHeader: {
     flexDirection: 'row',

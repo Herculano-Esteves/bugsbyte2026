@@ -187,6 +187,29 @@ class StopIndex:
         return [(s, d) for s, d in self.find_transfers(stop_id, radius_m)
                 if not s.stop_id.startswith(origin_prefix)]
 
+    # ── text search ─────────────────────────────────────────────────────
+
+    def search_by_name(self, query: str, limit: int = 15) -> List[Stop]:
+        """Case-insensitive substring search over stop names.
+
+        Returns up to *limit* stops, deduplicated by stop_name
+        (keeps the first occurrence).
+        """
+        q = query.lower().strip()
+        if not q:
+            return []
+
+        seen: set[str] = set()
+        results: List[Stop] = []
+        for stop in self._stops:
+            name_lower = stop.stop_name.lower()
+            if q in name_lower and name_lower not in seen:
+                seen.add(name_lower)
+                results.append(stop)
+                if len(results) >= limit:
+                    break
+        return results
+
     # ── private ──────────────────────────────────────────────────────────
 
     @staticmethod

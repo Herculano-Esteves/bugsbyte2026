@@ -22,15 +22,30 @@ class LegMode(str, Enum):
     BUS = "BUS"
     TRAIN = "TRAIN"
     TRAM = "TRAM"
+    SUBWAY = "SUBWAY"
 
 
 # GTFS route_type → LegMode
+# Standard types: 0=Tram, 1=Metro, 2=Rail, 3=Bus, 7=Funicular
+# Extended types:  100-109=Rail variants, 400=Metro,
+#                  700-717=Bus variants, 900=Tram
 _ROUTE_TYPE_MAP = {
     0: LegMode.TRAM,
-    1: LegMode.TRAIN,   # Metro
-    2: LegMode.TRAIN,   # Rail
+    1: LegMode.SUBWAY,     # Metro / Subway
+    2: LegMode.TRAIN,      # Rail
     3: LegMode.BUS,
-    7: LegMode.TRAM,    # Funicular
+    7: LegMode.TRAM,       # Funicular
+    # GTFS Extended route types
+    100: LegMode.TRAIN,    # Railway
+    101: LegMode.TRAIN,    # High Speed Rail
+    102: LegMode.TRAIN,    # Long Distance Rail
+    103: LegMode.TRAIN,    # Inter Regional Rail
+    106: LegMode.TRAIN,    # Regional Rail
+    109: LegMode.TRAIN,    # Suburban Railway (CP Urbanos)
+    400: LegMode.SUBWAY,   # Metro / Urban Railway
+    700: LegMode.BUS,      # Bus
+    717: LegMode.BUS,      # Share Taxi
+    900: LegMode.TRAM,     # Tram
 }
 
 

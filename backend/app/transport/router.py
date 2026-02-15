@@ -111,6 +111,10 @@ class TransportRouter:
         Returns
         -------
         RouteResult with ordered legs, or empty result if no path found.
+
+        If no route is found at the requested time, automatically retries
+        with later departure times (2-hour increments, up to 4 retries)
+        to find the next available service.
         """
         # Parse date
         if date is None:
@@ -126,6 +130,40 @@ class TransportRouter:
         if start_min < 0:
             start_min = 480.0  # default 08:00
 
+        # Try the requested time first, then retry with later times
+        MAX_RETRIES = 4
+        RETRY_STEP_MIN = 120.0  # 2 hours
+
+        for attempt in range(MAX_RETRIES + 1):
+            attempt_min = start_min + (attempt * RETRY_STEP_MIN)
+            if attempt_min >= 1440:  # past midnight, stop
+                break
+            if attempt > 0:
+                logger.info(
+                    f"Retry {attempt}/{MAX_RETRIES}: trying departure "
+                    f"at {format_time(attempt_min)}"
+                )
+            result = self._search(
+                origin_lat, origin_lon,
+                dest_lat, dest_lon,
+                attempt_min, travel_date,
+            )
+            if result.legs:
+                return result
+
+        logger.warning("No route found after retries")
+        return RouteResult()
+
+    # ── internal search (single attempt) ─────────────────────────────────
+
+    def _search(
+        self,
+        origin_lat: float, origin_lon: float,
+        dest_lat: float, dest_lon: float,
+        start_min: float,
+        travel_date: datetime.date,
+    ) -> RouteResult:
+        """Run a single Dijkstra search from the given start time."""
         # 1. Find start and destination stop clusters
         origin_stops = self._geo.find_nearest(
             origin_lat, origin_lon, k=8, max_distance_m=MAX_ORIGIN_RADIUS_M
@@ -164,6 +202,7 @@ class TransportRouter:
                 stop_name="Your location",
                 lat=origin_lat, lon=origin_lon,
             )
+            agency_hint = stop.agency_prefix.rstrip('_').upper()
             leg = RouteLeg(
                 mode=LegMode.WALK,
                 from_stop=origin_stop,
@@ -171,7 +210,10 @@ class TransportRouter:
                 departure_time=format_time(start_min),
                 arrival_time=format_time(arrival),
                 duration_minutes=round(walk_min, 1),
-                instructions=f"Walk {dist_m:.0f}m to {stop.stop_name}",
+                instructions=(
+                    f"Walk {dist_m:.0f}m to {stop.stop_name} "
+                    f"station ({agency_hint})"
+                ),
             )
             state = _State(stop.stop_id, arrival, 0, cost, None, leg)
             heapq.heappush(pq, (cost, counter, state))
@@ -286,7 +328,7 @@ class TransportRouter:
                         trip_headsign=dep.trip_headsign,
                         route_name=dep.route_id,
                         instructions=(
-                            f"Take {mode.value} ({dep.agency_id}) "
+                            f"Take {mode.value.capitalize()} ({dep.agency_id}) "
                             f"towards {dep.trip_headsign or 'destination'} — "
                             f"ride {ride_min:.0f} min to {to_stop.stop_name}"
                         ),

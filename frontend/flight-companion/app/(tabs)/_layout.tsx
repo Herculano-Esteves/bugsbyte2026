@@ -33,15 +33,15 @@ function TabsLayout() {
 
                         {/* Tabs esquerda */}
                         <View style={styles.tabsLeft}>
-                            <TabButton label="Pré-voo" icon="✈️" onPress={() => props.navigation.navigate('prevoo')} />
+                            <TabButton label="PosFlight" icon="🛬" onPress={() => props.navigation.navigate('posFlight')} />
                             <TabButton label="In Flight" icon="🛫" onPress={() => props.navigation.navigate('inFlight')} />
                         </View>
 
                         {/* Botão central MAIOR - Home */}
                         <TabButton
-                            label="PosFlight"
-                            icon="🛬"
-                            onPress={() => router.push('/(tabs)/posFlight')}
+                            label="Home"
+                            icon="🏠"
+                            onPress={() => router.push('/(tabs)/main')}
                         />
 
                         {/* Tabs direita */}

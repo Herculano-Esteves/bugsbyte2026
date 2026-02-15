@@ -295,3 +295,26 @@ async def get_transport_info():
         "schedule_date_to": date_to,
         "agencies": ["CP", "FlixBus", "CarrisMet", "STCP"],
     }
+
+
+@router.get("/transport/stops/search", response_model=List[StopSchema])
+async def search_stops(q: str, limit: int = 15):
+    """
+    Search stops by name (case-insensitive substring match).
+    Used for autocomplete in the frontend.
+    """
+    from main import _stop_index
+
+    if _stop_index is None:
+        raise HTTPException(status_code=503, detail="Transport not initialized.")
+
+    stops = _stop_index.search_by_name(q, limit=min(limit, 50))
+    return [
+        StopSchema(
+            stop_id=s.stop_id,
+            stop_name=s.stop_name,
+            lat=s.lat,
+            lon=s.lon,
+        )
+        for s in stops
+    ]

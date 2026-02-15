@@ -1,5 +1,5 @@
 import { API_BASE_URL } from '../constants/config';
-import { User, LoginCredentials, RegisterData } from '../types/user';
+import { User, LoginCredentials, RegisterData, VisitedAirport } from '../types/user';
 
 const API_URL = `${API_BASE_URL}/api`;
 
@@ -67,6 +67,22 @@ export const authService = {
       throw new Error('Failed to fetch user');
     }
 
+    return response.json();
+  },
+
+  async recordAirportVisit(userId: number, airportIata: string): Promise<void> {
+    await fetch(`${API_URL}/users/${userId}/visits`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ airport_iata: airportIata }),
+    });
+  },
+
+  async getVisitedAirports(userId: number): Promise<VisitedAirport[]> {
+    const response = await fetch(`${API_URL}/users/${userId}/visits`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch visited airports');
+    }
     return response.json();
   },
 };

@@ -184,6 +184,23 @@ async def mark_article_read(user_id: int, article_id: int):
     """
     return UserLogic.mark_article_as_read(user_id, article_id)
 
+class AirportVisitRequest(BaseModel):
+    airport_iata: str
+
+@router.post("/users/{user_id}/visits")
+async def record_airport_visit(user_id: int, req: AirportVisitRequest):
+    """
+    Record that a user visited an airport.
+    """
+    return UserLogic.record_airport_visit(user_id, req.airport_iata)
+
+@router.get("/users/{user_id}/visits")
+async def get_visited_airports(user_id: int):
+    """
+    Get a user's visited airport stats, ordered by visit count.
+    """
+    return UserLogic.get_visited_airports(user_id)
+
 @router.get("/tips")
 async def get_tips(destination: str = None):
     """

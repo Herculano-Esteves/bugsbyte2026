@@ -38,7 +38,7 @@ function TabsLayout() {
                     <View style={styles.tabBarContainer}>
                         <View style={styles.blurBackground} />
 
-                        <TabButton label="Transports" icon={icons.transports} onPress={() => props.navigation.navigate('prevoo')} />
+                        <TabButton label="Transports" icon={icons.transports} onPress={() => props.navigation.navigate('posFlight')} />
                         <TabButton label="In Flight" icon={icons.inFlight} onPress={() => props.navigation.navigate('inFlight')} />
 
                         <TouchableOpacity
@@ -55,7 +55,7 @@ function TabsLayout() {
                 )}
             >
                 <Tabs.Screen name="main" options={{ tabBarButton: () => null }} />
-                <Tabs.Screen name="prevoo" options={{ tabBarButton: () => null }} />
+                <Tabs.Screen name="posFlight" options={{ tabBarButton: () => null }} />
                 <Tabs.Screen name="inFlight" options={{ tabBarButton: () => null }} />
                 <Tabs.Screen name="search" options={{ tabBarButton: () => null }} />
                 <Tabs.Screen name="perfil" options={{ tabBarButton: () => null }} />

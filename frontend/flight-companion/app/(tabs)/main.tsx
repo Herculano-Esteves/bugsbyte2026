@@ -26,7 +26,7 @@ import AIRPORTS from '../../assets/data/airports.json';
 
 export default function MainScreen() {
     const { mode, setMode } = useFlightMode();
-    const { boardingPass, setBoardingPass, clearBoardingPass } = useBoardingPass();
+    const { boardingPass, setBoardingPass, clearBoardingPass, setSelectedAirport: setContextSelectedAirport } = useBoardingPass();
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [showScanner, setShowScanner] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -40,6 +40,7 @@ export default function MainScreen() {
         try {
             await AsyncStorage.setItem('current_target_airport', JSON.stringify(airport));
             setSelectedAirport(airport);
+            setContextSelectedAirport(airport); // Sync to context so tips tab can use it
             setDropdownOpen(false); // Close dropdown
 
             // Create valid Stops for the route
@@ -536,6 +537,7 @@ export default function MainScreen() {
                                                     onRemove={() => {
                                                         setTripRoute(null);
                                                         setSelectedAirport(null);
+                                                        setContextSelectedAirport(null); // Clear from context too
                                                         AsyncStorage.removeItem('current_target_airport');
                                                     }}
                                                 />

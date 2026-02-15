@@ -103,6 +103,34 @@ def create_tables(conn):
         sent_items TEXT DEFAULT '[]' -- JSON List of Item IDs
     );
     """)
+    
+    # Airlines Table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS airlines (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        icao TEXT NOT NULL UNIQUE,
+        iata TEXT,
+        name TEXT NOT NULL,
+        logo_url TEXT
+    );
+    """)
+    
+    # Flight Schedules Table
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS flight_schedules (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        flight_number TEXT NOT NULL,
+        airline_icao TEXT NOT NULL,
+        aircraft_type TEXT,
+        origin_airport TEXT,
+        destination_airport TEXT,
+        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(airline_icao) REFERENCES airlines(icao)
+    );
+    """)
+    
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_flight_number ON flight_schedules(flight_number);")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_airline_icao ON airlines(icao);")
 
     conn.commit()
 
@@ -137,6 +165,27 @@ def initialize_database():
             
             AirportRepository.bulk_insert_airports(airports)
             print(f"[DB] Seeded {len(airports)} airports.")
+        
+        # Seed manual flight mappings (airlines + flight schedules)
+        from app.parsers.manual_flight_loader import ManualFlightLoader
+        
+        try:
+            ManualFlightLoader.load_manual_data()
+        except Exception as e:
+            print(f"[DB] Failed to load manual flight mappings: {e}")
+        
+        # Optionally seed more airlines from FlightRadar24
+        # (Disabled by default to save startup time - uncomment to enable)
+        # from app.database.airline_repository import AirlineRepository
+        # from app.parsers.airline_scraper import AirlineScraper
+        # if AirlineRepository.is_empty():
+        #     print("[DB] Seeding airlines from FlightRadar24...")
+        #     try:
+        #         airlines = AirlineScraper.scrape_airlines()
+        #         AirlineRepository.bulk_insert_airlines(airlines)
+        #         print(f"[DB] Seeded {len(airlines)} airlines.")
+        #     except Exception as e:
+        #         print(f"[DB] Failed to scrape airlines: {e}")
             
         print("[DB] Tables created and seeded successfully.")
     finally:

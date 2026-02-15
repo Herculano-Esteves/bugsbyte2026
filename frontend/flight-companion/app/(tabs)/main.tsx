@@ -234,19 +234,31 @@ export default function MainScreen() {
             const boardingPass = await parseResponse.json();
             console.log('Parsed boarding pass:', boardingPass);
 
-            let schedule = { dep_time: '', arr_time: '', dep_timezone: '', arr_timezone: '' };
+            let flightIdent = boardingPass.flight_number;
+            // If we have a carrier (e.g. "S4") and a numeric flight number (e.g. "0183"),
+            // combine them but STRIP leading zeros -> "S4183"
+            if (boardingPass.carrier && !isNaN(Number(flightIdent))) {
+                // parseInt("0183", 10) -> 183
+                flightIdent = `${boardingPass.carrier}${parseInt(flightIdent, 10)}`;
+            }
+            console.log('Fetching info for flight ident:', flightIdent);
+
+            let flightInfo: any = {};
             try {
-                const scheduleResponse = await fetch(
-                    `${API_BASE_URL}/api/flights/${encodeURIComponent(boardingPass.flight_number)}/schedule`
+                const infoResponse = await fetch(
+                    `${API_BASE_URL}/api/flights/${encodeURIComponent(flightIdent)}/info`
                 );
-                if (scheduleResponse.ok) {
-                    schedule = await scheduleResponse.json();
+                if (infoResponse.ok) {
+                    flightInfo = await infoResponse.json();
                 }
-            } catch (scheduleErr) {
-                console.warn('Schedule fetch error:', scheduleErr);
+            } catch (infoErr) {
+                console.warn('Flight info fetch error:', infoErr);
             }
 
-            const airTimeMinutes = calculateAirTimeMinutes(schedule.dep_time, schedule.arr_time);
+            const airTimeMinutes = calculateAirTimeMinutes(
+                flightInfo.dep_time || '',
+                flightInfo.arr_time || ''
+            );
 
             const cabinCode = boardingPass.cabin_class || '';
             setBoardingPass({
@@ -260,11 +272,14 @@ export default function MainScreen() {
                 cabinClassCode: cabinCode,
                 cabinClassName: mapCabinClass(cabinCode),
                 boardingZone: '',
-                departureTime: schedule.dep_time || '',
-                arrivalTime: schedule.arr_time || '',
-                departureTimezone: schedule.dep_timezone || '',
-                arrivalTimezone: schedule.arr_timezone || '',
+                departureTime: flightInfo.dep_time || '',
+                arrivalTime: flightInfo.arr_time || '',
+                departureTimezone: flightInfo.dep_timezone || '',
+                arrivalTimezone: flightInfo.arr_timezone || '',
                 airTimeMinutes: airTimeMinutes,
+                // FlightAware general info
+                operator: flightInfo.operator || boardingPass.carrier || 'Unknown Airline',
+                aircraftType: flightInfo.aircraft_type || 'Unknown Aircraft',
             });
         } catch (error: any) {
             console.error('Upload error:', error);
@@ -292,7 +307,11 @@ export default function MainScreen() {
             <View style={styles.contentWrapper}>
 
                 {mode === 'AIR' ? (
-                    <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center', paddingBottom: 140 }}>
+                    <ScrollView
+                        style={{ width: '100%' }}
+                        contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
+                        showsVerticalScrollIndicator={false}
+                    >
                         {boardingPass ? (
                             <>
                                 <TouchableOpacity
@@ -936,4 +955,37 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff',
     },
+    flightCardSubDetail: {
+        fontSize: 12,
+        color: '#757575',
+        marginTop: 2,
+    },
+    statusText: {
+        fontSize: 12,
+        fontWeight: '600',
+        marginTop: 2,
+    },
+    terminalText: {
+        fontSize: 12,
+        color: '#555',
+        marginTop: 2,
+        fontWeight: '500',
+    },
+    timeText: {
+        fontSize: 14,
+        fontWeight: '700',
+        color: '#333',
+        marginTop: 4,
+    },
+    durationText: {
+        fontSize: 11,
+        color: '#999',
+        marginTop: 4,
+    },
 });
+
+function formatTime(isoString: string) {
+    if (!isoString) return '';
+    const date = new Date(isoString);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}

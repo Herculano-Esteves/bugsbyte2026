@@ -1,0 +1,2613 @@
+{
+  "version": "1.0",
+  "generated": "2026-02-15",
+  "source": "WikiVoyage",
+  "destinations": {
+    "LIS": [
+      {
+        "title": "Stay safe",
+        "content": "Lisbon is generally safe, but use common sense precautions, especially at train stations and on public transport.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "LIS",
+        "country_code": "PT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 2",
+        "content": "Some areas are best avoided late at night because of the risk of mugging: Bairro Alto, the alleys, Cais do Sodre. Some night clubs in Lisboa have a poor reputation.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "LIS",
+        "country_code": "PT",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "Lisbon is a city on the water—the River Tagus (Rio Tejo)—built on seven hills that are traversed by trams. This has led to comparisons withSan Francisco. To provide access from the southern suburbs, Lisbon has two spectacular bridges. The 25th of April Bridge (Ponte 25 de Abril) combines the design of the San Francisco–Oakland Bay Bridge with the color of the Golden Gate Bridge, and it's often mistaken for the latter. The Vasco da Gama Bridge (Ponte Vasco da Gama), Europe's longest, was built in the 1990s for Expo '98. One of Lisbon's great landmarks,Cristo Rei, a28m (92ft)statue of Christ the King on an82m (269ft)pedestal, isn't even in Lisbon itself, but across the river inAlmada, big enough to be easily seen from the capital.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "LIS",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do",
+        "content": "Go out at night to the central Bairro Alto, or 'High Neighbourhood'. Just up the hill from Chiado, this is the place to go out in town. In the early evening, go to a fado-themed restaurant near the Praca Camoes, and head upwards as the evening goes on. If you're in Lisbon on the night preceding a Feriado or public holiday, you have to check this out. Tiny little streets which are empty in the daytime become crammed walkways which are difficult to get through. For more of a clubbing or disco experience, try the Docas district along the marina overlooking the Ponte 25 de Abril.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "LIS",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "Portuguese dining rituals tend to follow the Mediterranean siesta body clock. Most restaurants are very small, family-run and generally inexpensive. Some of them have a sheet on the door with thepratos do dia(dishes of the day) written on it – these dishes are usually cheaper and fresher than the rest of menu there, and unless you're looking for something specific, they're the right choice. During the dinner the waiter will probably bring you some unrequested starter dishes (calledcouvert); as those are not free, don't feel obliged to touch them and they will not be charged on your bill (but check it!).",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "LIS",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "Traditional Portuguese restaurants are inBairro Alto, scattered abundantly through its quirky narrow streets, and for Portuguese traditional cuisine at its finest, head to the area ofChiado. Tour groups primarily feel at home inAlfama. Tourist traps with laminated menus and meal deals are mostly concentrated in theBaixaarea; one exception to this is theRua das Portas de Santo Antão, a 'seafood strip' northeast from and parallel to Praça dos Restauradores. If you feel like eating with the local people, try theCasteloneighborhood, the smaller family run places serve a fixed daily menu and are not expensive, getting up there by foot will open an appetite, or else go in theelétrico. For a familiar taste at one of the many chain eateries, head toDoca de Santo Amaro(train/tram 15 station Alcantara-Mar) andParque das Nações(metro Oriental). All the culinary and clubbing kudos is right now concentrated inDoca de Jardim de Tabaco(piece of river waterfront right under Castelo de Sao Jorge). Quality dishes for a high price are in well-to-doLapa. The Pastel De Nata is one of Portugal's most well known foods, with this delightful custard egg tart best found inBelem.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "LIS",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 3",
+        "content": "Try the magnificentpastéis de nataat any pastry shop.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "LIS",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 4",
+        "content": "Never ask a taxi driver about which restaurant you should go to – they will take you to an expensive tourist-oriented restaurant, where they will receive a commission.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "LIS",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 5",
+        "content": "You will find traditional meals served in small coffee shops and restaurants, especially in the old parts of town. Some will be better than others, just check if there are a lot of locals eating there! They will be very cheap (as little as €5 for a full meal) and home-style cooking. The owners probably won't speak English and the menu will probably be in Portuguese only!",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "LIS",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "Lisbon is built on seven hills, so getting around Lisbon can be a workout. Many slopes and few really flat areas is one of Lisbon's trademarks. This is also a city of enchanting contrasts: The elegant squares, broad avenues, monumental buildings and rectangular layout of the lower areas quickly gives way to the hilly, narrow, winding, unpredictable and cramped streets of districts such as Alfama and Bairro Alto. The elegant dining rooms and smart rooftop bars of expensive hotels seems like a different world compared to the excellent restaurants disguised behind an inconspicuous façade in a modest Bairro Alto street. Quality patisseries and restaurants thrive side by side with late night bars and noisy discos. The old, tiny squeaky trams (one of the city's trademarks) are no less of a contrast to the efficient metro network.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "LIS",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 2",
+        "content": "The Portuguese capital is often perceived as less frantic than other million cities, and traffic and barkers are less aggressive than in many other tourist destinations.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "LIS",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "OPO": [
+      {
+        "title": "Stay safe",
+        "content": "There may bepickpocketsin heavily crowded areas and on public buses and trains; however, pickpocketing is not common in Porto. Travelling by bus or metro is generally safe and one of the best ways to go from a place to another.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 2",
+        "content": "Porto is generally a safe place to be if you take normal precautions like walking in well-illuminated streets at night.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 3",
+        "content": "One part of Porto, near the Tourist Information Office between the cathedral and the steps to the small church, often has drunk people that could cause you trouble. There's no reason for alarm because many of them are inoffensive, but it is best to use some caution, as you would elsewhere.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 4",
+        "content": "If you take the main road from the bus station to the cathedral and tourist information centre, walk back to the bus station after you're done and then walk from there to the other sites. Avoid the shortcut from the tourist information centre downstairs because near there have been many incidents there.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 5",
+        "content": "Call 112 if you have an emergency.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "Porto is a mysterious city that reveals its charm to the visitor through time. Take your time, wander through the mazes and alleys of the city. Take in the old, bohemian spirit of the city. Hike through the Ribeira and Foz do Douro regions (the latter, at sunset). Porto may not be in every tourist's Iberian Peninsula itinerary, but it's well worth a visit if you want to see a city that has changed economically, but that has kept its old traditions.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 2",
+        "content": "If you want to visit several museums, consider thePorto Card[dead link]which provides free access to several museums and further discounts, optionally also free public transport access.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do",
+        "content": "• Douro river cruise.Take a cruise upriver (the cost starts at €15 (although they can be slightly cheaper if paired with a different activity) and takes about 50 minutes. Cruises run from 10:00 to 18:30, with sailings every 30 minutes for most operators. There are multiple river cruise operators and you can purchase a ticket from every tourist service and office in the Sao Bento area, or potentially from the wharf itself. Many of the cruises are themed around seeing the various bridges and river-adjacent facilities. You may also choose a day-long cruise starting at €70 to or from Régua, with one way of the journey completed by bus (included in the price). This tour states at 08:00 and returns at 17:00 or 18:00. Go at least as far asPinhão— the landscape is absolutely stunning. If you choose to do this in the summer, don't forget your factor 30 sunscreen! Look for cruises based on the Vila Nova de Gaia wharf (the same side as the port wine caves), as some of them may offer discounts for cave tours or port wine purchases.(updated Feb 2024)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 2",
+        "content": "• Fado Bars.Fadois a music genre originating in Lisbon and considered an integral part of Portuguese music. It is traditionally sung by a woman in a black dress, accompanied by guitar players. A handful of Fado bars stand in Porto, primarily in the Sao Bento area, offering one or two shows per day. The cost is generally €15 (as of June 2022) and tickets for different shows are sold by tourist offices throughout the Sao Bento area. Some shows may include a glass of Port Wine within the cost of the ticket.€10.(updated Jun 2022)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 3",
+        "content": "• 41.144626-8.6074651Teatro Nacional São João (TNSJ),Praça da Batalha, 4000-102,☏+351 22 340 19 56(tour enquiries and reservations),toll-free:800 108 675.Porto's main theatre and opera production company and venue. There are also guided tours (€5/person) for access to the stage, rehearsal room, dressing rooms and the technical area (if they are not used during the time of the tour).(updated Sep 2015)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 4",
+        "content": "• Porto Exit Games(West Baixa; City centre),☏+351 914 884 883,hello@portoexitgames.com.You're locked in a room with a mystery to solve and the clock ticking. Can you crack the puzzle and escape?2-5 players €50 pp.(updated Sep 2018)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "Porto has some of the finest restaurants in Portugal.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "It is said that if you like to eat, you should go to Porto because it's a place where you eat well in terms of quality and amount (even Lisbon citizens say that in Porto is where they eat the best food).",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 3",
+        "content": "The best restaurants of the city are mainly inMatosinhosnear the beach, and thePorto de Leixõesseaport but watch out for pricing, more than a few ok establishments deem themselves worthy of high pricing just because of the decor or the \"in crowd\" is seen going there or a combination of both, they charge ridiculous prices for food not much better prepared or presented than elsewhere and many times, the dose is very small, so don't be shy to look around to get a sense of what is what. You can take the blue metro line A to get there which takes about 30 min. In theRibeirinhapart of Porto, overlooking the Douro River and Vila Nova de Gaia, there's many well run very affordable small family run restaurants with a great vibe, friendly staff, great food and drink and sometimes, due to limited space, having to share tables with complete strangers, sometimes local people and sometimes not, making the whole experience very cosmopolitan and entertaining. Within the old city centre, inexpensive to reasonable priced eating houses catering mostly for residents are also easily found for both lunch and dinner, these places welcome foreigners and many take special pride in hosting you. At these places, to enjoy a hearty well prepared meal, it's best practice to just follow the waiter suggestions as the menus are three course setPratos do dia(Today's menu), normally a choice of two or three soups, main dishes including bread, wine of the house, dessert and abica(espresso) in the end, all this for €7-10 per person. If you are hungry, a good strategy is to say how much you enjoyed the soup and politely ask if you can have a little more. That's why local patrons tend to have the soup last. If you truly enjoyed the meal, show your appreciation to the chef and staff, it always makes the people proud for being of service.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 4",
+        "content": "Expect hearty meals, and if you can, try \"Tripas à moda do Porto\", a tripe dish. Citizens of Porto are calledtripeiros(tripe-eaters) on account of this dish. Traditional set menu restaurants, tend to serve the soup last but these days most waiters will ask what you want first and so on, but don't be surprised to see someone starting with desert and finish with thecouvert! It's known to happen. Also trybacalhau- in any way it is cooked - there are hundreds of different dishes with salted codfish!",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 5",
+        "content": "Don't forget the traditional grilled cheese sandwich called \"Francesinha\", which literally translated means little French lady. This city is just about the only place in the world where you can find it. However, in many other northern Portuguese cities you can find a low quality version of it. Essentially it is a toast with layers of meat inside (beef, pork meat, ham....)  It is covered with cheese and a spicy sauce, with the option of including french fries on top. Most importantly, this dish must be accompanied by beer and not wine.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "OPO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "FAO": [
+      {
+        "title": "Stay safe",
+        "content": "Faro and the Algarve region are reasonably safe year round.Pickpocketsare not unheard-of, however, especially near beaches at night, so be on your guard.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "FAO",
+        "country_code": "PT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 2",
+        "content": "Not unlike other Mediterranean tourism hot spots like Alicante or Mallorca, Faro attracts its share of poorly-mannered tourists (especially from the UK, the Netherlands, and Germany) that go to Faro to drink and let loose. Though the police does a great job at maintaining order, do be careful at night.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "FAO",
+        "country_code": "PT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "• 37.016111-7.9319441Bone Chapel(Capela dos Ossos (inside Igreja do Carmo))(within Igreja do Carmo church).This chapel is almost completely made of bones taken from a former monk graveyard.€2.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FAO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 2",
+        "content": "• 37.01431-7.934932Old town(Centro Historico).A well-preserved section of town off the harbour with cobblestone streets and 18th century Portuguese and Moorish-influenced architecture. It is great place for a peaceful and almost private walk back in time in an area that has been virtually untouched by modernity.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FAO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 3",
+        "content": "• 37.013333-7.9347223Cathedral(Sé)(within the old town).The view from the tower over the old town and the Rio Formosa is a highlight.€5.00.(updated Mar 2024)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FAO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 4",
+        "content": "• 37.09535-7.904044Roman Ruins of Milreu(Ruínas Romanas de Milreu)(in Estoi, near Faro).A luxurious Roman villa that evolved into a Christian basilica by the 4th century. Notable features include well-preserved mosaic floors with marine motifs, remnants of thermal baths, a temple, and agricultural installations, offering insights into Roman life in the region(updated May 2025)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FAO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do",
+        "content": "• 36.9833-7.916671Ria Formosa National Park.In Faro and Olhão you can take a boat trip, birdwatching tours, kayaking or other eco tours and other activities to discover the nature and wildlife of this natural park. Several companies offer packages and tours. Ask at the tourist information or at your accommodation.(updated Oct 2020)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FAO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 2",
+        "content": "• 37.00738-7.993912Faro beach(Praia de Faro).This beach is several kilometres long and so normally never gets crowded, even in the height of summer. Most of the beach is gently sloping though it can take a sudden dip in places. There are the usual beach-side stalls and a public lavatory, but no showers. Praia de Faro is just past the airport, the airport bus stops there. A lot of people with early check-outs and late flights seem to go there on their last day.(updated Sep 2017)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FAO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 3",
+        "content": "• Faro Jewish Heritage Centre,Rua Leao Penedo(in front of Faro Hospital),☏+351 289829525.09:30-12:30 and 14:00-17:00.Established in 1851, the Faro Jewish Cemetery is the only remaining vestige of the first post-Inquisition Jewish presence in Portugal. It served as a burial place for a thriving 60 family community (also known as \"Little Jerusalem\"). The Jews of Portugal were expelled by the Inquisition at the end of the 15th century and settled in Gibraltar and North Africa. After the devastating 1755 Lisbon Earthquake, their descendants were invited by the Marquis of Pombal to help rebuild the economy. Although the community is long gone, the cemetery remains to remind citizens and travellers of its former glory. The Faro Jewish Heritage Centre features over one hundred graves in Sephardi style, with beautifully engraved slabs instead of headstones. Although the land was purchased by the Jewish community in 1851, the first burial, that of Rabbi Toledano, dates back to 1838. Apart from the Cemetery, there is also a museum, housing many objects linked to the history of the Jews of Faro, like the furniture from one of the two former synagogues of Faro or the facsimile copy of Gacon's 1478 Pentateuch in Hebrew, the first book ever printed in Portugal!Free.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FAO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "Faro (FAH-roo, /ˈfa.ɾu/) is the southernmost city in mainland Portugal. During summer, Faro is a popular destination for sun-seekers from northern Europe and theUK, especially due to the presence of its international airport. It also enjoys a reputation as being more friendly than many other parts of the region.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FAO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 2",
+        "content": "Outside of summer, the beach-goers are mostly gone, but it is still a base to explore the more remote areas of the Algarve, a convenient stop betweenLisbonand Seville (or Spain in general), and what it loses in partying outside summer, it gains in peacefulness, reverting to a quaint and charming small city.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FAO",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "PDL": [
+      {
+        "title": "See",
+        "content": "• City toursare based along the Avenida where visitors can find several services to sightsee, including horse-drawn carriage, panoramic bus tours and the Lagarta Tourist Train that travels along the streets.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "PDL",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 2",
+        "content": "• 37.7433-25.66751Carlos Machado Museum,Rua do Dr.Guilherme Poças 65(in the Convento de Santo Andre),☏+351 296 20 29 30,museu.cmachado.info@azores.gov.pt.It portrays the scientific mentality of the 19th century. Most of the information is by naturalists of the second half of the 19th century after the publication of Darwin’sTheory of Evolutionand the Oceanographic expeditions.(updated Sep 2017)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "PDL",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 3",
+        "content": "• 37.7391-25.66912Town Hall(Paços do Concelho de Ponta Delgada).Built in the 17th century, rebuilt in the 20th century.(updated Jan 2024)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "PDL",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do",
+        "content": "• There areboat toursfrom the marina for see the island's coastline, and for whale-watching, available from offices at the marina.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "PDL",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 2",
+        "content": "• 37.739448-25.6653961Ponta Delgada Marina.Visitors can go speedboat racing and big game fishing here.(updated Mar 2021)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "PDL",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 3",
+        "content": "• Organised whale- and dolphin-watching from small boats operating out of Ponta Delgada is increasingly popular. Also whale watching at Blue Talassa.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "PDL",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 4",
+        "content": "• Festa do Senhor Santo Cristo dos Milagres.yearly on the fifth Sunday after Easter.One of the many religious festivities held in the Azores. The town of Ponta Delgada is transformed into a town of color and lively celebration, decorated with colourful flowers and decorative bedspreads hung from balconies. The celebration starts with the blessing of the bread and meat, and the distribution of food among the needy. The festival then continues with a procession, music and fireworks.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "PDL",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "Ponta Delgada is known for itspineappleharvest, so trying fresh pineapples from a local market is a must.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "PDL",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "Ponta Delgada (POHN-tuh dehl-GAH-duh, /ˈpõ.tɐ dɛɫ.ˈga.dɐ/), the city on São Miguel island, is not to be confused with Ponta Delgada, the rural civil parish on the north coast of Flores island.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "PDL",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "MAD": [
+      {
+        "title": "Stay safe",
+        "content": "Madrid is a very safe city, with some of the lowest crime rates among Europe's largest cities. The police is highly visible, and the city is equipped with cameras.  There are always people in the streets, even at night time, so you can walk across the city generally without fear. Travellers who remain aware of their surroundings, and keep an eye on their belongings, should have little to worry about. For police, medical, or fire emergencies, simply call 112. Operators usually speak English.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "MAD",
+        "country_code": "ES",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "Madrid is one of the top addresses in the world for art, both contemporary and not-so-contemporary, with Goya's most famous works in the Prado, Picasso'sGuernicain the Reina Sofía and countless other works in those two museums and the Thyssen-Bornemisza Museum. The Prado goes back to the royal art collection which - for a nation that was the world's leading superpower for two centuries - is of course quite impressive. The Reina Sofía was opened to house what the Prado \"had no room for\" with a dividing line based on era ultimately being drawn. Besides art, Madrid also boasts some impressive architecture courtesy of kings who had access to the wealth of two continents and no qualms in spending it for extravagant royal residences.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MAD",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 2",
+        "content": "The following is a non-exclusive taste of what Madrid has to offer. Dive into the districts to find more!",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MAD",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 3",
+        "content": "• 40.41381-3.692241Museum Triangle. This is Madrid's museum district, named for the three major art museums clustered along Paseo del Prado east of the old city: theMuseo del Prado, one of the finest art museums in the world, theThyssen-Bornemisza, a baron's collection of classical art, and theReina Sofia, Madrid's modern art museum. However, a couple of smaller museums also occupy the neighbourhood which are well worth seeing as well.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MAD",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 4",
+        "content": "• 40.418-3.71422Royal Palace. An enormous palace, one of the biggest in Europe, with scorching plains of concrete around it. Though it is the official residence of the King of Spain, the royal family does not actually reside here and it is generally used only for state ceremonies. The Royal Palace is considered to be one of the most emblematic and beautiful buildings in Madrid.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MAD",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 5",
+        "content": "• 40.41537-3.707263Plaza Mayor. Perhaps the best known plaza in Madrid, this impressive square is now one of the main stops on any tourist visit.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MAD",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "Madrid has over 3.4 million residents within the city limits and 7 million people live in the autonomousCommunity of Madridregion (as of 2025).",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "MAD",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "BCN": [
+      {
+        "title": "Do",
+        "content": "• 41.3710042.1724075Aeri del Port de Barcelona(Telefèric del Port),C/ Taquígrafo Garriga, 97 – Esc.B -2º9ª,☏+34 934 304 716,tebarsa@hotmail.com.Jun-Aug 11:00-20:00; Mar-May, Sep-Oct 11:00-19:00; Nov-Feb 11:00-17:30.Have a ride at Port Vell Aerial Tramway. Port Vell Aerial Tramway is the 1450-metre-long harbour aerial tramway with red cars connectsMontjuïcandBarceloneta. It starts in Barceloneta on the top of the 78-metre-tall41.3731782.1877926Torre San Sebastiantower, which has also a restaurant at its top accessible by an elevator. It has an intermediate stop at41.3720832.1801217Torre Jaume Itower (close to Columbus monument), which can be reached by elevator from ground – 107 metre tall tower, the second-tallest aerial tramway support tower in the world. The final point of the line isMiramaron the slopes of Montjuïc hill. Overall, the whole system is quite old (built in 1929, albeit restored a couple of times), and the car is packed with tourists during the daytime – particularly sensitive for a stroller or a wheelchair. But if you start from the Montjuîc side, there are fewer people waiting.single €11, return €16.50; it's not a part of Barcelona's integrated fare network.(updated Oct 2015)La Rambla, Barcelona's main boulevard",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "BCN",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 2",
+        "content": "• Stroll along the following famous streets inCiutat Vella:41.3813892.1730561La Rambla(Las Ramblas), a gorgeous tree-lined pedestrian walkway, the busiest and most lively street of the city. Mostly occupied by tourists, expect to pay higher prices for food and drink. Avoid the groups of people supposedly betting on a game played on a cardboard table – they are thieves. Head off into some of the side streets for a cheaper, more local, and authentic experience of Barcelona. Often called Las Ramblas, because it is a series of several different streets each called 'Rambla de ____', the sections also have distinct feels. As you get closer to Plaça Catalunya, you find more street performers doing stunts. In the middle, you'll find street performers in costumes. Towards the pier, there are artists who will do pencil drawings, paintings, etc.41.3870312.1700792Plaça de Catalunya. Connecting all the major streets in the city, the Plaça is known for its fountains and statues, and the central location to everything in the city. A favourite meeting spot for locals.41.386462.171963Portal de l'Àngel. Large pedestrian walkway with many new and stylish shops in which to browse.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "BCN",
+        "country_code": "ES",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 3",
+        "content": "• Cruise miles ofbeachfront boardwalkstarting from Barceloneta, or get a tan on the beach. Eat good seafood and rice dishes atLa Barcelonetaneighbourhood",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "BCN",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "As with all cities which welcome large numbers of tourists, Barcelona's cuisine is inconsistent in quality, but there are plenty of restaurants serving excellent food at very reasonable prices, if you know where to look. The usual rules of thumb apply: to save money and get better food, look for places off the beaten track used by fellow travellers, and seek out cafés and restaurants which the locals frequent. In practice, this usually involves searching out eateries in residential districts away from the main sightseeing attractions. Avoid restaurants withtoutsoutside, and have a basic understanding of the traditional foods served in restaurants, as well as the local drinks. One slightly crafty way of sussing a place's authenticity at a glance is to take note of how they spell a certain word: a menu board advertisingtapas, written the Spanish/international way, is likely to be somewhere which primarily caters to tourists, whereas somewhere offeringtapes, using Catalan spelling, is in all probability a venue frequented by locals.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "BCN",
+        "country_code": "ES",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "Some districts to check out includeGràcia, which is a hub of quality, affordable Catalan cooking of both the traditional and more avant-garde varieties, and theEixample, whose chic boulevards have upscale restaurants aplenty worthy of your splurge money. The fishing quarter of Barceloneta (inCiutat Vella) is an example of a neighbourhood where it pays to be picky: closer to the gentrified seafront, a slew of mojito beach bar-style places serve up expensive tourist tapas; for the real thing, head into the backstreets, where many traditional bars are still tucked away. In all cases, be prepared to \"promenade\" in search of the most attractive-looking menu; that's what the locals do, after all.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "BCN",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 3",
+        "content": "Set menus (menú del migdia / menú del día): Most restaurants (and some bars) offer amenú del migdia/menú del día(menu of the day), which usually means a three course meal (a first plate often a salad or rice-based or pasta-based dish, a second plate usually a meat or fish, and a drink; plus a dessert or coffee), 3 or 4 options for each course, for €12 to €20, depending on the restaurant. The portions may be quite generous, or rather small. During the week, some smart restaurants offer lunch specials from 14:00 to 16:00. The savvy traveller will try the hip places for a fraction of the price during the day.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "BCN",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 4",
+        "content": "If you're looking for a place where everyone can choose their own meal, ask for restaurants that serveplatos combinados, which is the closest thing to an American/Northern European meal.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "BCN",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 5",
+        "content": "Smokingis not permitted inside bars and restaurants since 2011, but it's usually allowed in terraces.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "BCN",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk",
+        "content": "Barcelona's official languages areCatalanandSpanish. About a half prefer to speak Catalan, a vast majority understands it, and virtually everyone knows Spanish. However, most signs are indicated only in Catalan because it is established by law as the first official language. Yet, Spanish is also widely used in public transport and other facilities. Regular announcements in the Metro are made only in Catalan, but unplanned disruptions are announced by an automated system in a wide variety of languages including Spanish, English, French, Arabic and Japanese. On the other hand, FGC announcements – either regular or disruptions – will be made only in Catalan, and disruption announcements on RENFE's network will usually be made only in Spanish. As in most other cities, any attempt by visitors to use the native languages is always appreciated. Most locals are bilingual in Catalan and Spanish, and instinctively address foreigners in Spanish. Catalan is a separate Romance language, not a dialect, and sounds closer to Italian, Portuguese and French in many ways. Avoid referring to Catalan as a dialect, which will offend Catalans.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "BCN",
+        "country_code": "ES",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 2",
+        "content": "You might find some locals answer in Catalan after being asked in Spanish, that's not because they are being rude but because they assume you are bilingual. In Catalonia, it's not uncommon to hear people code switching between different languages in the same conversation. In case you can't understand what they are saying, tell them you don't speak Catalan and politely ask them to repeat it in Spanish or English.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "BCN",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 3",
+        "content": "The main cause of Spanish and Catalan social bilingualism in modern Catalonia is a large scale immigration process from the rest of Spain, which occurred over the 20th century, as Catalonia started a significant industrialization which demanded an increased workforce from elsewhere. 60% of the people in Catalonia use Spanish as their first language, and 40% use Catalan. The issues regarding language, national identity, and politics are like politics anywhere.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "BCN",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 4",
+        "content": "In tourist areas, almost all shops and bars have some English speaking staff. People will generally make an effort to try to help you if you speak English. If you are a native English speaker, you will have few problems, as Barcelona hosts many tourists.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "BCN",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "SVQ": [
+      {
+        "title": "Do",
+        "content": "• Cruises, an hour in duration, leave from beneath the Torre del Oro and travel a circuit on the Guadalquivir river.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "SVQ",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 2",
+        "content": "• Horse-drawn carriagerides found near the cathedral take you to the nearby park and other sites of interest. For the sake of the animals, try to avoid carriage rides in the heat of the day in summer.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "SVQ",
+        "country_code": "ES",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "Seville, like most Andalusian destinations, is known for its tapas. \"Tapa\", while it is associated with certain dishes, is actually a size and many restaurants or bars will offer atapa,media ración(half serving, although sometimes enough to make a meal) andración(serving) of the same dish. There are many great tapas places around the foot of the cathedral in the centre of town. You can't go wrong; simply order one of everything to find your favourite! Some typical tapas includetortilla española(potato omelet),pulpo gallego(Galician octopus),aceitunas(olives),patatas bravas(spicy potatoes), andqueso manchego(sheep's milk cheese from the region of La Mancha in central Spain). Also be sure to try thejamón(ham), which you often see hanging above the bar. Most of the restaurants kitchens do not open before 20:30 in the evening. Though usually some easy to prepare meals are available before that time.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "SVQ",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "As the quality of food is considered of a great importance in Seville, most local bars will have very good food at a low price. For an authentic and interesting meal, stop at one of the many bars, especially one which doesn't offer English menus (the prices are likely to be lower!).",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "SVQ",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 3",
+        "content": "Some bars near the river, such asPedalquivirandEl Faro de Triana, offer a nice view but aren't as good of a deal in terms of the quality of the food. Another would beEl Patio San Eloy(San Eloy 9, Sevilla) where the tapas can be a little hit and miss, but where the cool staggered seating steps, fabulous décor and fruity sangria; provide a wonderful respite from the heat of the day.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "SVQ",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 4",
+        "content": "A good deal can more easily be had at less characteristic places such asSloppy Joe's Pizza InnandPapasá.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "SVQ",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 5",
+        "content": "If you would like to purchase your own food, head down to one of the markets close to the centre of the city, such as in Plaza Encarnación. El Corte Inglés is a larger more popular department store that you can go to for almost every need.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "SVQ",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "With more than 685,000 inhabitants (2021), and 1.5 million in the metropolitan area, it is Spain's fourth-largest city, dominating southern Spain.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "SVQ",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 2",
+        "content": "The smooth, slow Guadalquivir River flows through Seville, known asBetisby the Romans and asBetik Wahd-Al-Khabirby the Arabs. Since it is hard to navigate upstream from Seville, the cereal-producing region starts here, and Seville has been a busy port from Roman times, under Muslim rule, and exploding during theAge of Discovery. As the monopoly was broken andCádizlargely took Seville's place, the city entered a period of relative decline.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "SVQ",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 3",
+        "content": "In the 19th century Seville gained a reputation for its architecture and culture and was a stop along the Romantic \"Grand Tour\" of Europe. Seville has built on its tourism industry since, playing host to the International Exposition in 1992, which spurred the construction of a new airport, a new train station, a bullet train link to Madrid, new bridges and improvements to the main boulevards.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "SVQ",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 4",
+        "content": "Forclassical musicbuffs, Seville is the setting of many famous operas over the years, such as Mozart'sLe nozze di FigaroandDon Giovanni, Beethoven'sFidelio, Rossini'sIl barbiere di Sivigliaand  Bizet'sCarmen.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "SVQ",
+        "country_code": "ES",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "CDG": [
+      {
+        "title": "Respect",
+        "content": "Parisians have a reputation for being egocentric, rude and arrogant. While this is often only an inaccurate stereotype, the best way to get along in Paris still is to be on your best behavior, acting like someone who is \"bien élevé\" (well brought up). It will make getting about considerably easier.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Respect - Tip 2",
+        "content": "Parisians' abrupt exteriors will rapidly evaporate if you display some basic courtesies. A simple \"Bonjour, Madame\" when entering a shop, for example, or \"Excusez-moi\" when trying to get someone's attention, are very important; say \"Pardon\" or better \"je suis désolé\" if you bump into someone accidentally or make other mistakes. If you speak French or are using a phrasebook remember to always use the vous form when addressing someone you don't know; this may transform the surliest shop assistant into a smiling helper or the grumpiest inhabitant to a helpful citizen. Courtesy is extremely important in France (where the worst insult is to call someone \"mal élevé\", or \"badly brought up\").",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Respect - Tip 3",
+        "content": "If you only learn one long phrase in French a good one would be \"Excusez-moi de vous déranger, monsieur/madame, auriez-vous la gentillesse de m'aider?\" (pardon me for bothering you, sir/madam, would you have the kindness to help me?) - this level of extreme politeness is about the closest one can come to a magic wand for unlocking Parisian hospitality. If you know some French, try it! But remember, too, that Parisians have places to go and things to do, so if they have no time and don't answer you, don't take it personally. Many Parisians, given time, will go out of their way to help, especially if you make an effort to speak their language and act polite to them.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Respect - Tip 4",
+        "content": "Most foreigners tend to ignore basic rules of courtesy in metro and train transport in Paris. If the carriage is full and you're sitting on a folding seat, you should consider standing up. If you stand next to the door, you are expected to leave the train at a stop so that people inside can exit. Once they have got out, you can go back. However, don't always expect that others will do the same for you. When pushing a door in a station, you are expected to hold it for the next person, so that it won't close abruptly. This rule is strictly observed in the metro, and quite commonly everywhere else.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Respect - Tip 5",
+        "content": "In addition, if you are traveling to or from the airport on the train and have luggage, do not block the aisles with your bags. The RER B (which links both Orly and Charles de Gaulle airports to the city) has luggage racks above the seats (on the newer trains, there are no such racks above the seats, but racks dedicated to luggage in between some seats); it is best to use them so you do not block the path of a local who is getting off the train before the airport stop. On the métro and especially on the RER, don't take up extra seats with your luggage. There are luggage racks and spaces between the seats.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "Highlightsare listed below.Detailed informationcan be found on each individual district page (click on the name of the sight).",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "Paris is one of Europe's culinary centres, where thehaute cuisinehas flourished since at least the French revolution. It may however come as a surprise that Paris isn't considered the culinary capital ofFrench cuisine; many people prefer the French cooking found in small rural restaurants, outside of the city, closer to the farms and with their focus on freshness and regional specialities. Even among French cities, Paris has long been considered by the French as second toLyonfor fine dining.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "There have been other challenges in the last 20 years or so as restaurateurs in places likeSan FranciscoandSydneybriefly surpassed their Parisian fore bearers, again with an emphasis on freshness of ingredients but also borrowings from other cuisines. Parisian cooks didn't just rest on their laurels during this time, rather they travelled, taught, and studied, and together with Paris's own immigrant communities, have revitalized the restaurant trade. Today you can find hundreds of beautiful restaurants with thoughtful (or just trendy) interior design and well-planned and executedcartesandmenusoffering a creativemélangeof French and exotic foreign cuisines. It's safe to say that Paris is once again catching up with or edging ahead of itsAnglophonerivals.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 3",
+        "content": "Of course there are also some traditional offerings, and for the budget conscious there are hundreds of traditional bistros, with their sidewalkterracesoffering a choice of fairly simple (usually meat centred) meals for reasonable prices.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 4",
+        "content": "It is unfortunately possible to have a uniformly poor dining experience during a stay in Paris, probably because mass tourism attracts price gougers. It is frequent to hear people complaining of very high Parisian prices for very poor food and service. Since so many of the restaurants are sub-par, the best approach is to rely on a restaurant guide and personal recommendations. Do your research in advance if possible and be prepared to travel some distance. Don't just walk down the street expecting to find good food; you probably won't.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 5",
+        "content": "Many restaurants are tiny and have tables close together - square metres are at a premium and understandably restaurateurs need to make the most of limited space. In some cases when the restaurant is crowded, you may have to sit beside strangers at the same table. If that does not appeal to you, go to a more upscale place where you will pay for the extra space.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "Paris sits on the River Seine, in north-central France. Around 2.2million people live in the city of Paris, but this only represents the urban core within theBoulevard Périphérique. There are some 10 million people in the widerMétropole du Grand Paris(814 km2) and almost 13million people living in the metropolitan area, making this one of Europe's largest.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 2",
+        "content": "Due to high expectations, a tight schedule, and language barriers, not to mention the large crowds and long lines at certain attractions during high season, the city also disappoints some visitors. Foreign visitors who have an idealized view of Paris might be shocked by the typical challenges of visiting any large city.  They expect romance, beauty, and luxury, but they find street crime, traffic noise, pollution, garbage, and relatively high costs. In the worst case, visitors might experience theParis syndrome, which is a state of severeculture shockand anxiety – sometimes, severe enough that it even results in a psychiatric emergency that requires hospitalization.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 3",
+        "content": "To enjoy the wonders of Paris, make realistic plans. The number of attractions and landmarks is overwhelming; visiting only the most famous ones (which are overcrowded during major holidays) takes more than a week. The city also has more to offer for people who take time for a calm stroll along the back streets. If your time in the city is short, be selective, and save some attractions for your next visit.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 4",
+        "content": "• Paris je t'aime.The website of the tourist office.(updated Jan 2024)",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 5",
+        "content": "• SPOT24,101 quai Jacques Chirac, Paris 15th(Metro: Bir-Hakeim (line 6); RER: Champ-de-Mars—Tour Eiffel (line C); Vélib': station 7023).Daily 10:00-18:00.The City of Paris welcome centre also has an exhibition and shop.(updated Jan 2024)",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk",
+        "content": "French(français) is of course the country's official language. Any native French person will speak French and it helps if you can speak a bit of it. In the parts of the city that tourists frequent the most, the shopkeepers, information booth attendants, and other workers are likely to answer you in English, even if your French is advanced. These workers tend to deal with thousands of foreign-speaking tourists, and responding in English is often faster than repeating themselves in French. This is not the case for the rest of the city.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 2",
+        "content": "For most Parisians, English is something they had to study in school, and thus seems a bit of a chore. People helping you out in English are making an extra effort, sometimes a considerable one. Parisians younger than 40 are much more likely to be fluent in English. Immigrants, often working in service jobs, are less likely to speak English. If it's your first time in France you will have some problems understanding what people are saying, even with prior education in French. Unlike most language education tapes, real Parisians tend to speak fast, use slang, and swallow some letters.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 3",
+        "content": "When attempting to speak French, do not be offended if people ask you to repeat, or seem not to understand you, as they are not acting out of snobbery. Keep your sense of humour, and if necessary, write down phrases or place names. And remember to speak slowly and clearly. Unless you have an advanced level and can at least sort of understand French movies, you should also assume that it will be difficult for people to understand what you are saying (imagine someone speaking English to you in an indiscernible accent).",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 4",
+        "content": "When in need of directions what you should do is this: find a younger person, or a person reading some book or magazine in English, who is obviously not in a hurry; say \"hello\" or \"bonjour\" (bon-zhor); start by asking if the person speaks English, \"Parlez-vous anglais?\" (Par-LAY voo on-glay?) even if the person can read something in English, speak slowly and clearly; write down place names if necessary. Smile a lot. Also, carry a map (preferablyParis par Arrondissement); given the complexity of Paris streets it is difficult to explain how to find any particular address in any language, no matter how well you speak it. If anything, the person may have an idea as to the place you are looking for, but may not know exactly where it may be, so the map always helps.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 5",
+        "content": "On the other hand, you will probably get the cold shoulder if you stop a random person in the métro, fail to greet them and say \"where is place X or street Y\".",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "CDG",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "NCE": [
+      {
+        "title": "Stay safe",
+        "content": "Nice's crime rate is comparable to other cities in western countries. Nevertheless, locals have been grumbling about a number of issues since the 2000s, often with good reasons. Basic precautions are needed at times.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "NCE",
+        "country_code": "FR",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 2",
+        "content": "Nice is known to be the city in France with the highest number of police officers per capita – and since the tragic 2016 terrorist attack by the promenade, Nice hosts a large number of military patrols. They can be somewhat intimidating to meet, especially in the middle of the night, however they are there to maintain an air of control. Most French people maintain their weapons are fake, and they will normally never interact with you.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "NCE",
+        "country_code": "FR",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 3",
+        "content": "As with other larger cities, Nice has areas that must be avoided. The most commonly cited areas are:",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "NCE",
+        "country_code": "FR",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 4",
+        "content": "• The neighbourhoods of Arianne and Pasteur, located in the eastern parts of the city, and the neighbouring town of la Trinité are known hotbeds for gang violence and drug dealing. It is highly discouraged to wander there at night.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "NCE",
+        "country_code": "FR",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 5",
+        "content": "• Some of the neighbourhoods immediately north of the airport have been the stages of pickpocketing.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "NCE",
+        "country_code": "FR",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "The greatest thing to see in Nice is the views along thePromenade des Anglais, which skirts the seacoast for over 5 km, then ends at Nice Airport. These are the views you will have seen in dozens of postcards and in paintings by the 20th-century artist Henri Matisse, who spent so many years living in Nice, but whether you've seen pictures or not, you owe it to yourself to walk along some of this stretch if you have made it to Nice.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "NCE",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 2",
+        "content": "Theold town(Vieux Nice) beneath the hill is a maze of streets and alleys, with many picturesque houses, boutiques and home to the daily flower and fruit market of theCours Saleya. In addition, the local cathedral, the BaroqueCathédrale Sainte-Réparate, in the heart of Vieux Nice, is pretty. You'll want to walk through the Place Sainte-Réparate, anyway, while you're in the old city. If the doors are open, go in and look at the interior and paintings.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "NCE",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 3",
+        "content": "• 43.695777.280141Colline du Château.The castle hill overlooking the Baie des Anges and harbour offers a spectacular vantage point overlooking the city. Not much is left of its ruinedcastlebesides crumbling walls. Still, climbing up the stairs to reach the platforms 90 m above Nice is well worth the view. There is also a lift (ascenseur) which will take you three quarters of the way up. The castle hill park closes at around sunset. Expect to be escorted outside if you stay longer.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "NCE",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 4",
+        "content": "• 43.668397.21842Parc Phoenix,405 Promenade des Anglais,☏+33 4 92 29 77 00,fax:+33 492 29 7701,parcphoenix@ville-nice.fr.Daily, Apr-Sep: 09:30-19:30, Oct-Mar: 09:30-18:00.2500 different plants in botanical garden and tropical glass house. Also various animals.€5.20, 12-18 €3, under 12 free, Nice museums pass-holder €3.(updated Oct 2023)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "NCE",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "Nice's origins can be found among the Gallo-Roman ruins of Cimiez, in the hills up the boulevard de Cimiez from downtown. Cimiez also contains a monastery and some museums, but nowadays, most of the city's inhabitants live closer to sea level. Nice was part of the Italian Duchy ofSavoiaand then the Kingdom ofSardiniauntil it was ceded to France in 1860. The ancient local language is Nissart, and some of the street signs are bilingual. However very few people speak Nissart, and even the elderly know and speakFrench. Don't assume everyone you encounter will speak English—an effort at French will always be appreciated.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "NCE",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "LYS": [
+      {
+        "title": "Stay safe",
+        "content": "Real security problems in the city centre are rare, but the usual advice applies.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 2",
+        "content": "Rue Ste Catherine, behind Place des Terreaux, is locally famous for its bars; on weekend nights there are a lot of drunk people on the street, who might be violent. The police keep a close watch but it is probably better to avoid the area if you are on your own, especially after 3AM when the bars are closed. Similar problems may be encountered in Vieux Lyon.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 3",
+        "content": "In populated places such as Rue de la République or outside Part-Dieu station, you may come across people advertising for charities; they can be recognised by their specific, coloured clothing. They will not ask you for money but rather give you information documents which encourage you to donate. Homeless people sell newspapers such asMacadamorSans-abriwhich help them making some money without begging; they should have an ID card issued by the editors. But there are also people trying to con you and get money for some imaginary charity, sometimes by selling postcards or other items. Never give money directly to someone on the street who claims to be working for charity and does not have official documents, or if the documents look doubtful.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 4",
+        "content": "Some areas with a reputation for insecurity are way off the beaten track. But if you do decide to venture outside the city center, avoid wandering in Guillotière, Gerland, Vergoin, and La Duchère. Beyond, the city limits, stay clear of major suburbs like Villeurbanne and Vénissieux.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "Lyon may not have world-famous monuments such as the Eiffel tower or the Statue of Liberty, but it offers very diverse neighbourhoods which are interesting to walk around in and which hide architectural marvels. As time goes by, the city also becomes more and more welcoming for pedestrians and cyclists. So a good way to explore it may be to get lost somewhere and enjoy what comes up, and not to always follow the guide...",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 2",
+        "content": "A good point for visitors is that most attractions will not cost you a cent: churches,traboules, parks, etc. For those intending to visit several museums (which are almost the only attractions you cannot see for free), theLyon City Cardmay be of interest. Available from the Tourist office and some hotels, it costs €29 for one day, €39 for 2 days, €49 for 3 days, and €59 for 4 days (10% discount if you order online and pick-up). It includes unlimited rides on the public transport network, free or reduced entry fee to major museums and exhibitions and one guided tour per day per person (Vieux Lyon, Croix-Rousse, etc.). The price is still a bit high, so count before you buy to see if this is a good deal considering your plans.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 3",
+        "content": "Do not hesitate to buy a detailed map with a street index from a book shop or a newsagent; many places of interest or good restaurants are in small streets that you will not find on simplified maps, such as the ones you can get from the Tourist office.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 4",
+        "content": "Whatever the time of year (except for theFête des Lumières), tourists are not very numerous yet, but they concentrate in a few small areas, especially Fourvière and Vieux Lyon, where the pedestrian streets are just as crowded as the Champs-Élysées sidewalks on sunny weekends.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do",
+        "content": "Cultural events are listed by the weekly magazineLe Petit Bulletin(free, available in cinemas, theatres, some bars, etc. andonline).",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 2",
+        "content": "Early booking is often necessary for the major institutions (Auditorium, opera house, Célestins and Croix-Rousse theatres). The big names sell out months in advance. Unlike London or New York, there is no place in Lyon where you can buy reduced-price tickets for same day shows. (There used to be one but it was very short-lived, possibly because it had too few seats to sell.)",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "Restaurants have their menus with prices displayed outside. As everywhere in France, the pricesalwaysinclude service, bread and tap water (ask for acarafeof water). Tipping is rare and only expected if you are particularly satisfied with the service. This is especially true in budget or mid-range restaurants, maybe less so in expensive places where it may be considered more appropriate; nothing is compulsory, though. Typical tips depend, of course, on the price of the menu and your level of satisfaction but they are generally not as high as in the US, for example. If you pay by credit card and wish to add a tip, you can tell the person in charge how much he/she should charge your card.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "Meal times are generally 12:00–14:00 for lunch and 19:30–22:00 for dinner. Visitors from areas such as North America and Northern Europe might be surprised to find many places still closed at their usual dinner times. Places offering all-day service are to be found in tourist areas, and are unlikely to serve quality fresh food. Late-night service is quite rare in quality restaurants, but you can always get the usual fast-food or kebab.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 3",
+        "content": "The traditional restaurants in Lyon are calledbouchons; the origin of the word is unclear (it literally means \"cork\"). They appeared at the end of the 19th century and flourished in the 1930s, when the economic crisis forced wealthy families to fire their cooks, who opened their own restaurants for a working-class clientele. These women are referred to asmères(mothers); the most famous of them, Eugénie Brazier, became one of the first chefs to be awarded three stars (the highest ranking) by the famous Michelin gastronomic guide. She also had a young apprentice called Paul Bocuse. Eating in a goodbouchonis certainly a must-do. They serve the typical local dishes, many of which make good use of affordable ingredients like offal:",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 4",
+        "content": "• Salade lyonnaise(Lyon salad): green salad with bacon cubes, croutons and a poached egg",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 5",
+        "content": "• Saucisson chaud: a hot, boiled sausage; can be cooked with red wine (saucisson beaujolais) or in a bun (saucisson brioché)",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "Founded by theRomans, with many preserved historical areas, Lyon is the archetype of the heritage city, as recognised byUNESCO. Lyon is a vibrant metropolis which starts to make the most out of its unique architectural, cultural and gastronomic heritage, its dynamic demographics and economy and its strategic location between Northern and Southern Europe. It is more and more open to the world, with an increasing number of students and international events.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 2",
+        "content": "The city has about 470,000 inhabitants. However, the direct influence of the city extends well over its administrative borders. The figure which should be compared to the population of other major metropolises is the population of Greater Lyon (which includes 57 towns orcommunes): about 1,200,000. Lyon and its metropolitan area are rapidly growing and getting younger, because of their economic attractiveness.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk",
+        "content": "The language of the city is French. The local dialect (patois, basically French with a number of typical local words or expressions) has practically disappeared since one out of two inhabitants were born outside the Rhônedépartement.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 2",
+        "content": "Hotels, tourist attractions and restaurants in popular areas generally have staff capable of working in English. You could, however, experience difficulties in more remote areas. The transportation system also has little information written in English. On the street, many people (especially young people) speak at least basic English, but they will appreciate a little effort in French. Using basic words and phrases likebonjour(hello),s'il vous plaît(please),merci(thank you) orexcusez-moi(excuse me) will certainly make people even more friendly and willing to help you.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "LYS",
+        "country_code": "FR",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "FCO": [
+      {
+        "title": "Stay safe",
+        "content": "Rome is generally a safe place, even for women traveling alone. However, there have been rape cases around the Roma Termini train station, so be careful especially at night time. There is very little violent crime, but plenty of scams and pickpocketing that target tourists. As in any other big city, it is better if youdon't look like a tourist: don't exhibit your camera to all and sundry, and keep your money in a safe place. Consciousness and vigilance are your best insurances for avoiding becoming a victim of a crime in Rome. Remember, if you are pickpocketed or victim of another scam, don't be afraid to shout, \"Aiuto, al ladro!\" (Help, Thief!) Romans will not be nice to the thief.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 2",
+        "content": "Members of the Italian public are likely to be sympathetic if you are a crime victim. Police are also generally friendly if not always helpful. Carabinieri (black uniform, red striped trousers) are military police, and Polizia (blue and grey uniform) are civilians, but they both do essentially the same thing and are equally good, or bad. If you are robbed, try to find a police station and report it. This is essential to establishing a secure insurance claim and to replace documents: the chances of it resulting in the return of your possessions are, however, fairly remote.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 3",
+        "content": "Rome is home to two rival Serie Afootball(soccer) clubs, A.S. Roma and S.S. Lazio, and there is a history of conflict, and even rioting, between the two. Never wear anything that shows that you support either of them, especially during the Rome Derby (when the two clubs play each other, known in Italian as theDerby della Capitale): avoid even wandering into groups of supporters of the other club, or you may be subject to heckling or even confrontation. Play it safe and refrain from openly supporting either club unless you are very familiar with the rivalry. If you are a fan of a foreign team that is playing in Rome,be very carefulas a number of supporters have been stabbed over the past few years.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 4",
+        "content": "Rome has its fair share of odd people: talkative panhandlers, crazy taxi drivers, lonely people wanting to just have a chat with strangers, people trying to sell you things, and so on. If you don't want to acknowledge anyone, do what most Italian people do: completely ignore them, shoo them off, or simply say you don't have anything to give to them or you are not interested.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Respect",
+        "content": "Romans regularly interact with foreigners and tourists; it shouldn't be hard to find friendly help provided you know some Italian. As for most every place in Italy, just be polite and you won't have much trouble.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Respect - Tip 2",
+        "content": "If you hit someone with your luggage or shoulder while walking on a street, say \"sorry\" (Mi scusi): despite being very busy, Rome is not London or New York and going ahead is considered bad behaviour, while a little apology will be satisfactory.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Respect - Tip 3",
+        "content": "In buses or trains, let older people have your seat if there's no space available. The gesture will be appreciated.\nRomans, and Italians as well, are very chaotic while in a queue, and often \"clump\" without any particular order: It's considered impolite, but they do it anyway. Be careful while driving,\nas Romans often drive frantically and bend the rules to cope with the heavy traffic.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "Italians are very fond of their landmarks; in order to make them accessible to everyone one week a year there is no charge for admittance to all publicly owned landmarks and historical sites. This week, known as \"La settimana dei beni culturali\", typically occurs in mid-May and for those 7 to 10 days every landmark, archaeological site and museum belonging to government agencies (including the Quirinale presidential palace and gardens, the Colosseum and all of the ancient Forum) is accessible and free of charge.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 2",
+        "content": "Government-owned museums and historical sites havefree admissionon the first Sunday of every month. There are also significant discounts for EU citizens aged 18 to 25, although this will require identification. Note that in 2026, tourist fees were introduced to some particularly busy attractions: the Trevi fountain costs €2 and a €5 Roma Mic card is required for some civic museums including the Napoleonic Museum and the Giovanni Barracco Museum of Ancient Sculpture.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do",
+        "content": "• Take in a show. There are lots of theatres, but you will need to know Italian to enjoy them. The main concert venue is theAuditoriumin Viale Pietro de Coubertinto the north of Rome. The Auditorium at Parco della Musica is a large complex composed of three separate halls whose shapes are inspired by musical instruments. These are positioned around an open-air amphitheatre, that is used nearly every night in the summer for concerts. The Parco della Musica hosts a constant stream of classical, popular, and jazz music, featuring national as well as international musicians and groups. Really big names perform outdoors in the summer; usually in either theOlympic Stadiumor in Stadio Flaminio, which is next door to the Parco della Musica. In winter the Palalotto inEURis an important pop concert venue.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 2",
+        "content": "• Walk and feel the energy of Rome; sights are everywhere waiting to be discovered.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 3",
+        "content": "• Walk or cycle along the banks of the Tiber. There are steps down to the river from close to most of the bridges. A few have special runners for cycle wheels. This gets you away from the traffic fumes and gives a different perspective of Rome. Not usually possible in winter when water levels can be very high.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 4",
+        "content": "• Explore the Trastevere neighbourhood for some great cafes and trattorie, and a glimpse at a hip Roman neighbourhood.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "Rome is full of good restaurants, many in attractive settings, particularly when you sit outside in the evening. No one location can be recommended to search for a good restaurant: some of the best places to eat are in the most unpromising locations while well-situated restaurants can often live on their reputation rather than the quality of their food. Restaurants in guidebooks can be good but prices can be inflated because it is more than likely a \"tourist trap\". To find an authentic restaurant that won't break the bank, try to find a place in a more residential area or somewhere that isn't in the middle of the tourist locations.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "Many of the good restaurants in Rome are hard to find, but a good tip is to go where Italians live and eat. The downside is that waitstaff at these restaurants usually do not speak English, so be prepared to have to speak some Italian. On the top of the green, old mountain (Monte Verde Vecchio) there are some trattorias with authentic Italian cuisine at an affordable price. Rome also has many beautiful spots to eat, so buying some delicacies to make up a picnic can be a great experience. In Via Marmorata you find Volpetti's which is known for its amazing selection of cheese, prosciutto and delicious pastries (and also for its prices!). A more affordable choice is to go to a local supermarket which will also have good fresh foods for lunch.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "Situated on the River Tiber, between the Apennine Mountains and the Tyrrhenian Sea, the \"Eternal City\" was once the administrative centre of the mighty Roman Empire, governing a vast region that stretched all the way fromBritainto Mesopotamia. Today it remains the seat of the Italian government and home to numerous ministerial offices. Rome has 2.7 million inhabitants while the metropolitan area is home to around 4.5 million.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 2",
+        "content": "Architecturally and culturally, Rome has some contrasts - you have areas with pompously huge majestic palaces, avenues and basilicas, which are then surrounded by tiny alleyways, little churches and old houses. The centre of Rome is mainly ancient, and modern buildings are usually concentrated in the suburbs, unlikeMilan(where new and old architecture is combined both in the centre and the outskirts). You may also find yourself walking from a grand palace and tree-lined elegant boulevard, into a small and cramped Medieval-like street.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 3",
+        "content": "The abbreviation \"S.P.Q.R\" is ubiquitous in Rome, short for the old democratic motto \"Senatus Populusque Romanus\" (Latin), i.e. \"The Roman Senate and People\".",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 4",
+        "content": "For two weeks in August, many of Rome's inhabitants shut up shop (literally) and go on their own vacations; many stores, restaurants and other amenities will beclosedduring this time. The temperature in the city centre at this time of year is not particularly pleasant. If you do travel to Rome at this time, be prepared to seeChiuso per ferie(Closed for holidays) signs on many establishments. Even in these weeks the city is very beautiful and if you are looking for a less overcrowded vacation in Rome, this is not a bad time. You will always be able to find somewhere to eat.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk",
+        "content": "In Rome, obviously, the population speaksItalian. The road signs are mostly in Italian (except for \"STOP\"). If you are staying in the city there are plenty of English alternatives to be found. Seeing as Rome is a popular place to visit there are maps and information in many languages available. Police officers and transit drivers are more than willing to help you get around and usually provide easier ways to get around.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 2",
+        "content": "Some residents still speak the ancient local dialect,Romanesco; nowadays, however, Italian is the more common mother tongue.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 3",
+        "content": "Englishis widely spoken in Rome by the younger generations and by people working in the tourist industry who often switch to English if you start a conversation in broken Italian. Since many people have a limited knowledge of English, it is wise to speak slowly and simply. Among 40+s the chance is a lot less, and with 60+s as good as zero.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 4",
+        "content": "Romance languagesother than Italian, especially Spanish, Portuguese and French, are also fairly widely understood due to their similarity to Italian, although not necessarily spoken.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "FCO",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "MXP": [
+      {
+        "title": "Stay safe",
+        "content": "Unless you venture into the dangerous suburbs, Milan is a rather safe city.Certain areasnear Loreto, the central railway station, and Porto di Mare (Southern end of the yellow metro line)can be unsafe at night. At the station, do not seek help from any random person offering to help with the booking machines or ATMs or under any other pretext. After they have helped, they will pursue you to get as much money as possible for their \"help\". Or they can pretend to be helpful, cheating instead. A possible scenario: they guide you through the interface of the ticket machine in a metro station, and advice you to pay using notes instead of coins (allegedly the ticket machine wouldn't accept coins). If you insert a €20 note, the machine would give it back after a few moments. However, before it happens, they will grab your attention saying that the ticket should appear in the bottom of the machine, and simultaneously an old beggar with body odor will appear begging for money. You wouldn't notice it but the beggar will collect the €20 note that the machine would give back to you. The \"helper\" would then show to you that the maximum amount of change given by the machine is less than €10. Pickpockets are active in busy places, incusing on metro trains.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 2",
+        "content": "Milan is home to two rival football (soccer) clubs;AC MilanandInternazionale. While not as heated as its counterpart inRome, the Milan Derby (Derby della Madonnina) is still a rather intense one, and rioting has been known to occur between the supporters of the two rival clubs. Avoid wearing anything that identifies you as a supporter of either team whenever possible, and should you be supporting one of them on matchday, be careful not to wander into a groups of supporters of the other club. Also be sure to avoid wearingJuventusshirts, as they have a very heated rivalry with Internazionale, and doing so may result in you being targeted for violence by Inter fans, particularly on match days.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 3",
+        "content": "Beware of the migrant vendors in the streets: most of the merchandise they sell isimitation/fake luxury goods. Even at a fraction of the cost of the original merchandise, the quality is spotty, and the goods are not well maintained in storage. Remember that it's illegal to bring pirated goods into some countries and therefore such souvenirs might get even more expensive when trying to bring them home.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 4",
+        "content": "They may also try giving you \"free\" friendship bracelets (sometimes calling them 'a gift').  After you take the bracelet, a coloured piece of string, they will hit you up for money and relentlessly pursue you until they get as much as they can. They will be forceful, physically tying the bracelet to your wrist, or laying it on your shoulder as you try to walk away. This is especially true in the tourist areas around theDuomoandCastello Sforzesco. They usually first ask \"Where are you from?\" Just ignore them. In empty places, watch for strangers directly approaching you. Try to be with other people like in a bus station or a shopping mall.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 5",
+        "content": "Beware of people hanging around the square outside Duomo: they will walk up to you and forcefully give you corn on the hands to feed the pigeons on the pretence that they are free. All the pigeons in the surrounding area will then fly to you. The people will then relentlessly pursue you and ask you for money.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "There are many things to see in Milan - from fine churches, old palaces, excellent museums, world class theatres and opera houses, cultural gems, striking buildings, sleek modern architectural works and lovely streets and squares.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 2",
+        "content": "Milan has some of the oldestchurchesin Italy, older than the ones in Rome because Milan was the capital of the Northern part of the late Roman Empire. The cathedral,Duomois the symbol and the heart of Milan. Santa Maria delle Grazie in the Western part of the city is the home for Leonardo da Vinci's paintingThe Last Supperand a UNESCO World Heritage Site. For those passionate about art Milan offers a large variety ofart museums, mainly of Italian Renaissance and Baroque.  Note, though, that most museums are closed on Mondays.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 3",
+        "content": "For long periods Milan has been surrounded bywalls, built during the Roman Empire, the Middle Ages and the rule of the Habsburg. Many of thegatesare still there and well worth a visit. During the centuries some of them have been completely annihilated and many are built on the same place as a former gate. There are seven gates standing dating from various ages. Clockwise from 12 o'clock they are: Porta Nuova, Porta Venezia (formerly called Porta Orientale and Porta Renza), Porta Romana, Porta Ticinese (two gates; one closer to Duomo and one further out), Porta Sempione and Porta Garibaldi (formerly Porta Comasina).",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 4",
+        "content": "Despite not having as much greenery as some cities, Milan offers severalparks and gardens, scattered all over the city. Maybe the most visited of them is Parco Sempione, also home to the Sforzesco Castle. Many smaller and less-famous parks can be found in the southern part of the city.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 5",
+        "content": "Not all points of interest are right in the absolute centre — some of the most wonderful gems can be found near the outskirts or even outside of Milan.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do",
+        "content": "• Exhibitions- Many exhibitions are held during the year, ranging from wines to computers, industrial equipment and chocolate. Thefieramilanocityis the old exhibitions ground in central Milan a few km northwest of Duomo (MM1 Amendola Fiera or MM1 Lotto - Fiera 2 Stations), the new fairgrounds offieramilanoare in Rho (northwest of Milan, MM1 Rho Fiera Station, A4 highway Pero exit).",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 2",
+        "content": "• La Scala, one of the world's most famousopera houses,is in Milan. It also hosts classical music concerts. Other places to enjoy classical music include Teatro dal Verme, Auditorium di Milano and the Giuseppe Verdi conservatory.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 3",
+        "content": "• If you liketheaterand preferably understand Italian, there are a couple of theater houses in Milan.Piccolo Teatro di Milanohas three theaters,Teatridithalia - Elfo e Portaromana Associatihas two.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "Although Milan is a city that changes its mind as quickly as fashion trends come and go, it remains one of the strongest bastions of traditional Italian cooking, where homemade elements are still very much praised and appreciated. There are trattorias, enoteche (wine bars) and restaurants (including luxury ones) everywhere that offer traditional Milanese and Italian dishes to eat. This city's traditional cooking is based on filling dishes likeosso buco(braised veal shanks) andrisotto alla milanese(chicken-broth risotto made with saffron).",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "Dining times tend to be a shade earlier than in Rome or Florence, with lunch generally served between 12:30 and 14:30 and dinner from 19:30 to 21:30. Dinner, and sometimes lunch, are usually preceded by that great Milanese institution, the aperitivo—a glass of sparkling wine or a Campari soda in a sophisticated hotel bar.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 3",
+        "content": "Avoid the restaurants around the Duomo: they tend to be tourist-only spots, with low-quality food at inflated prices. Be aware that most restaurants charge an extra \"serving tax\" or \"table rent\", calledcoperto, of about €2 per consumer. Also avoid restaurants or cafes around the central station, where it has been reported that hidden serving tax can be up to €5 per person with cheap quality food.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 4",
+        "content": "There is much confusion regarding tipping in Italy. Italians do not typically leave tips at restaurants. In touristy locations there will often be a line left blank for a tip to be added. Just draw a line through it and leave a couple of euros. Never leave tips at bar counters.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "Milan is often described as representing \"modern\" Italy. The differences between Rome and Milan are evident from several proverbs, such as an Italian saying about the differences between the two cities which roughly translates, \"Rome is a voluptuous woman whose gifts are very apparent, while Milan is the shy, demure girl whose treasures are plentiful, but discovered in time.\" Milan is the most modern of all Italian cities, yet it keeps most of its  history intact.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 2",
+        "content": "At first sight, Milan looks like a bustling and relatively stylish (with its shiny display windows and elegant shops) metropolis, with a good number of grand palaces and fine churches in the centre, but might seem like a slightly prosaic, soulless and business-oriented place. It can be quite rainy, grey and foggy, and some of the buildings, ancient or modern, have quite a severe appearance. Whilst there are a lot of parks, Milan looks as if it has very little greenery, and apart from the very well-kept historic part, many areas are indeed quite scruffy and dirty. However, Milan, unlike most usually historical European cities which throw the sights in your face, requires quite a lot of exploring — take it as it is, and you might enjoy its fashionable glitter and business-like modernity, but might find it not very \"captivating\". If you spend time, though, strolling through less well known areas such as the pretty Navigli, the chic Brera district, the lively University quarter, or some of the smaller churches and buildings, you'll find a forward-thinking, diverse city filled in every corner with history, and with a plethora of hidden gems. Plus, with such an established history in theatre, music, literature, sport, art and fashion, there's really not much you can miss.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 3",
+        "content": "Milan, as many have noticed, doesn't fully feel like a part of Italy. Despite the similarities with iconic Italian cities such asVeronaorVenice, the city does have a different atmosphere. Milan feels more like a bustling, busy, fashionable business capital — where in several cafes, lots of people only stop to have a quick espresso at the bar counter, and where tourists at times seem even more laid back than the locals. Milan, unlike the traditionally red-terracotta roofed Italian cities, is quite grey, as many buildings are constructed using limestone or dark stones. Older buildings mainly have a sort of Austrian/Germanic neoclassical look with some slight French influences. However, with some cycling around in old fashioned bicycles, restaurant chairs and tables outside at summer filled with locals and tourists alike, and people strolling down the pedestrian avenues, licking an ice cream or carrying some heavy shopping bags, Milan does boast some \"Italian flair\".",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk",
+        "content": "As you would expect of a city in Italy, the main language in Milan isItalian. However, the traditional language in Milan is the Milanese dialect of the Lombard language, which is not mutually intelligible with standard Italian. You may still hear Milanese being spoken by some of the elderly in the outskirts of the city, but in general it is moribund. That being said, there is a wealth of literature in the Milanese dialect, so those with a deep interest in Milanese culture may consider learning it. English is widely spoken.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "MXP",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "VCE": [
+      {
+        "title": "Stay safe",
+        "content": "Venice is considered a safe city. You have to take the habitual travellers' precautions however. Keep your valuable items (like wallet and passport) close to you because there are pickpockets, especially in more crowded parts of the city.\nIn case of need, you can dial free of charge on any phone112(no area code needed) to contact Carabinieri or113(no area code needed) to contact the Police.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 2",
+        "content": "Sometimes, in the evening and night hours, Campo Bella Vienna and Campo Santa Margherita are places for violence, so be careful if you stay here.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 3",
+        "content": "Since 2024-2025 there are a lot of pickpockets, so you should avoid highly crowded areas.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Get around",
+        "content": "Venice, the world's only pedestrian city, is easily walkable, and the absence of cars makes this a particularly pleasant experience. However, walking and standing all day can also be exhausting, so it is best to pace yourself. The Rialtine islands – the 'main' part of Venice – are small enough to walk from one end to the other in about an hour, provided you don't get lost (a common occurrence).",
+        "category": "transport",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Get around - Tip 2",
+        "content": "If you want to get around a bit more quickly, there are numerousvaporetti (water buses)andwater taxis. The vaporetti are generally the best way to get around, even if the service route map changes frequently. If you are going to be in Venice for a few days visiting, it is a lot cheaper to use vaporetti than private water taxis. If you want to have a romantic ride along the canals, take a gondola ride, although they tend to exist for more scenic purposes, rather than getting people from point A to point B.",
+        "category": "transport",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Get around - Tip 3",
+        "content": "GPS navigation services such as Google Maps are notoriously unreliable in Venice. The density of stone buildings makes it fairly difficult to receive a proper GPS satellite signal. You can mitigate some of these navigation issues using the Live View function in Google Maps, which uses your camera to orient yourself relative to businesses and landmarks around you. However, as of February,2024, Google Maps has been reported as to be working well for pathway navigation.",
+        "category": "transport",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Get around - Tip 4",
+        "content": "The one surprising way you can't get around in Venice is by bicycle. Bicycles are banned in the main city. You are allowed to carry your bike in your arms (not ride, not wheel/walk) from the pIazzale Roma to the Venezia Santa Lucia train station, and if you are traveling through Venice to reachLidoor Pellestrina, then you can carry a bicycle like any other large package on public transit. There is a €100 fine for riding a bicycle in Venice.",
+        "category": "transport",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Respect",
+        "content": "Much of Venice's famous architecture is extremely old and showing the effects of being mishandled by the flood of tourists, some small fraction of whom behave as if they were in a modern holiday resort complex instead of an ancient city. To preserve the wonder of this city for future generations, everyone needs to treat the city's infrastructure as if you were in a large, open-air art museum.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Respect - Tip 2",
+        "content": "The city officials state that it is necessary to enforce rules that preserve the city's urban cleanliness and make sure visitors behave themselves. The following tips will come in handy:",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Respect - Tip 3",
+        "content": "• Walk on the right side of the street; especially on narrower streets, you'll contribute to making your and other’s walk faster, safer, and tidier. Do it always, even if the street is empty: you never know if there is someone behind corner and you will end to hit him. Do not block the flow of traffic, especially on bridges.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Respect - Tip 4",
+        "content": "• Do not bathe, dive into, or swim in the canals; it is dangerous and unhealthy (the canals are the city's ancient open-air sewage system, and you risk being hit by motorboat traffic). Violations are subject to fines up to €350 and being banned from the city for the next 48 hours, even if you have a prepaid hotel room and non-refundable tickets to events. More information is available on#EnjoyRespectVenezia website.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Respect - Tip 5",
+        "content": "• Do not walk around bare-chested or in swimwear; this is punishable by a fine of up to €250.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "Venice is packed full of sights, with something interesting to see around each corner. The most spectacular sights, such as theDoge's PalaceandSaint Mark's Basilica, are inSan Marco, the historic seat of power.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 2",
+        "content": "• Doge's Palacein San Marco: don't miss the guided tour namedSecret Itinerary, which will let you discover the part of the palace where the city's administration worked, as well as Casanova's jail and the wonderful 500-year-old roof structure. A MUVE museum.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 3",
+        "content": "• Bell tower of St. Markdates from 1912; an exact replica of the previous tower which collapsed in 1902. The top of the tower offers great views of Venice and the lagoon.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 4",
+        "content": "• TheClock towerhas a restored astronomical clock which is now visible. The fascinating tour of the clock mechanism (and rooftop bell) can only be visited on a guided tour. A MUVE museum.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "Venice is home to a rich and distinct regional cuisine and there are numerous wonderful restaurants, including a few Michelin starred ones. However, the city is also home to many more mediocre eateries that will not shy away from serving you undercooked pasta for overinflated prices. This has led to it becoming widely regarded that the restaurants in Venice serve food of a quality and in quantities much lower than anywhere else in Italy. However, with a bit of caution and planning ahead you'll have many excellent experiences eating in Venice. Rule of thumb is that if there's a waiter outside pimping for business, it's probably best avoided!",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "One of Venice's trademark foods isSepe al nero, cuttlefish and its ink. This intense black ink serves as a sauce and ingredient for polenta (corn meal), risotto (rice), and pasta. These dishes are normally indicated by the Italian words \"nella seppia\" (in cuttlefish), \"alla seppia\" (in the style of cuttlefish), or \"nero di seppia,\" (black of the cuttlefish). For example, Polenta Nella Seppia is fried corn meal with the black ink of a cuttlefish. Despite the intensity in color, the ink has a surprisingly mild taste. Other Veneitian dishes includeFegato alla veneziana, chopped liver, cooked with chopped onions andSarde in saor: fried sardines, dipped in fried onion, raisins and pine nuts, spices and vinegar.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 3",
+        "content": "For snacks, Venice has its own version of tapas, thecicchetti. Often paired with wine you will find that most restaurants and bars serve some variant of it. There are also many 'bacarosin Venice, a wine bar that serves a wide selection of cicchetti to go along.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 4",
+        "content": "What Venice is not famous for is its pizza, Italy is a big country and pizza is generally more of a speciality in its southern parts. While there are restaurants serving it and some even do it acceptably, don't compare it to other parts of the country. If you really are craving for pizza, try the local chainPizzeria Ae Oche. Meals are plentiful and prices reasonable, look to spend between €5-10 for a pizza depending on how exotic your selection is. For Americans, you can find a place called Quanto Basta pizza that serves an American-style pizza with pepperoni and french fries.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 5",
+        "content": "Be careful when the prices are on a weight basis (typically by the \"etto\", abbreviated \"/hg\". or 100 g). One dish can easily contain 400g of fish or meat (almost a pound) - coming to 4 times the indicated base price! Restaurants might offer low prices for food on their menus that they advertise outside the entrance, but they will sometimes compensate this by charging high prices for drinks (which is naturally *not* advertised). €5 for 33 cl of beer is not uncommon. Le Bauta, an eatery on Fond del Gaffaro, is a good example. Also, please make sure that you get your change back after payment as sometimes it may be 'forgotten' by the waiters.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "VCE",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "FRA": [
+      {
+        "title": "Stay safe",
+        "content": "Frankfurt has one of Germany's highest crime rates, though, in part, only for statistical reasons: smuggling and similar offences at the airport as well as anything concerning credit card fraud anywhere in Germany is registered in Frankfurt, since the main credit card clearing company is based in the city. Furthermore if you count crime per person, you don't include a good chunk of people working but not living in Frankfurt.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "FRA",
+        "country_code": "DE",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 2",
+        "content": "Physical crime is in general concentrated in the red-light district around the central train station, which is also the hangout of many drug dealers/junkies, although even there you are usually safe during the day and moderate evening hours. Frankfurt is safe and it is highly unlikely that you will face armed robbery or other violent crimes. Use your common sense and avoid drunken or aggressive people at night. In general, firearms are an uncommon sight in Germany and the police have a very no-nonsense approach to people wielding guns or even knives. If shots are fired, the police are never far away, as this very rarely happens.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "FRA",
+        "country_code": "DE",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 3",
+        "content": "If you have a problem or are being harassed, ask the police for help. The German police and the Frankfurt Ordnungsamt (City Enforcement Officers) are clean, competent and willing to help. Germany is very bureaucratic but structured; as long as you behave respectfully toward the police, you should have no problem. Don't consider buying and smuggling drugs, these are major offences with dire consequences. Lately, bogus police officers have been an issue. All real officers have a green card with photograph and number, and no officer will check cash. Ring110if you get in any trouble.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "FRA",
+        "country_code": "DE",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "While most of the buildings in the inner town were destroyed during the second world war, many of them in Römerberg have been meticulously restored. The imposing town hall and the cathedral St Bartholomeus where emperors of the Holy Roman empire were crowned in the 17th and 18th centuries are among them. Walk on top of a tower or get to the Main for good views of the skyline.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FRA",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "There are of course restaurants all over Frankfurt. One notable area for dining may be what is locally known as theFressgass(a literal translation would be \"munching alley\"). The correct name of this street isGroße Bockenheimer Straße. As the nickname implies, theFressgassfeatures many cafés, restaurants, and deli food stores. It is a popular area to dine after going shopping. Take the subway to stationHauptwacheU1U2U3U6U7U8orAlte OperU6U7. In late May to early June (exact dates vary each year), theFressgass Festtakes place with food stands, cheap beer and live music. The area also has a few notable historic buildings, such as the beautiful rococo style house at Große Bockenheimer Straße 31 built in 1760 and the two 18th century half-timbered houses at Kleine Bockenheimer Strasse 10 and 12.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "FRA",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "If you are looking for an in-depth paper-based restaurant guide, a popular publication isFrankfurt Geht Aus(Frankfurt is going out), a magazine style dining guide of the city. It can be bought for €4.80 at many kiosks and book stores, or at the Tourism Information at the central station.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "FRA",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "Frankfurt is a city of contrasts. Wealthy bankers, students and hippie drop-outs coexist in a city that has some of the highest, most avant-garde skyscrapers of Europe next to well maintained old buildings. The downtown area, especially Römer square and the museums at the River Main, draw millions of tourists every year. On the other hand, many off-the-beaten-track neighbourhoods, such as Bockenheim, Bornheim, Nordend and Sachsenhausen, with their intact beautiful 19th-century streets and parks are often overlooked by visitors.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FRA",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 2",
+        "content": "It's the heart of the Rhine-Main region, spanning fromMainzandWiesbadenin the west toHanauin the east andGießenin the north toDarmstadtin the south and has some 5.6 million inhabitants (2019) in the whole surrounding metropolitan area.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FRA",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 3",
+        "content": "Frankfurt is the place where Germany's major autobahns and railways intersect. About 650,000 people commute to the city each day, not counting some 763,000 people who live here (2019). With a huge airport—the third-largest in Europe—it is the gateway to Germany and for many people also the first point of arrival in Europe. Further, it is a prime hub for interconnections within Europe and for intercontinental flights.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FRA",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 4",
+        "content": "In the years following 1968, especially in the late 1970s and up to the early 1980s, Frankfurt was a centre of the left wingSponti-Szene, which frequently clashed with police and local authorities over politics and urban design issues (specifically whether or not old buildings should be torn down). Several members of these radical groups went on to have quite respectable careers in politics, among them Daniel Cohn-Bendit (long time leading MEP for the Greens) and Joschka Fischer (Foreign Minister and Vice Chancellor 1998-2005), though their erstwhile radical and violent antics did hurt them in their later political careers.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FRA",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 5",
+        "content": "Frankfurt has one of the highest percentage of immigrants in Germany: about 25% of Frankfurt's people have no German passport and another 10% are naturalized German citizens. With about 35% immigrants, Frankfurt is one of the most diverse of German cities.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FRA",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "MUC": [
+      {
+        "title": "Stay safe",
+        "content": "Boasting one of the lowest crime rates of any major European city, Munich is a very safe city, and violent crime is rare. Walking around, day or night, is not an issue, and you will most likely not encounter any crime at all, though you should still take the usual precautions against pickpocketing (especially in the central districts of Altstadt-Lehel and the Ludwigsvorstadt area immediately south of the central station), such as not leaving your camera unattended or venturing alone through parks at night. While some of Munich's boroughs like Neuperlach and Hasenbergl have a reputation for seediness among locals, crime levels are actually average.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "MUC",
+        "country_code": "DE",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 2",
+        "content": "Munich is an open-minded, international city with a large number of immigrants and expatriates living in the city (almost 40% of residents have a foreign origin, mostly from Turkey, the Balkans, and Poland), so you are very unlikely to encounter any problems because you are a foreigner. Gay and lesbian people should not experience any issues either: Munich has a large gay and lesbian community, and theRosa Liste, a gay rights party, was part of the city government from 1996 to 2014.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "MUC",
+        "country_code": "DE",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 3",
+        "content": "A safety hazard in Munich is the local beer-drinking culture in combination with the high accessibility of alcohol. Think twice before trying to keep up with the locals or looking for your maximum level of alcohol intoxication; being drunk will sharply raise your chances of injuring yourself. You should also keep your distance if you see drunk people fighting, such as in the bars around the central station. Of course, heavy drinking at the time of Oktoberfest will inevitably make people lose control and result in some violent behaviour. Another issue for people not used to driving or walking on ice or snow is wintry road and pavement conditions.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "MUC",
+        "country_code": "DE",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 4",
+        "content": "If you've been to other major cities outside Bavaria before the encounters with the Munich police might be a bit of a culture shock, who mostly follow the \"law and order\" ideas of the regional politics here. Don't be surprised that minor infractions that could slide in Berlin will often get you into hot water with the Munich police. On the whole however they are helpful and there to make people feel safer and corruption is nearly unheard of.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "MUC",
+        "country_code": "DE",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Get around",
+        "content": "The innermost city is walkable and the outer fringes are suitable for a car. For everything else use the excellent public transport system.",
+        "category": "transport",
+        "location_type": "city",
+        "location_code": "MUC",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "• Bavarian cuisineis the main offering, majoring on sausages and other pork. Munich specialities are Weißwurst (a breakfast sausage served until noon and not a second later, washed down with Weissbier), Schweinsbraten (roasted pork) or Schweinshaxe (roasted pig's knuckle). Other trad dishes such as schnitzel are popular but not specifically Bavarian. Beer gardens and beer halls serve heaps of all these.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "MUC",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "• Leberkässemmelnis a white roll filled with a thick warm slice of \"Leberkäse\" — which, despite its name, contains neither liver nor cheese. It's a mix of veal, pork, spices and a hint of lemon zest baked in an open pan and served with a sweet and grainy mustard. Buy these filling, inexpensive snacks at butchers rather than bakers.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "MUC",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 3",
+        "content": "• Brezel(pretzel) withweisswurst(white sausage) and sweet mustard is a traditional breakfast in Munich.Bavarian / Austrian cakes and tortes can be bought by the slice at countless bakeries and cafés. There's also a great array of bread: one local snack is pretzels, \"Brezn\".",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "MUC",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "• Tourist information,Neues Rathaus, Marienplatz,☏+49 89 233 96500,tourismus.gs@muenchen.de.M-F 10:00-18:00, Sa 10:00-17:00, Su 10:00-14:00.The official tourist office is in New Town Hall and can make bookings for tours, hotels and events.(updated Dec 2022)",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "MUC",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 2",
+        "content": "• Munich tourismwebsite",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "MUC",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "BER": [
+      {
+        "title": "Stay safe",
+        "content": "Berlin might be a safe place, but it is a huge city, and as such has some not-so-well maintained areas. No specific rules apply with the exception of public transportation and tourist areas wherepickpocketsare a problem. Watch your bags during rush hours, at larger train stations (with the central and Warschauer stations being notoriously sketchy at night).",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 2",
+        "content": "The police in Berlin are competent, not corrupt; therefore, if you try to bribe them you are likely to spend at least a night behind bars to check your background. They are generally helpful to tourists. Most of the officers are able to speak English, so don't hesitate to approach them if you are frightened or lost. Police are generally more relaxed than in more conservative places likeMunichand do not necessarily engage in a \"zero tolerance\" policy. In general police will focus on crime and traffic safety rather than petty misdemeanors or drunken tourists unless things get out of hand.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 3",
+        "content": "The nationwide emergency numbers are",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 4",
+        "content": "• Medical emergencies and fires,☏112.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 5",
+        "content": "• Police emergency number,☏110.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Get around",
+        "content": "Pedestrians should be careful not to walk in the designated bike lanes.",
+        "category": "transport",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "Berlin has numerous attractions dating from its turbulent history and in part owing to the fact that it was a \"double capital\" for 40 years. While the upkeep of some is an ongoing headache for the treasurer, they are a delight to visitors and many locals alike. Much of the city was destroyed in World War II, so Berlin is a rather modern city and does not have as much historic architecture as most other European capitals. What it instead has is some of the finest examples of contemporary architecture from the second half of the 20th century onwards.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do",
+        "content": "Pick up a copy ofExberliner, the English-language paper targeting expats and guests of Berlin to find out what's on, when and where. It provides good quality journalism and up-to-date listings. If you understand German, the activity planners for the city,zittyandtip, are available at every kiosk. LGBT+/Queer themed magazine and guideSiegessäuleis also one of the most prominent of its kind internationally. Be prepared to choose among a huge number of options.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "Lovers ofstreet foodrejoice! Berlin has an incredibly wide variety of different styles and tastes at very affordable prices (for European wallets, that is). You can find superb food in small stalls tucked away under the tracks of elevated U-Bahn stretches for well under €5.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "A staple in Berlin iscurrywurstfor around €3 (April 2022). It's a bratwurst covered in ketchup and curry powder. You can find them all over Berlin by street vendors. It's a must try when in Berlin. Two renowned currywurst stands are \"Konnopke's Imbiss\" below Eberswalder Straße U-Bahn station on line 2 and \"Curry 36\" opposite the Mehringdamm U-Bahn station in Kreuzberg (only two stops south of Checkpoint Charlie). Both of these offer far friendlier service than many of Berlin's more upmarket eateries.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 3",
+        "content": "Another famous thing to eat in Berlin isdönerfor around €6 (April 2023), a flat bread filled with lamb or chicken meat and vegetables, available at many Turkish stands.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 4",
+        "content": "Berlin may seem like carnivore heaven, butvegetariansandveganscan eat quite well. Berliners are generally environmentally conscious, and that extends to their food; most of the inner neighbourhoods have a handful of good healthy vegetarian or vegan restaurants using local ingredients, though they tend to be more expensive than the ubiquitous kebab and sausage stands. If you're a vegetarian on a limited budget, many kebab restaurants have a good selection of roasted vegetables and salads, and you can usually getfalafels(fried chickpea balls, suitable for vegans) andhalloumi(a type of dense cheese) in place of meat.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 5",
+        "content": "Eating out in Berlin is incrediblyinexpensivecompared to any other Western European capital or other German cities. The city is multicultural and many cultures' cuisines are represented here somewhere, although they are often modified to suit German tastes.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "The city of Berlin is co-extensive with theLandof Berlin, one of the 16 federal states that make up the Federal Republic of Germany. It has a population of 3.8 million (2019) (and a million more in suburbs likePotsdamacross the state line inBrandenburg).",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 2",
+        "content": "Berlin is and has been far less dominant as the capital of Germany than London, Paris or Madrid are in their respective countries, because of the federal nature of Germany and because the havoc war and partition wreaked on the city. In many ways, West Berlin was in some ways forgotten by West Germany, given that it was located as an enclave inside of the DDR, and would be immediately lost if hostilities were to break out between NATO and the Warsaw Pact. Due to the collapse of the DDR, the main power centers of Germany remained the main power centers of West Germany, with money and power centered on the industrial and financial centers in West Germany. However, as Germany has remained a unified country, Berlin is increasingly not looked over, and competition for control of Berlin—and thus political power in Germany—has significantly increased in the twenty-first century.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 3",
+        "content": "Merely a backwater town in the early 18th century, Berlin grew to be one of the most important and biggest cities in the world by the 1920s. The heart of oldPrussiaand a focal point of theCold War, it lost much of its importance and historic architecture as a result ofWorld War IIand German partition.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 4",
+        "content": "Berlin is a world city of culture, politics, media and science. Its economy is based on high-tech firms and the service sector, a diverse range of creative industries, research facilities, and media corporations. Significant sectors also include IT, biotechnology, construction and electronics.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 5",
+        "content": "With the world's oldest large-scale movie studio complex in nearby Babelsberg, Berlin is an increasingly popular location for international film productions.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk",
+        "content": "Signage and automatic announcements are often available inEnglish, and sometimes in French and Spanish as well as German. There are, however, surprisingly many people who speak little or no English, in particular among the elderly and people who grew up in the East, where Russian was taught in schools. This does not necessarily keep them from attempting to speak English with you if they notice an accent or halting German.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 2",
+        "content": "A lot of place names can be a bit tricky even to fluent German speakers as they are of Slavic origin. The widespread -ow ending is to be pronounced /o:/ like a long German \"o\". Saying \"Pankoff\" or \"Rudoff\" will mark you as an out-of-towner and might cause jokes at your expense.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 3",
+        "content": "People who work in public transit and the tourism sector are now expected to speak at least some English, but they may not necessarily have much patience explaining the same thing over and over to tourists every single day, even when it's their job to do so, and the aforementioned Berlin rudeness / \"humour\" might come through when dealing with tourists.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 4",
+        "content": "Immigration and the Erasmus programme mean there are severalother languageswidely spoken. In particular, there are some 200,000 people of Turkish origin living in Berlin, mainly in the western districts. But don't assume someone speaks Turkish well (or at all) just because they have a Turkish surname, many Turkish families have been in Berlin for generations now. While less visible and numerous than the Turkish population, Berlin also has a sizable Vietnamese minority that came to East Berlin as guest workers in the 1980s. Similarly to the Turkish minority, some but not all of the Vietnamese minority speak Vietnamese, but don't assume that someone speaks Vietnamese just because they're ethnically Vietnamese.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk - Tip 5",
+        "content": "Foreign students originate from all over Europe, but Spanish, Greek and Italian speakers are especially numerous. As many students in Berlin are either Erasmus students or have been abroad elsewhere, you can reasonably expect students to speak at least passable English and often another European language.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "BER",
+        "country_code": "DE",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "TER": [
+      {
+        "title": "Stay safe",
+        "content": "Like most of the world, it is not uncommon for petty thievery to occur. Unlocked cars with visible possessions will look like an invitation for thieves. It is advisable the cars doors be locked, valuables be with you at all times or at least concealed. Maintain visual contact with your belongings. There isn't a rash of thievery on the island, but is a common precaution anywhere in the world as tourists are always less informed making them easier prey for opportunists.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Get around",
+        "content": "• Empresa de Viação Terceirence(EVT),☏+351 295 217 001,evt@mail.telepac.pt.EVT offers numerous bus routes around the island, including service between Praia do Vitoria and Angra Velha, which takes 55 min, M-F hourly, less frequently on Sa Su.(updated Dec 2023)",
+        "category": "transport",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Get around - Tip 2",
+        "content": "There are many car rental services around the airport in Praia De Vitoria.",
+        "category": "transport",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Get around - Tip 3",
+        "content": "Be very careful when driving. Local drivers are careless. Livestock has right of way, only seen in the interior rural areas of the island. There is one highway (Via Rapida) which connects Praia de Vitoria to Angra De Heroísmo, a 15- to 20-minute drive, with a speed limit of100km/h (62mph).",
+        "category": "transport",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Get around - Tip 4",
+        "content": "There are numerous taxis on the island, unmistakable with their eggshell white/cream colour and two broad blue hashlines behind the passenger door. They are generally very well-maintained vehicles. Most drivers speak English, or one can be requested.",
+        "category": "transport",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "Algar do CarvãoandGruta do Natalare volcanic caves in the interior of the island. These caves are formed when a volcano's lava supply is suddenly interrupted, leaving an open space (a cave) with a vertical opening.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 2",
+        "content": "See thefumarolesin pristine condition, a local natural monument in a protected area. You may appreciate it exactly as Charles Darwin saw it in 1830.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 3",
+        "content": "Angra do Heroísmo, a UNESCO World Heritage Site, has three castles. One castle is the largest in the world built by Spaniards, with over 3.5 km of perimeter walls, over twice the size of many famous castles.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do",
+        "content": "One main beach is atPraia de Vitoria. It is man-made and small, about 1 mile at best, usually a summer hangout for the locals. There are numerous man made \"pools\" around the island, which are connected to the ocean. There are also many natural rock pools near the beaches in the coastal towns. InBiscoitos, enjoy swimming between lava rocks.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 2",
+        "content": "In Praia da Vitória is a diving center with a professional PADI and SSI team, and activities like scuba diving courses, scuba experiences, or snorkelling tours. The email address is geral@octopusportugal.com and the contact is +351 965431985.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "There are many restaurants that offer local dishes and other international cuisine. Seafood is the main specialty as is locally cultured cheese and bread, great with local wines.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "• 38.656151-27.2226491Restaurant Mercatto di Osteria,rua dos canos verdes, 129, Angra do Heroísmo(next to Sé Cathedral),☏+351 295 628 375,geral@mercatto.pt.W-M 12:00-15:00 and 19:00-23:00.€20-25, executive lunch for €10.(updated Jan 2024)",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "Terceira (tihr-SAY-ruh, /tɨɾ.ˈsɐj.ɾɐ/) is the third largest island in the Azores.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 2",
+        "content": "The people who inhabit the island rely on agriculture for income and there are very few restaurants on the island.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Talk",
+        "content": "Most of the locals speak some English, at least the young or professionals in the city speak it.Portugueseis the main language. If you're fluent inSpanish, you can get by alright.",
+        "category": "language",
+        "location_type": "city",
+        "location_code": "TER",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
+    "TSF": [
+      {
+        "title": "Do",
+        "content": "• Seminario Vescovile di Treviso, in via S. Nicolò. Ask to go in the \"Stanza affrescata\" by Tommaso da Modena: on the wall, between others, there is the first monk painted with spectacles in the history of Painting.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "TSF",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 2",
+        "content": "• Eat Tiramisu. It was 'created' in Treviso, at Ristorante le Beccherie in Piazza Ancillotto. Unfortunately today there is no special place to eat Tiramisu. A Pasticceria near the Railway station has tiramisù made with savoyard biscuits, the original recipe.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "TSF",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 3",
+        "content": "• Rugby Union:Benetton Treviso play in the United Rugby Championship (formerly Pro-14), the predominantly Celtic super-league. Their home ground is Stadio Comunale di Monigo, capacity 5000.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "TSF",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "• DiVino Osteria Trevigiana,Via Postumia Castellana, 2(Quinto di Treviso).A restaurant characterised by typical local cuisine, an exclusive design, a lively and welcoming environment and a spectacular display of all wines, that simply astonishes lovers of good wine.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "TSF",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "• Muscoli's Osteria Trevigiana,Pescheria, 2.9AM-midnight.An ancient hosteria in a charming place: in front of The island of fishmarket, right in the historic centre of Treviso. Local food include cicchetti, it means finger food and local people drink spritz, a light cocktail with prosecco wine, campari or aperol.€2-20.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "TSF",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 3",
+        "content": "• Le Beccherie,Piazza Ancilotto,10,☏+39 0422 540871.closed Sun evening and Mon.€28 -39 (2003).",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "TSF",
+        "country_code": "IT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ]
+  }
+}

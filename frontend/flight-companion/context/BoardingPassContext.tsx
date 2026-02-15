@@ -49,6 +49,21 @@ export interface BoardingPassData {
     departureTimezone: string;
     arrivalTimezone: string;
     airTimeMinutes: number | null;
+    // FlightAware general info
+    operator?: string;
+    aircraftType?: string;
+    flightStatus?: string;
+    originName?: string;
+    originGate?: string;
+    originTerminal?: string;
+    destinationName?: string;
+    destinationGate?: string;
+    destinationTerminal?: string;
+    routeDistance?: string;
+    scheduledDeparture?: string;
+    scheduledArrival?: string;
+    estimatedDeparture?: string;
+    estimatedArrival?: string;
 }
 
 interface BoardingPassContextType {

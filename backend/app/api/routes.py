@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from app.logic.core_logic import CoreLogic
-from app.models.schemas import Airport, Flight, Ticket, Weather, FlightSchedule, Item
+from app.models.schemas import Airport, Flight, Ticket, Weather, FlightSchedule, FlightInfo, Item
 from pydantic import BaseModel
 import base64
 import re
@@ -53,6 +53,14 @@ async def get_flight_schedule(flight_number: str):
     Fetch mock flight schedule (departure/arrival times and timezones).
     """
     return CoreLogic.get_flight_schedule(flight_number)
+
+@router.get("/flights/{flight_number}/info", response_model=FlightInfo)
+async def get_flight_info(flight_number: str):
+    """
+    Fetch general flight info from FlightAware AeroAPI.
+    Falls back to mock schedule if the API is unavailable.
+    """
+    return CoreLogic.get_flight_info(flight_number)
 
 @router.get("/weather", response_model=Weather)
 async def get_weather(location: str):
@@ -169,6 +177,35 @@ async def get_user_details(user_id: int):
     """
     return UserLogic.get_user(user_id)
 
+@router.get("/tips")
+async def get_tips(destination: str = None):
+    """
+    Get travel tips for a destination airport.
+    
+    Args:
+        destination: IATA airport code (e.g., LIS, BCN, PDL)
+    
+    Returns:
+        Tips grouped by category
+    """
+    if not destination:
+        raise HTTPException(status_code=400, detail="destination parameter is required")
+    
+    from app.parsers.tip_loader import TipLoader
+    
+    tips_by_category = TipLoader.get_tips_by_category(destination)
+    
+    if not tips_by_category:
+        return {
+            "destination": destination.upper(),
+            "tips": {},
+            "message": "No tips available for this destination"
+        }
+    
+    return {
+        "destination": destination.upper(),
+        "tips": tips_by_category
+    }
 
 # --- Transport Routes ---
 from app.transport.models import (

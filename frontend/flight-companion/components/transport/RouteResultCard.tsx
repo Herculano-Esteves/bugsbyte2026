@@ -31,19 +31,11 @@ function formatDuration(minutes: number): string {
 
 // ── Map helpers ─────────────────────────────────────────────────────────
 
-/** Open exact GPS coordinates — uses geo: URI which pins raw coords */
+/** Open exact GPS coordinates in Google Maps */
 function openStopInMaps(lat: number, lon: number) {
-  if (Platform.OS === 'ios') {
-    const url = `maps://?ll=${lat},${lon}&z=17`;
-    Linking.openURL(url);
-  } else {
-    // geo: URI with label — Android drops a pin at exact coordinates
-    const url = `geo:${lat},${lon}?z=17`;
-    Linking.openURL(url).catch(() => {
-      const fb = `https://www.google.com/maps/@${lat},${lon},17z`;
-      Linking.openURL(fb);
-    });
-  }
+  // Use Google Maps Universal Link — works on iOS/Android app or browser
+  const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+  Linking.openURL(url);
 }
 
 // ── Ticket purchase URLs by agency ──────────────────────────────────────

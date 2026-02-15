@@ -17,6 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL, GO_API_BASE_URL } from '../../constants/config';
 import { router } from 'expo-router';
 import AirportMap from '../../components/AirportMap';
+import FlightRouteMap from '../../components/FlightRouteMap';
 
 export default function MainScreen() {
     const { mode, setMode } = useFlightMode();
@@ -168,8 +169,93 @@ export default function MainScreen() {
 
     return (
         <View style={styles.container}>
-            {/* Full-width header toggle */}
-            <View style={styles.header}>
+            {/* Main content */}
+            <View style={styles.contentWrapper}>
+
+                {mode === 'AIR' ? (
+                    <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center', paddingBottom: 140 }}>
+                        {boardingPass ? (
+                            <TouchableOpacity
+                                style={styles.flightCard}
+                                onPress={() => router.push('/(tabs)/boardingpass')}
+                                activeOpacity={0.7}
+                            >
+                                <View style={styles.flightCardHeader}>
+                                    <Text style={styles.flightCardCarrier}>{boardingPass.carrier}</Text>
+                                    <Text style={styles.flightCardFlight}>{boardingPass.flightNumber}</Text>
+                                </View>
+
+                                <View style={styles.flightCardRoute}>
+                                    <Text style={styles.flightCardAirport}>{boardingPass.departureAirport}</Text>
+                                    <View style={styles.flightCardLine} />
+                                    <Ionicons name="airplane" size={18} color="#007AFF" />
+                                    <View style={styles.flightCardLine} />
+                                    <Text style={styles.flightCardAirport}>{boardingPass.arrivalAirport}</Text>
+                                </View>
+
+                                <View style={styles.flightCardDetails}>
+                                    <Text style={styles.flightCardDetail}>Seat {boardingPass.seat}</Text>
+                                    <Text style={styles.flightCardDetail}>{boardingPass.cabinClassName}</Text>
+                                </View>
+
+                                <Text style={styles.flightCardHint}>Tap for details</Text>
+
+                                <TouchableOpacity
+                                    style={styles.rescanButton}
+                                    onPress={(e) => {
+                                        e.stopPropagation();
+                                        clearBoardingPass();
+                                    }}
+                                >
+                                    <Ionicons name="refresh-outline" size={16} color="#d32f2f" />
+                                    <Text style={styles.rescanText}>Scan new</Text>
+                                </TouchableOpacity>
+                            </TouchableOpacity>
+                        ) : (
+                            <View style={styles.scannerContainer}>
+                                <Text style={styles.scannerTitle}>Get ticket from:</Text>
+                                <View style={styles.buttonRow}>
+                                    <TouchableOpacity style={styles.actionButton} onPress={openScanner}>
+                                        <Ionicons name="camera-outline" size={36} color="#333" />
+                                        <Text style={styles.actionButtonText}>Camera</Text>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity style={styles.actionButton} onPress={pickImage}>
+                                        <Ionicons name="image-outline" size={36} color="#333" />
+                                        <Text style={styles.actionButtonText}>File</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                                {loading && <ActivityIndicator style={{ marginTop: 16 }} size="small" color="#d32f2f" />}
+                            </View>
+                        )}
+
+                        {/* Flight Route Map */}
+                        <View style={styles.routeMapBox}>
+                            <Text style={styles.boxTitle}>Flight Route</Text>
+                            <View style={styles.routeMapWrapper}>
+                                <FlightRouteMap
+                                    departure={{ code: 'OPO', name: 'Porto Airport', lat: 41.2481, lng: -8.6814 }}
+                                    arrival={{ code: 'TER', name: 'Lajes Airport, Terceira', lat: 38.7618, lng: -27.0908 }}
+                                />
+                            </View>
+                        </View>
+                    </ScrollView>
+                ) : (
+                    <View style={styles.grdContainer}>
+                        {/* Airport Map Box */}
+                        <View style={styles.mapBox}>
+                            <Text style={styles.boxTitle}>Airport Locator</Text>
+                            <View style={styles.mapWrapper}>
+                                <AirportMap />
+                            </View>
+                        </View>
+                    </View>
+                )}
+            </View>
+
+            {/* Bottom mode toggle – sits above the tab bar */}
+            <View style={styles.bottomToggle}>
                 <TouchableOpacity
                     style={[styles.modeButton, mode === 'AIR' && styles.activeModeButton]}
                     onPress={() => setMode('AIR')}
@@ -189,78 +275,6 @@ export default function MainScreen() {
                         GRD
                     </Text>
                 </TouchableOpacity>
-            </View>
-
-            {/* Main content */}
-            <View style={styles.contentWrapper}>
-
-                {mode === 'AIR' ? (
-                    boardingPass ? (
-                        <TouchableOpacity
-                            style={styles.flightCard}
-                            onPress={() => router.push('/(tabs)/boardingpass')}
-                            activeOpacity={0.7}
-                        >
-                            <View style={styles.flightCardHeader}>
-                                <Text style={styles.flightCardCarrier}>{boardingPass.carrier}</Text>
-                                <Text style={styles.flightCardFlight}>{boardingPass.flightNumber}</Text>
-                            </View>
-
-                            <View style={styles.flightCardRoute}>
-                                <Text style={styles.flightCardAirport}>{boardingPass.departureAirport}</Text>
-                                <View style={styles.flightCardLine} />
-                                <Ionicons name="airplane" size={18} color="#007AFF" />
-                                <View style={styles.flightCardLine} />
-                                <Text style={styles.flightCardAirport}>{boardingPass.arrivalAirport}</Text>
-                            </View>
-
-                            <View style={styles.flightCardDetails}>
-                                <Text style={styles.flightCardDetail}>Seat {boardingPass.seat}</Text>
-                                <Text style={styles.flightCardDetail}>{boardingPass.cabinClassName}</Text>
-                            </View>
-
-                            <Text style={styles.flightCardHint}>Tap for details</Text>
-
-                            <TouchableOpacity
-                                style={styles.rescanButton}
-                                onPress={(e) => {
-                                    e.stopPropagation();
-                                    clearBoardingPass();
-                                }}
-                            >
-                                <Ionicons name="refresh-outline" size={16} color="#d32f2f" />
-                                <Text style={styles.rescanText}>Scan new</Text>
-                            </TouchableOpacity>
-                        </TouchableOpacity>
-                    ) : (
-                        <View style={styles.scannerContainer}>
-                            <Text style={styles.scannerTitle}>Get ticket from:</Text>
-                            <View style={styles.buttonRow}>
-                                <TouchableOpacity style={styles.actionButton} onPress={openScanner}>
-                                    <Ionicons name="camera-outline" size={36} color="#333" />
-                                    <Text style={styles.actionButtonText}>Camera</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity style={styles.actionButton} onPress={pickImage}>
-                                    <Ionicons name="image-outline" size={36} color="#333" />
-                                    <Text style={styles.actionButtonText}>File</Text>
-                                </TouchableOpacity>
-                            </View>
-
-                            {loading && <ActivityIndicator style={{ marginTop: 16 }} size="small" color="#d32f2f" />}
-                        </View>
-                    )
-                ) : (
-                    <View style={styles.grdContainer}>
-                        {/* Airport Map Box */}
-                        <View style={styles.mapBox}>
-                            <Text style={styles.boxTitle}>Airport Locator</Text>
-                            <View style={styles.mapWrapper}>
-                                <AirportMap />
-                            </View>
-                        </View>
-                    </View>
-                )}
             </View>
 
             {/* Camera Modal */}
@@ -289,17 +303,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
 
-    header: {
+    bottomToggle: {
         flexDirection: 'row',
         width: '100%',
-        height: 64,
+        height: 52,
         backgroundColor: '#fff',
-        borderBottomWidth: 2,
-        borderBottomColor: '#ef5350',
-        overflow: 'hidden',
-        elevation: 3,
+        borderTopWidth: 2,
+        borderTopColor: '#ef5350',
+        position: 'absolute',
+        bottom: 70,
+        left: 0,
+        right: 0,
+        elevation: 5,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
+        shadowOffset: { width: 0, height: -2 },
         shadowOpacity: 0.15,
         shadowRadius: 3,
         zIndex: 10,
@@ -339,6 +356,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 32,
         paddingHorizontal: 20,
+        paddingBottom: 0,
     },
 
     title: {
@@ -431,6 +449,24 @@ const styles = StyleSheet.create({
     },
     mapWrapper: {
         height: 400,
+        borderRadius: 8,
+        overflow: 'hidden',
+    },
+
+    routeMapBox: {
+        backgroundColor: '#fff',
+        borderRadius: 12,
+        padding: 16,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+        width: '100%',
+        marginTop: 20,
+    },
+    routeMapWrapper: {
+        height: 300,
         borderRadius: 8,
         overflow: 'hidden',
     },

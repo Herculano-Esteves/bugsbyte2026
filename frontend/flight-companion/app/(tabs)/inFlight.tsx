@@ -155,7 +155,7 @@ export default function InFlightScreen() {
                 <Text style={[styles.headerTitle, { color: theme.text }]}>In Flight</Text>
             </View>
 
-            <ScrollView contentContainerStyle={styles.scrollContent}>
+            <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 <View style={styles.sectionContainer}>
                     <Text style={[styles.sectionTitle, { color: theme.text }]}>Your carrier</Text>
                     {renderCard(carrierArticle, 'carrier')}
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     },
     scrollContent: {
         paddingHorizontal: 16,
-        paddingBottom: 20,
+        paddingBottom: 100,
     },
     sectionContainer: {
         marginBottom: 24,

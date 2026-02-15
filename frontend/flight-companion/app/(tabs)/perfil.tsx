@@ -6,6 +6,7 @@ import {
     StyleSheet,
     ScrollView,
     Alert,
+    Image,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
@@ -22,7 +23,7 @@ export default function ProfileScreen() {
                     colors={['#667eea', '#764ba2']}
                     style={styles.guestContainer}
                 >
-                    <Text style={styles.guestIcon}>👤</Text>
+                    <Image source={require('../../assets/Icons/Profile.png')} style={styles.guestIconImage} />
                     <Text style={styles.guestTitle}>Guest Mode</Text>
                     <Text style={styles.guestSubtitle}>
                         Sign in to access your profile and save your preferences
@@ -165,8 +166,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 30,
     },
-    guestIcon: {
-        fontSize: 80,
+    guestIconImage: {
+        width: 80,
+        height: 80,
+        resizeMode: 'contain',
         marginBottom: 20,
     },
     guestTitle: {

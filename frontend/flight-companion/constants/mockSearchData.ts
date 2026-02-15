@@ -1,7 +1,7 @@
 export interface Article {
     id: number;
-    tags: string[];
-    hiddenTags: string[];
+    public_tags: string[];
+    hidden_tags: string[];
     title: string;
     text: string;
     image: string;
@@ -11,42 +11,229 @@ export interface Article {
 export const mockArticles: Article[] = [
     {
         id: 1,
-        tags: ['safety', 'emergency'],
-        hiddenTags: ['procedure', 'evacuation', 'mask', 'mock'],
+        public_tags: ['safety', 'emergency'],
+        hidden_tags: ['procedure', 'evacuation', 'mask', 'mock'],
         title: 'In-Flight Safety Guide',
         text: 'Learn about the safety procedures and emergency protocols for your flight. Always pay attention to the flight attendants during the safety briefing.',
         image: 'https://images.unsplash.com/photo-1542296332-2e44a99cfef0?q=80&w=2666&auto=format&fit=crop',
     },
     {
         id: 2,
-        tags: ['tips', 'comfort'],
-        hiddenTags: ['sleep', 'jetlag', 'health', 'mock'],
+        public_tags: ['tips', 'comfort'],
+        hidden_tags: ['sleep', 'jetlag', 'health', 'mock'],
         title: 'Avoiding Jet Lag',
         text: 'Tips and tricks to stay fresh during long haul flights. Drink plenty of water and try to adjust your sleep schedule before you fly.',
         image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2674&auto=format&fit=crop',
     },
     {
         id: 3,
-        tags: ['food', 'dining'],
-        hiddenTags: ['menu', 'drinks', 'snacks', 'mock'],
+        public_tags: ['food', 'dining'],
+        hidden_tags: ['menu', 'drinks', 'snacks', 'mock'],
         title: 'In-Flight Dining Experience',
         text: 'Discover our gourmet meal options and beverage selection. We offer a variety of meals to cater to different dietary requirements.',
-        image: 'https://images.unsplash.com/photo-1542296332-2e44a99cfef0?q=80&w=2666&auto=format&fit=crop', // Reusing image for now as placeholder
+        image: 'https://images.unsplash.com/photo-1542296332-2e44a99cfef0?q=80&w=2666&auto=format&fit=crop',
     },
     {
         id: 4,
-        tags: ['entertainment', 'movies'],
-        hiddenTags: ['wifi', 'music', 'games', 'mock'],
+        public_tags: ['entertainment', 'movies'],
+        hidden_tags: ['wifi', 'music', 'games', 'mock'],
         title: 'Entertainment System',
         text: 'Explore our vast library of movies, music, and games available on your personal screen. Wi-Fi is also available on select flights.',
         image: 'https://images.unsplash.com/photo-1517400508447-f8dd518b86db?q=80&w=2670&auto=format&fit=crop',
     },
     {
         id: 5,
-        tags: ['destination', 'travel'],
-        hiddenTags: ['paris', 'france', 'europe', 'mock'],
+        public_tags: ['destination', 'travel'],
+        hidden_tags: ['paris', 'france', 'europe', 'mock'],
         title: 'Destination Guide: Paris',
         text: 'Top attractions and hidden gems in the City of Light. Visit the Eiffel Tower, the Louvre, and enjoy authentic French pastries.',
         image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2673&auto=format&fit=crop',
     },
+    {
+        id: 11,
+        title: "TAP Air Portugal",
+        text: "TAP Air Portugal is the flag carrier and national airline of Portugal, officially known as TAP – Transportes Aéreos Portugueses. Founded in 1945 and headquartered in Lisbon, it serves as a key connector between Europe, Africa, North America, and South America, with a strong focus on routes to Brazil and other Lusophone countries.\n\nAs a proud member of the Star Alliance since 2005, TAP operates an average of around 2,500 weekly flights to over 85–90 destinations in dozens of countries. Its main hub is Lisbon Humberto Delgado Airport, with secondary hubs in Porto and Madeira (Funchal).\n\nThe airline boasts a modern, primarily all-Airbus fleet of approximately 100–101 aircraft (including TAP Express regional operations), with a few additional planes on order. Key models include the fuel-efficient Airbus A330-900neo (for long-haul, with lie-flat business class seats and enhanced comfort), A321neo/LR (great for transatlantic efficiency), and the A320 family for short/medium-haul routes. The average fleet age is currently around 10.9 years (as of early 2026), reflecting ongoing modernization efforts that have kept the fleet relatively young and eco-friendly compared to many legacy carriers.\n\nTAP is well-known for its competitive pricing on transatlantic flights, comfortable seating (including Recaro seats in many cabins for better recline and adjustable headrests), a solid in-flight entertainment selection, and the popular Portugal Stopover program, which lets passengers add a free multi-day visit to Lisbon or Porto on qualifying international tickets.\n\nOverall, TAP Air Portugal combines Portuguese hospitality with reliable service, making it a go-to choice for affordable yet comfortable travel across the Atlantic and beyond!",
+        image: "https://www.aosabordovento.com/wp-content/media_files/2013/08/TAP-logotipo.jpg",
+        public_tags: [
+            "Carriers",
+            "Portugal",
+            "Company"
+        ],
+        hidden_tags: [
+            "Carrier_TAP"
+        ]
+    },
+    {
+        id: 12,
+        title: "SATA/Azores Airlines",
+        text: "Azores Airlines (formerly known as SATA Internacional) is the international arm of Grupo SATA, the main airline group of the Azores archipelago in Portugal. Operating alongside its sister company SATA Air Açores, it serves as the primary gateway connecting the nine Azores islands to mainland Portugal, Europe, North America, and selected other destinations.\nAs part of the SATA Group (founded in 1941), Azores Airlines focuses on longer-haul routes with a modern fleet of around 9 Airbus A320-family aircraft (including A320neo, A321neo, and A321LR models), offering fuel-efficient operations and comfortable transatlantic travel. The airline is well-known for its direct links from Ponta Delgada (São Miguel) to cities such as Lisbon, Porto, Faro, Boston, Toronto, New York, and several European hubs like Madrid, Barcelona, and London.\nAzores Airlines stands out for its competitive fares on North Atlantic routes, reliable service with a Portuguese touch, and strong emphasis on connecting the Azores diaspora and tourism markets. It complements SATA Air Açores (which handles short inter-island hops with turboprop Dash 8 aircraft), creating a seamless network that supports both local mobility within the archipelago and global access to the islands.\nTogether, the two carriers operate over 800 weekly flights to/from the Azores in peak summer periods, making them essential for the region's economy, tourism, and connectivity. Azores Airlines delivers a practical, value-driven flying experience ideal for travelers heading to or from this unique mid-Atlantic destination.",
+        image: "https://comply365.com/wp-content/uploads/sata-blog.png",
+        public_tags: [
+            "Carrier",
+            "Airline",
+            "Açores",
+            "Azores",
+            "Portugal",
+            "Company"
+        ],
+        hidden_tags: [
+            "Carrier_SATA"
+        ]
+    },
+    {
+        id: 13,
+        title: "Airbus A330-900neo",
+        text: "Modern long-haul wide-body with spacious cabin and high efficiency. Max speed: Mach 0.86 (~918 km/h). Typical cruise speed: Mach 0.82 (~871 km/h). Service ceiling: 41,000–41,450 ft (12,500–12,634 m). Typical range: 7,200–8,150 nm (13,334–15,090 km). Passengers: 287–303 seats (typical three-class). Special features: Airspace cabin with larger overhead bins, customizable LED lighting, blended winglets for better lift-to-drag, quieter Trent 7000 engines, and up to 14% better fuel economy per seat.",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Airbus_A330neo_F-WTTN_37.jpg/1280px-Airbus_A330neo_F-WTTN_37.jpg",
+        public_tags: [
+            "Aircraft",
+            "Turbofan"
+        ],
+        hidden_tags: [
+            "Aircraft_A330-900neo"
+        ]
+    },
+    {
+        id: 14,
+        title: "Airbus A330-200",
+        text: "Classic wide-body twinjet for long-haul routes. Max speed: Mach 0.86 (~913 km/h). Typical cruise speed: Mach 0.82 (~871–880 km/h). Service ceiling: 41,000–41,450 ft (12,500–12,634 m). Typical range: Up to 7,260–8,150 nm (13,450–15,090 km). Passengers: 247–269 seats (typical three-class). Special features: Twin-aisle wide fuselage for spacious configurations, advanced in-flight entertainment options, and high dispatch reliability.",
+        image: "https://images.aircharterservice.com/global/aircraft-guide/group-charter/airbus-a330-200-1.jpg",
+        public_tags: [
+            "Aircraft",
+            "Turbofan"
+        ],
+        hidden_tags: [
+            "Aircraft_A330-200"
+        ]
+    },
+    {
+        id: 15,
+        title: "Airbus A321LR",
+        text: "Long-range narrow-body variant with extra fuel capacity for transatlantic flights. Max speed: Mach 0.82 (~876 km/h). Typical cruise speed: Mach 0.78 (~833 km/h). Service ceiling: 39,000–39,800 ft (11,900–12,100 m). Typical range: Up to 4,000 nm (7,400 km) with 206 passengers. Passengers: 180–220 seats (typical two-class). Special features: Additional Center Tanks (ACTs) for extended range, enabling new transatlantic routes on narrow-body economics, with premium cabin options like lie-flat beds.",
+        image: "https://www.airway.com.br/wp-content/uploads/2018/10/A321LR-in-flight-004.jpg",
+        public_tags: [
+            "Aircraft",
+            "Turbofan"
+        ],
+        hidden_tags: [
+            "Aircraft_A321LR"
+        ]
+    },
+    {
+        id: 16,
+        title: "Airbus A321neo",
+        text: "Advanced stretched narrow-body with new engines for better efficiency and range. Max speed: Mach 0.82 (~876 km/h). Typical cruise speed: Mach 0.78 (~833 km/h). Service ceiling: 39,000–39,800 ft (11,900–12,100 m). Typical range: Up to 4,000 nm (7,400 km). Passengers: 180–244 seats. Special features: Airspace cabin with largest overhead bins in single-aisle market, customizable mood lighting, integrated window shades, and optional Cabin-Flex layout for more seats/efficiency",
+        image: "https://www.aircraft.airbus.com/sites/g/files/jlcbta126/files/styles/w1200h675/public/2025-10/Aircraft.Airbus%20Figma%20Images%20V2_A321neo_0.png?h=eb58b4d6&itok=gAu23q7j",
+        public_tags: [
+            "Aircraft",
+            "Turbofan"
+        ],
+        hidden_tags: [
+            "Aircraft_A321neo"
+        ]
+    },
+    {
+        id: 17,
+        title: "Airbus A321-200",
+        text: "Stretched narrow-body for higher-capacity medium-haul operations. Max speed: Mach 0.82 (~876 km/h). Typical cruise speed: Mach 0.78 (~833 km/h). Service ceiling: 39,000–39,800 ft (11,900–12,100 m). Typical range: Up to 3,000–3,800 nm (5,600–7,000 km). Passengers: 185–230 seats (typical two-class). Special features: Double-slotted flaps for better low-speed performance, flexible cabin configurations, and wide fuselage for spacious single-aisle comfort.",
+        image: "https://newsaero.info/news/admin/assets/image/actualite/actualite9474.jpg",
+        public_tags: [
+            "Aircraft",
+            "Turbofan"
+        ],
+        hidden_tags: [
+            "Aircraft_A321-200"
+        ]
+    },
+    {
+        id: 18,
+        title: "Airbus A320neo",
+        text: "Fuel-efficient evolution of the A320 with new engines and lower emissions/noise. Max speed: Mach 0.82 (~872 km/h). Typical cruise speed: Mach 0.78 (~828–833 km/h). Service ceiling: 39,000–39,800 ft (11,900–12,131 m). Typical range: Up to 3,400–3,500 nm (6,300–6,500 km). Passengers: 150–194 seats. Special features: Sharklets as standard, 15–20% better fuel efficiency, Airspace cabin with customizable LED lighting, larger overhead bins, and slimmer sidewalls for extra shoulder space.",
+        image: "https://www.aircraft.airbus.com/sites/g/files/jlcbta126/files/styles/w640h512/public/2022-10/4-A320neo%20MSN6101%20with%20engine%20PW1100G%20GTF%20Advantage%20-%20First%20flight%20.jpg?h=e897b2e3&itok=2mVpVz8o",
+        public_tags: [
+            "Aircraft",
+            "Turbofan"
+        ],
+        hidden_tags: [
+            "Aicraft_A320neo"
+        ]
+    },
+    {
+        id: 19,
+        title: "Airbus A320 / A320-200",
+        text: "Classic narrow-body workhorse for medium-haul flights, pioneering fly-by-wire digital controls. Max speed: Mach 0.82 (~872 km/h). Typical cruise speed: Mach 0.78 (~828–833 km/h). Service ceiling: 39,000–39,800 ft (11,900–12,131 m). Typical range: 3,100–3,500 nm (5,700–6,500 km). Passengers: 150–186 seats (typical two-class). Special features: Full glass cockpit with side-stick controls, widest single-aisle cabin in class, and high commonality across family for easy pilot transitions.",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Airbus_A320-214%2C_Airbus_Industrie_JP7617615.jpg/330px-Airbus_A320-214%2C_Airbus_Industrie_JP7617615.jpg",
+        public_tags: [
+            "Aircraft",
+            "Turbofan"
+        ],
+        hidden_tags: [
+            "Aircraft_A320/A320-200"
+        ]
+    },
+    {
+        id: 20,
+        title: "Airbus A319",
+        text: "Compact narrow-body jet suited for shorter routes with good efficiency and flexible high-altitude/short-runway performance. Max speed: Mach 0.82 (~872 km/h). Typical cruise speed: Mach 0.78 (~829 km/h). Service ceiling: 39,000–41,000 ft (11,900–12,500 m). Typical range: Up to 3,700 nm (6,900 km). Passengers: 124–156 seats (typical two-class). Special features: Optional extra fuel tanks for extended range, sharklets (winglets) for better efficiency, and adaptable cabin layouts including luxury/private jet configurations.",
+        image: "https://pt-pt.aircraft24.com/images/aircraftpics/02/pic_140602_1_xxl.jpg",
+        public_tags: [
+            "Aircraft",
+            "Turbofan"
+        ],
+        hidden_tags: [
+            "Aircraft_A319"
+        ]
+    },
+    {
+        id: 21,
+        title: "Bombardier Dash 8 Q400",
+        text: "Fastest regional turboprop, excellent for high-frequency short-haul operations, featuring active noise and vibration suppression (ANVS) and optional NextGen cabin upgrades. Max speed: ~360 knots (~667 km/h). Typical cruise speed: 350–360 knots (~648–667 km/h). Service ceiling: 25,000–27,000 ft (7,620–8,229 m). Typical range: 1,100–1,457 nm (2,037–2,700 km). Passengers: 68–90 seats. Special features: Jet-like cruise speed with turboprop efficiency, rugged short-runway capability, and enhanced cabin comfort (e.g., larger bins, LED lighting in NextGen variants).",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwJ-VsR4HZ8EuBKuKr3Bjl-9zj9I_XF1dRcw&s",
+        public_tags: [
+            "Aircraft",
+            "Turboprop"
+        ],
+        hidden_tags: [
+            "Aircraft_Q400"
+        ]
+    },
+    {
+        id: 22,
+        title: "Bombardier Dash 8 Q200",
+        text: "Quiet regional turboprop designed for short routes and short runways, with active noise and vibration suppression (ANVS) for a near-jet-like cabin experience. Max speed: ~290–300 knots (~537–556 km/h). Typical cruise speed: ~270–289 knots (~500–535 km/h). Service ceiling: 25,000 ft (7,620 m). Typical range: 1,100–1,125 nm (2,037–2,084 km). Passengers: 37–39 seats. Special features: Improved engines over earlier Dash 8 models, excellent short-field performance, and cabin noise reduction via ANVS system.",
+        image: "https://cdn.plnspttrs.net/37529/vh-tqg-skytrans-airlines-bombardier-dhc-8-201-dash-8-q200_PlanespottersNet_1832781_d58d282879_o.jpg",
+        public_tags: [
+            "Aircraft",
+            "Turboprop"
+        ],
+        hidden_tags: [
+            "Aircraft_Q200"
+        ]
+    },
+    {
+        id: 23,
+        title: "Embraer E190",
+        text: "Regional narrow-body jet known for its efficiency on medium-haul routes and spacious cabin. Max speed: Mach 0.82 (~872 km/h). Typical cruise speed: Mach 0.78 (~829–833 km/h). Service ceiling: 41,000 ft (12,497 m). Typical range: 2,400–2,450 nm (4,445–4,537 km). Passengers: 96–114 seats (typical two-class). Special features: Fly-by-wire controls, full glass cockpit with side-stick, widest single-aisle cabin in its class for better passenger comfort, high commonality with E-Jet family for reduced training/maintenance costs, and excellent short-field performance.",
+        image: "https://www.embraer.com/media/1bkhjr2u/commercial-e190-2.jpg?v=1db1efc60b8b070",
+        public_tags: [
+            "Aircraft",
+            "Turbofan"
+        ],
+        hidden_tags: [
+            "Aircraft_E190"
+        ]
+    },
+    {
+        id: 24,
+        title: "Embraer E195",
+        text: "Largest in the first-generation E-Jet series, stretched for higher capacity on regional/medium-haul operations. Max speed: Mach 0.82 (~876 km/h). Typical cruise speed: Mach 0.78 (~833 km/h). Service ceiling: 41,000 ft (12,500 m). Typical range: 2,300–2,850 nm (4,260–5,278 km). Passengers: 108–124 seats (typical two-class). Special features: Fly-by-wire technology reducing pilot workload, spacious four-abreast cabin with no middle seat feel, high dispatch reliability, and optimized for low-cost/high-frequency routes with good economics.",
+        image: "https://www.embraer.com/media/yyfb1vsi/e2-expand-your-network.webp?v=1db3c2c7c0fcf00",
+        public_tags: [
+            "Aircraft",
+            "Turbofan"
+        ],
+        hidden_tags: [
+            "Aircraft_E195"
+        ]
+    }
 ];

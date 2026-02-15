@@ -52,8 +52,8 @@ export default function SearchScreen() {
                     title: item.title,
                     text: item.text,
                     image: item.image,
-                    tags: item.public_tags,
-                    hiddenTags: item.hidden_tags,
+                    public_tags: item.public_tags,
+                    hidden_tags: item.hidden_tags,
                     fleet_ids: item.fleet_ids,
                 }));
                 setAllArticles(items);
@@ -86,8 +86,8 @@ export default function SearchScreen() {
         const filtered = allArticles.filter(article => {
             return terms.every(term => {
                 const titleMatch = article.title.toLowerCase().includes(term);
-                const tagMatch = article.tags.some(tag => tag.toLowerCase().includes(term));
-                const hiddenTagMatch = article.hiddenTags.some(tag => tag.toLowerCase().includes(term));
+                const tagMatch = article.public_tags.some(tag => tag.toLowerCase().includes(term));
+                const hiddenTagMatch = article.hidden_tags.some(tag => tag.toLowerCase().includes(term));
                 return titleMatch || tagMatch || hiddenTagMatch;
             });
         });
@@ -104,7 +104,7 @@ export default function SearchScreen() {
             <View style={styles.textContainer}>
                 <Text style={[styles.cardTitle, { color: theme.text }]}>{item.title}</Text>
                 <View style={styles.tagsContainer}>
-                    {item.tags.map((tag, index) => (
+                    {item.public_tags.map((tag, index) => (
                         <View key={index} style={[styles.tagBadge, { backgroundColor: theme.tint + '20' }]}>
                             <Text style={[styles.tagText, { color: theme.tint }]}>#{tag}</Text>
                         </View>
@@ -186,7 +186,7 @@ export default function SearchScreen() {
                             <View style={styles.modalTextContainer}>
                                 <Text style={[styles.modalTitle, { color: theme.text }]}>{selectedArticle.title}</Text>
                                 <View style={styles.tagsContainer}>
-                                    {selectedArticle.tags.map((tag, index) => (
+                                    {selectedArticle.public_tags.map((tag, index) => (
                                         <View key={index} style={[styles.tagBadge, { backgroundColor: theme.tint + '20' }]}>
                                             <Text style={[styles.tagText, { color: theme.tint }]}>#{tag}</Text>
                                         </View>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
     View,
     Text,
@@ -14,7 +14,7 @@ import { CameraView, Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL, GO_API_BASE_URL } from '../../constants/config';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import FlightRouteMap from '../../components/FlightRouteMap';
 import AirportMap from '../../components/AirportMap';
 import CheckInManager from '../../components/CheckInManager';
@@ -39,6 +39,29 @@ export default function MainScreen() {
     const [resolvedAirport, setResolvedAirport] = useState<any>(null);
     const [showCheckInRecommendation, setShowCheckInRecommendation] = useState(false);
     const [showFinalMessage, setShowFinalMessage] = useState(false);
+
+    // Listen for AI-triggered actions (scanner/gallery) via AsyncStorage flags
+    useFocusEffect(
+        useCallback(() => {
+            const checkAIAction = async () => {
+                try {
+                    const action = await AsyncStorage.getItem('ai_action_request');
+                    if (action) {
+                        await AsyncStorage.removeItem('ai_action_request');
+                        if (action === 'OPEN_SCANNER') {
+                            // Small delay to let the screen fully render
+                            setTimeout(() => openScanner(), 400);
+                        } else if (action === 'OPEN_GALLERY') {
+                            setTimeout(() => pickImage(), 400);
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Failed to check AI action:', e);
+                }
+            };
+            checkAIAction();
+        }, [])
+    );
 
     // Pre-fetch airport coordinates from the backend DB by IATA code
     const prefetchAirportFromDB = async (code: string) => {

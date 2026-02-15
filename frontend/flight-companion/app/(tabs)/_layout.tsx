@@ -2,6 +2,7 @@ import { Tabs, router } from 'expo-router';
 import { View, TouchableOpacity, StyleSheet, Text, Image, ImageSourcePropType } from 'react-native';
 import { FlightModeProvider } from '../../context/FlightModeContext';
 import { BoardingPassProvider } from '../../context/BoardingPassContext';
+import { AIChatModal } from '../../components/AIChatModal';
 
 const icons = {
     transports: require('../../assets/Icons/Transports.png'),
@@ -27,7 +28,7 @@ function TabsLayout() {
     };
 
     return (
-        <>
+        <View style={{ flex: 1 }}>
             <Tabs
                 screenOptions={{
                     headerShown: false,
@@ -61,7 +62,8 @@ function TabsLayout() {
                 <Tabs.Screen name="perfil" options={{ tabBarButton: () => null }} />
                 <Tabs.Screen name="boardingpass" options={{ tabBarButton: () => null }} />
             </Tabs>
-        </>
+            <AIChatModal />
+        </View>
     );
 }
 

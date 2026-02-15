@@ -107,3 +107,6 @@ yarn-error.log*
 *.db
 *.sqlite3
 
+a.txt
+apikey.txt
+call.txt

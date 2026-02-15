@@ -360,3 +360,22 @@ async def search_stops(q: str, limit: int = 15):
         )
         for s in stops
     ]
+
+
+# --- AI Routes ---
+class AIChatRequest(BaseModel):
+    message: str
+
+@router.post("/ai/chat")
+async def chat_with_ai(req: AIChatRequest):
+    """
+    Chat with the AI assistant.
+    Returns { command: str|null, message: str }
+    - command: an action the frontend should execute (e.g. OPEN_SCANNER, GO_HOME)
+    - message: the AI's text response to display
+    """
+    from app.logic.ai_service import AIService
+
+    result = AIService.get_response(req.message)
+
+    return result

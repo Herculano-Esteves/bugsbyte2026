@@ -4,79 +4,711 @@
     "title": "Visit Rio de Janeiro",
     "text": "Experience the vibrant culture, stunning beaches, and iconic landmarks of Rio de Janeiro. Don't miss the Christ the Redeemer statue.",
     "image": "https://example.com/rio.jpg",
-    "public_tags": ["rio", "brazil", "beach", "culture", "tourism"],
-    "hidden_tags": ["south america", "summer", "vacation"]
+    "public_tags": [
+      "rio",
+      "brazil",
+      "beach",
+      "culture",
+      "tourism"
+    ],
+    "hidden_tags": [
+      "south america",
+      "summer",
+      "vacation"
+    ]
   },
   {
     "id": 2,
     "title": "Paris Travel Guide",
     "text": "The ultimate guide to the City of Light. Discover the best museums, cafes, and romantic spots in Paris.",
     "image": "https://example.com/paris.jpg",
-    "public_tags": ["paris", "france", "europe", "museum", "romance"],
-    "hidden_tags": ["eiffel tower", "louvre", "food"]
+    "public_tags": [
+      "paris",
+      "france",
+      "europe",
+      "museum",
+      "romance"
+    ],
+    "hidden_tags": [
+      "eiffel tower",
+      "louvre",
+      "food"
+    ]
   },
   {
     "id": 3,
     "title": "Packing Tips for Long Flights",
     "text": "Master the art of packing for long-haul travel. Learn what to bring in your carry-on for a comfortable journey.",
     "image": "https://example.com/packing.jpg",
-    "public_tags": ["travel tips", "flights", "packing", "comfort"],
-    "hidden_tags": ["airplane", "luggage", "essentials"]
+    "public_tags": [
+      "travel tips",
+      "flights",
+      "packing",
+      "comfort"
+    ],
+    "hidden_tags": [
+      "airplane",
+      "luggage",
+      "essentials"
+    ]
   },
   {
     "id": 4,
     "title": "Top 10 Airports in the World",
     "text": "A ranking of the best airports based on passenger experience, amenities, and efficiency. Singapore Changi tops the list.",
     "image": "https://example.com/changi.jpg",
-    "public_tags": ["airport", "ranking", "travel", "luxury"],
-    "hidden_tags": ["singapore", "transit", "layover"]
+    "public_tags": [
+      "airport",
+      "ranking",
+      "travel",
+      "luxury"
+    ],
+    "hidden_tags": [
+      "singapore",
+      "transit",
+      "layover"
+    ]
   },
   {
     "id": 5,
     "title": "Budget Travel in Southeast Asia",
     "text": "Explore Thailand, Vietnam, and Cambodia without breaking the bank. Tips for cheap accommodation and street food.",
     "image": "https://example.com/asia.jpg",
-    "public_tags": ["budget", "asia", "backpacking", "food"],
-    "hidden_tags": ["thailand", "vietnam", "cheap"]
+    "public_tags": [
+      "budget",
+      "asia",
+      "backpacking",
+      "food"
+    ],
+    "hidden_tags": [
+      "thailand",
+      "vietnam",
+      "cheap"
+    ]
   },
   {
     "id": 6,
     "title": "New York City in Winter",
     "text": "NYC transforms into a winter wonderland. Skate at Rockefeller Center and enjoy the holiday lights.",
     "image": "https://example.com/nyc_winter.jpg",
-    "public_tags": ["nyc", "usa", "winter", "holiday"],
-    "hidden_tags": ["snow", "christmas", "shopping"]
+    "public_tags": [
+      "nyc",
+      "usa",
+      "winter",
+      "holiday"
+    ],
+    "hidden_tags": [
+      "snow",
+      "christmas",
+      "shopping"
+    ]
   },
   {
     "id": 7,
     "title": "Understanding Airport Security",
     "text": "How to breeze through TSA and security checks. What liquids you can bring and how to pack electronics.",
     "image": "https://example.com/security.jpg",
-    "public_tags": ["airport", "security", "tips", "rules"],
-    "hidden_tags": ["tsa", "liquids", "safety"]
+    "public_tags": [
+      "airport",
+      "security",
+      "tips",
+      "rules"
+    ],
+    "hidden_tags": [
+      "tsa",
+      "liquids",
+      "safety"
+    ]
   },
   {
     "id": 8,
     "title": "Tokyo: Traditional vs Modern",
     "text": "A journey through Tokyo's historic temples and futuristic neon districts. The perfect blend of old and new.",
     "image": "https://example.com/tokyo.jpg",
-    "public_tags": ["tokyo", "japan", "asia", "culture"],
-    "hidden_tags": ["sushi", "technology", "temples"]
+    "public_tags": [
+      "tokyo",
+      "japan",
+      "asia",
+      "culture"
+    ],
+    "hidden_tags": [
+      "sushi",
+      "technology",
+      "temples"
+    ]
   },
   {
     "id": 9,
     "title": "Flying Advice for First Timers",
     "text": "Nervous about your first flight? Here is everything you need to know from check-in to landing.",
     "image": "https://example.com/flight.jpg",
-    "public_tags": ["flight", "beginner", "advice", "fear"],
-    "hidden_tags": ["airplane", "check-in", "boarding"]
+    "public_tags": [
+      "flight",
+      "beginner",
+      "advice",
+      "fear"
+    ],
+    "hidden_tags": [
+      "airplane",
+      "check-in",
+      "boarding"
+    ]
   },
   {
     "id": 10,
     "title": "Best Coffee Shops in Rome",
     "text": "Where to find the best espresso in Rome. Avoid the tourist traps and drink like a local.",
     "image": "https://example.com/rome_coffee.jpg",
-    "public_tags": ["rome", "italy", "coffee", "food"],
-    "hidden_tags": ["espresso", "europe", "cafe"]
+    "public_tags": [
+      "rome",
+      "italy",
+      "coffee",
+      "food"
+    ],
+    "hidden_tags": [
+      "espresso",
+      "europe",
+      "cafe"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "TAP Air Portugal",
+    "text": "TAP Air Portugal is the flag carrier and national airline of Portugal, officially known as TAP – Transportes Aéreos Portugueses. Founded in 1945 and headquartered in Lisbon, it serves as a key connector between Europe, Africa, North America, and South America, with a strong focus on routes to Brazil and other Lusophone countries.\n\nAs a proud member of the Star Alliance since 2005, TAP operates an average of around 2,500 weekly flights to over 85–90 destinations in dozens of countries. Its main hub is Lisbon Humberto Delgado Airport, with secondary hubs in Porto and Madeira (Funchal).\n\nThe airline boasts a modern, primarily all-Airbus fleet of approximately 100–101 aircraft (including TAP Express regional operations), with a few additional planes on order. Key models include the fuel-efficient Airbus A330-900neo (for long-haul, with lie-flat business class seats and enhanced comfort), A321neo/LR (great for transatlantic efficiency), and the A320 family for short/medium-haul routes. The average fleet age is currently around 10.9 years (as of early 2026), reflecting ongoing modernization efforts that have kept the fleet relatively young and eco-friendly compared to many legacy carriers.\n\nTAP is well-known for its competitive pricing on transatlantic flights, comfortable seating (including Recaro seats in many cabins for better recline and adjustable headrests), a solid in-flight entertainment selection, and the popular Portugal Stopover program, which lets passengers add a free multi-day visit to Lisbon or Porto on qualifying international tickets.\n\nOverall, TAP Air Portugal combines Portuguese hospitality with reliable service, making it a go-to choice for affordable yet comfortable travel across the Atlantic and beyond!",
+    "image": "https://www.aosabordovento.com/wp-content/media_files/2013/08/TAP-logotipo.jpg",
+    "public_tags": [
+      "Carriers",
+      "Portugal",
+      "Company"
+    ],
+    "hidden_tags": [
+      "Carrier_TAP"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "SATA/Azores Airlines",
+    "text": "Azores Airlines (formerly known as SATA Internacional) is the international arm of Grupo SATA, the main airline group of the Azores archipelago in Portugal. Operating alongside its sister company SATA Air Açores, it serves as the primary gateway connecting the nine Azores islands to mainland Portugal, Europe, North America, and selected other destinations.\nAs part of the SATA Group (founded in 1941), Azores Airlines focuses on longer-haul routes with a modern fleet of around 9 Airbus A320-family aircraft (including A320neo, A321neo, and A321LR models), offering fuel-efficient operations and comfortable transatlantic travel. The airline is well-known for its direct links from Ponta Delgada (São Miguel) to cities such as Lisbon, Porto, Faro, Boston, Toronto, New York, and several European hubs like Madrid, Barcelona, and London.\nAzores Airlines stands out for its competitive fares on North Atlantic routes, reliable service with a Portuguese touch, and strong emphasis on connecting the Azores diaspora and tourism markets. It complements SATA Air Açores (which handles short inter-island hops with turboprop Dash 8 aircraft), creating a seamless network that supports both local mobility within the archipelago and global access to the islands.\nTogether, the two carriers operate over 800 weekly flights to/from the Azores in peak summer periods, making them essential for the region's economy, tourism, and connectivity. Azores Airlines delivers a practical, value-driven flying experience ideal for travelers heading to or from this unique mid-Atlantic destination.",
+    "image": "https://comply365.com/wp-content/uploads/sata-blog.png",
+    "public_tags": [
+      "Carrier",
+      "Airline",
+      "Açores",
+      "Azores",
+      "Portugal",
+      "Company"
+    ],
+    "hidden_tags": [
+      "Carrier_SATA"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Airbus A330-900neo",
+    "text": "Modern long-haul wide-body with spacious cabin and high efficiency. Max speed: Mach 0.86 (~918 km/h). Typical cruise speed: Mach 0.82 (~871 km/h). Service ceiling: 41,000–41,450 ft (12,500–12,634 m). Typical range: 7,200–8,150 nm (13,334–15,090 km). Passengers: 287–303 seats (typical three-class). Special features: Airspace cabin with larger overhead bins, customizable LED lighting, blended winglets for better lift-to-drag, quieter Trent 7000 engines, and up to 14% better fuel economy per seat.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Airbus_A330neo_F-WTTN_37.jpg/1280px-Airbus_A330neo_F-WTTN_37.jpg",
+    "public_tags": [
+      "Aircraft",
+      "Turbofan"
+    ],
+    "hidden_tags": [
+      "Aircraft_A330-900neo"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Airbus A330-200",
+    "text": "Classic wide-body twinjet for long-haul routes. Max speed: Mach 0.86 (~913 km/h). Typical cruise speed: Mach 0.82 (~871–880 km/h). Service ceiling: 41,000–41,450 ft (12,500–12,634 m). Typical range: Up to 7,260–8,150 nm (13,450–15,090 km). Passengers: 247–269 seats (typical three-class). Special features: Twin-aisle wide fuselage for spacious configurations, advanced in-flight entertainment options, and high dispatch reliability.",
+    "image": "https://images.aircharterservice.com/global/aircraft-guide/group-charter/airbus-a330-200-1.jpg",
+    "public_tags": [
+      "Aircraft",
+      "Turbofan"
+    ],
+    "hidden_tags": [
+      "Aircraft_A330-200"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Airbus A321LR",
+    "text": "Long-range narrow-body variant with extra fuel capacity for transatlantic flights. Max speed: Mach 0.82 (~876 km/h). Typical cruise speed: Mach 0.78 (~833 km/h). Service ceiling: 39,000–39,800 ft (11,900–12,100 m). Typical range: Up to 4,000 nm (7,400 km) with 206 passengers. Passengers: 180–220 seats (typical two-class). Special features: Additional Center Tanks (ACTs) for extended range, enabling new transatlantic routes on narrow-body economics, with premium cabin options like lie-flat beds.",
+    "image": "https://www.airway.com.br/wp-content/uploads/2018/10/A321LR-in-flight-004.jpg",
+    "public_tags": [
+      "Aircraft",
+      "Turbofan"
+    ],
+    "hidden_tags": [
+      "Aircraft_A321LR"
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Airbus A321neo",
+    "text": "Advanced stretched narrow-body with new engines for better efficiency and range. Max speed: Mach 0.82 (~876 km/h). Typical cruise speed: Mach 0.78 (~833 km/h). Service ceiling: 39,000–39,800 ft (11,900–12,100 m). Typical range: Up to 4,000 nm (7,400 km). Passengers: 180–244 seats. Special features: Airspace cabin with largest overhead bins in single-aisle market, customizable mood lighting, integrated window shades, and optional Cabin-Flex layout for more seats/efficiency",
+    "image": "https://www.aircraft.airbus.com/sites/g/files/jlcbta126/files/styles/w1200h675/public/2025-10/Aircraft.Airbus%20Figma%20Images%20V2_A321neo_0.png?h=eb58b4d6&itok=gAu23q7j",
+    "public_tags": [
+      "Aircraft_A321neo"
+    ],
+    "hidden_tags": [
+      "Aircraft_A321neo"
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Airbus A321-200",
+    "text": "Stretched narrow-body for higher-capacity medium-haul operations. Max speed: Mach 0.82 (~876 km/h). Typical cruise speed: Mach 0.78 (~833 km/h). Service ceiling: 39,000–39,800 ft (11,900–12,100 m). Typical range: Up to 3,000–3,800 nm (5,600–7,000 km). Passengers: 185–230 seats (typical two-class). Special features: Double-slotted flaps for better low-speed performance, flexible cabin configurations, and wide fuselage for spacious single-aisle comfort.",
+    "image": "https://newsaero.info/news/admin/assets/image/actualite/actualite9474.jpg",
+    "public_tags": [
+      "Aircraft",
+      "Turbofan"
+    ],
+    "hidden_tags": [
+      "Aircraft_A321-200"
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Airbus A320neo",
+    "text": "Fuel-efficient evolution of the A320 with new engines and lower emissions/noise. Max speed: Mach 0.82 (~872 km/h). Typical cruise speed: Mach 0.78 (~828–833 km/h). Service ceiling: 39,000–39,800 ft (11,900–12,131 m). Typical range: Up to 3,400–3,500 nm (6,300–6,500 km). Passengers: 150–194 seats. Special features: Sharklets as standard, 15–20% better fuel efficiency, Airspace cabin with customizable LED lighting, larger overhead bins, and slimmer sidewalls for extra shoulder space.",
+    "image": "https://www.aircraft.airbus.com/sites/g/files/jlcbta126/files/styles/w640h512/public/2022-10/4-A320neo%20MSN6101%20with%20engine%20PW1100G%20GTF%20Advantage%20-%20First%20flight%20.jpg?h=e897b2e3&itok=2mVpVz8o",
+    "public_tags": [
+      "Aircraft",
+      "Turbofan"
+    ],
+    "hidden_tags": [
+      "Aicraft_A320neo"
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Airbus A320 / A320-200",
+    "text": "Classic narrow-body workhorse for medium-haul flights, pioneering fly-by-wire digital controls. Max speed: Mach 0.82 (~872 km/h). Typical cruise speed: Mach 0.78 (~828–833 km/h). Service ceiling: 39,000–39,800 ft (11,900–12,131 m). Typical range: 3,100–3,500 nm (5,700–6,500 km). Passengers: 150–186 seats (typical two-class). Special features: Full glass cockpit with side-stick controls, widest single-aisle cabin in class, and high commonality across family for easy pilot transitions.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Airbus_A320-214%2C_Airbus_Industrie_JP7617615.jpg/330px-Airbus_A320-214%2C_Airbus_Industrie_JP7617615.jpg",
+    "public_tags": [
+      "Aircraft",
+      "Turbofan"
+    ],
+    "hidden_tags": [
+      "Aircraft_A320/A320-200"
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Airbus A319",
+    "text": "Compact narrow-body jet suited for shorter routes with good efficiency and flexible high-altitude/short-runway performance. Max speed: Mach 0.82 (~872 km/h). Typical cruise speed: Mach 0.78 (~829 km/h). Service ceiling: 39,000–41,000 ft (11,900–12,500 m). Typical range: Up to 3,700 nm (6,900 km). Passengers: 124–156 seats (typical two-class). Special features: Optional extra fuel tanks for extended range, sharklets (winglets) for better efficiency, and adaptable cabin layouts including luxury/private jet configurations.",
+    "image": "https://pt-pt.aircraft24.com/images/aircraftpics/02/pic_140602_1_xxl.jpg",
+    "public_tags": [
+      "Aircraft",
+      "Turbofan"
+    ],
+    "hidden_tags": [
+      "Aircraft_A319"
+    ]
+  },
+  {
+    "id": 21,
+    "title": "Bombardier Dash 8 Q400",
+    "text": "Fastest regional turboprop, excellent for high-frequency short-haul operations, featuring active noise and vibration suppression (ANVS) and optional NextGen cabin upgrades. Max speed: ~360 knots (~667 km/h). Typical cruise speed: 350–360 knots (~648–667 km/h). Service ceiling: 25,000–27,000 ft (7,620–8,229 m). Typical range: 1,100–1,457 nm (2,037–2,700 km). Passengers: 68–90 seats. Special features: Jet-like cruise speed with turboprop efficiency, rugged short-runway capability, and enhanced cabin comfort (e.g., larger bins, LED lighting in NextGen variants).",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwJ-VsR4HZ8EuBKuKr3Bjl-9zj9I_XF1dRcw&s",
+    "public_tags": [
+      "Aircraft",
+      "Turboprop"
+    ],
+    "hidden_tags": [
+      "Aircraft_Q400"
+    ]
+  },
+  {
+    "id": 22,
+    "title": "Bombardier Dash 8 Q200",
+    "text": "Quiet regional turboprop designed for short routes and short runways, with active noise and vibration suppression (ANVS) for a near-jet-like cabin experience. Max speed: ~290–300 knots (~537–556 km/h). Typical cruise speed: ~270–289 knots (~500–535 km/h). Service ceiling: 25,000 ft (7,620 m). Typical range: 1,100–1,125 nm (2,037–2,084 km). Passengers: 37–39 seats. Special features: Improved engines over earlier Dash 8 models, excellent short-field performance, and cabin noise reduction via ANVS system.",
+    "image": "https://cdn.plnspttrs.net/37529/vh-tqg-skytrans-airlines-bombardier-dhc-8-201-dash-8-q200_PlanespottersNet_1832781_d58d282879_o.jpg",
+    "public_tags": [
+      "Aircraft",
+      "Turboprop"
+    ],
+    "hidden_tags": [
+      "Aircraft_Q200"
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Embraer E190",
+    "text": "Regional narrow-body jet known for its efficiency on medium-haul routes and spacious cabin. Max speed: Mach 0.82 (~872 km/h). Typical cruise speed: Mach 0.78 (~829–833 km/h). Service ceiling: 41,000 ft (12,497 m). Typical range: 2,400–2,450 nm (4,445–4,537 km). Passengers: 96–114 seats (typical two-class). Special features: Fly-by-wire controls, full glass cockpit with side-stick, widest single-aisle cabin in its class for better passenger comfort, high commonality with E-Jet family for reduced training/maintenance costs, and excellent short-field performance.",
+    "image": "https://www.embraer.com/media/1bkhjr2u/commercial-e190-2.jpg?v=1db1efc60b8b070",
+    "public_tags": [
+      "Aircraft",
+      "Turbofan"
+    ],
+    "hidden_tags": [
+      "Aircraft_E190"
+    ]
+  },
+  {
+    "id": 24,
+    "title": "Embraer E195",
+    "text": "Largest in the first-generation E-Jet series, stretched for higher capacity on regional/medium-haul operations. Max speed: Mach 0.82 (~876 km/h). Typical cruise speed: Mach 0.78 (~833 km/h). Service ceiling: 41,000 ft (12,500 m). Typical range: 2,300–2,850 nm (4,260–5,278 km). Passengers: 108–124 seats (typical two-class). Special features: Fly-by-wire technology reducing pilot workload, spacious four-abreast cabin with no middle seat feel, high dispatch reliability, and optimized for low-cost/high-frequency routes with good economics.",
+    "image": "https://www.embraer.com/media/yyfb1vsi/e2-expand-your-network.webp?v=1db3c2c7c0fcf00",
+    "public_tags": [
+      "Aircraft",
+      "Turbofan"
+    ],
+    "hidden_tags": [
+      "Aircraft_E195"
+    ]
+  },
+  {
+    "id": 25,
+    "title": "Coriolis Illusion",
+    "text": "A type of spatial disorientation experienced by pilots and passengers during flight, where sudden head movements in a turning aircraft create a false sensation of tumbling or rolling due to the interaction between the inner ear's semicircular canals and the Coriolis force from Earth's rotation. This can lead to vertigo, nausea, or loss of control if not recognized. Max intensity: Often peaks during sustained turns or accelerations at altitudes above 5,000 ft. Typical duration: 10–20 seconds per episode. Effects on body: Disrupts balance and spatial awareness, potentially causing pilot error; mitigated by training and avoiding abrupt head motions. Special features: More pronounced in high-performance aircraft; passengers may feel it as mild dizziness during banked turns.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Coriolis_Illusion_Vertigo_3.jpg/250px-Coriolis_Illusion_Vertigo_3.jpg",
+    "public_tags": [
+      "illusion",
+      "Somatogravic",
+      "Effect of flying",
+      "ears"
+    ],
+    "hidden_tags": [
+      "desorientation",
+      "nausea",
+      "conffusion"
+    ]
+  },
+  {
+    "id": 26,
+    "title": "Lower Humidity in Planes",
+    "text": "Cabin humidity drops to 10–20% (sometimes under 5%) at cruising altitude because dry high-altitude air is compressed and circulated with little added moisture to save weight and fuel. This dries out skin, eyes, nose, throat, and mucous membranes, increasing dehydration risk. Typical exposure: 4–12 hours per flight. Effects on body: Dry, irritated eyes/skin, sore throat, headaches, fatigue, and higher chance of respiratory discomfort. What to do: Drink plenty of water (aim for 8–12 oz per hour of flight); use a saline nasal spray or eye drops; apply moisturizer to face and hands; avoid alcohol and caffeine, which worsen dehydration; chew gum or suck on hard candy to keep mouth moist.",
+    "image": "https://img.smartertravel.com/production/Articles/5%20Ways%20to%20Combat%20Low%20Airplane%20Humidity%20and%20Stay%20Healthier/Feature/large_5_Ways_to_Combat_Low_Airplane_Humidity_and_Stay_Healthier_feature_image_b498fd0159.webp",
+    "public_tags": [
+      "Health",
+      "Effects of flying",
+      "skin",
+      "mouth",
+      "nose"
+    ],
+    "hidden_tags": [
+      "throat",
+      "mucus",
+      "sinus",
+      "pain",
+      "irritation",
+      "not feeling well"
+    ]
+  },
+  {
+    "id": 27,
+    "title": "Cabin Pressurization",
+    "text": "Cabin pressure is maintained at the equivalent of 6,000–8,000 ft altitude by compressing outside air through engines and controlling outflow valves. This keeps oxygen levels safe while allowing lighter aircraft structures. At 35,000 ft cruise, external pressure is very low, so the cabin differential reaches about 8–9 psi. Typical cycle: Gradual climb and descent. Effects on body: Mild reduction in oxygen can cause tiredness or foggy thinking in sensitive people; rapid changes may cause ear/sinus pressure or pain. What to do: Chew gum, yawn, swallow, or do the Valsalva maneuver (pinch nose, close mouth, gently blow) during ascent/descent to equalize ears; stay awake during takeoff/landing if you have congestion; use a decongestant spray 30–60 minutes before descent if needed (consult doctor first).",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoMMaEwaBW1NODOD-TzQB_bDlhUuTPD8VPbg&s",
+    "public_tags": [
+      "Mechanics",
+      "bootsrap",
+      "tired",
+      "ears"
+    ],
+    "hidden_tags": [
+      "hypoxia",
+      "short of breath"
+    ]
+  },
+  {
+    "id": 28,
+    "title": "Hypoxia",
+    "text": "Lower oxygen partial pressure at cabin altitudes (6,000–8,000 ft) reduces blood oxygen saturation to 90–95% from 98% at sea level, leading to subtle effects on brain and body. Symptoms may include fatigue, mild headache, slower thinking, or euphoria in sensitive individuals. Max risk: Higher on very long flights or if you have lung/heart conditions. Typical onset: After 2–4 hours. Effects on body: Reduced cognitive performance; worsens pre-existing conditions. What to do: Stay hydrated and avoid alcohol; take occasional deep breaths; move around the cabin; if you feel unusually tired or confused, alert crew and request supplemental oxygen (available on request); frequent flyers or those with health issues can discuss pre-flight oxygen with a doctor.",
+    "image": "https://www.spinalcord.com/hs-fs/hubfs/Heart%20attack,%20smoke%20inhalation%20and%20choking%20are%20some%20of%20the%20causes%20of%20Hypoxia.jpg?width=726&name=Heart%20attack,%20smoke%20inhalation%20and%20choking%20are%20some%20of%20the%20causes%20of%20Hypoxia.jpg",
+    "public_tags": [
+      "tiredness",
+      "Depressurization",
+      "blood oxygen"
+    ],
+    "hidden_tags": [
+      "feeling unwell",
+      "coma",
+      "brain damage",
+      "purple"
+    ]
+  },
+  {
+    "id": 29,
+    "title": "Barotrauma (Ear and Sinus Pressure)",
+    "text": "Pressure differences during climb and descent affect the middle ear and sinuses if the Eustachian tubes or sinus openings are blocked. Common in people with colds, allergies, or congestion. Typical during 1,000–2,000 ft/min changes. Effects on body: Ear pain, muffled hearing, sinus pressure, headaches; severe cases can cause temporary hearing issues or eardrum damage. What to do: Start equalizing early—chew gum, swallow frequently, yawn, or use the Valsalva (pinch nose and gently blow) or Toynbee (pinch nose, swallow) maneuvers; use a decongestant nasal spray 30–60 minutes before descent (if safe for you); avoid sleeping during descent if congested; infants can nurse or use a pacifier. Avoid scuba diving to depths of 10m or more at least 24hrs before flying.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHhbbpjbr1FV1wMjn8pIaZu82hrQNqVtXZGw&s",
+    "public_tags": [
+      "ear",
+      "pain",
+      "sccuba diving"
+    ],
+    "hidden_tags": [
+      "death",
+      "severe",
+      "valsalva",
+      "pressure"
+    ]
+  },
+  {
+    "id": 30,
+    "title": "Deep Vein Thrombosis (DVT)",
+    "text": "Prolonged sitting, cabin pressure, dehydration, and reduced movement raise the risk of blood clots in leg veins, especially on flights longer than 4 hours. Effects on body: Leg swelling, pain, warmth; clot can travel to lungs (pulmonary embolism) causing shortness of breath or chest pain. What to do: Wear compression stockings (15–30 mmHg); choose an aisle seat for easy movement; stand and walk every 1–2 hours; do seated ankle circles, calf raises, or foot pumps regularly; stay well hydrated and avoid alcohol; if you have risk factors (recent surgery, pregnancy, clotting disorders), consult a doctor about preventive measures like low-dose aspirin or anticoagulants.",
+    "image": "https://www.venousforum.org/wp-content/uploads/2024/03/Fig-23-1.jpg",
+    "public_tags": [
+      "Prolonged sitting",
+      "Pressure",
+      "Degydration",
+      "Pain"
+    ],
+    "hidden_tags": [
+      "embolism",
+      "swelling",
+      "short of breath"
+    ]
+  },
+  {
+    "id": 31,
+    "title": "Turbulence",
+    "text": "Irregular air movements caused by weather phenomena (thunderstorms, jet streams, mountain waves), wake vortices from other aircraft, or clear air turbulence (CAT) at high altitudes, leading to sudden jolts, drops, or shakes in the aircraft. Effects range from light (bumpy ride) to severe (brief loss of control or injuries if unbelted). Typical frequency: Common on most flights, especially over mountains, near equator, or in winter jet streams. Max intensity: Can exceed 2–3g vertical acceleration in rare severe cases. Effects on body: Jarring movements cause fear/anxiety, muscle tension, nausea (especially if motion sickness prone), minor injuries from being thrown around, or exacerbation of back/neck issues. What to do: Always keep your seatbelt fastened when seated (even when sign is off—it's the best protection); choose a seat over the wings for less motion; hold onto armrests or seat in front during bumps; avoid standing or moving in aisles during reported turbulence; if prone to anxiety, practice deep breathing (inhale 4 seconds, hold 4, exhale 6) or use distraction like music/podcasts; inform crew if you feel unwell—they can request smoother altitudes when possible.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfAMkNUzQSwBD-rSBaUXNTDjIKOW6tfmW5gw&s",
+    "public_tags": [
+      "Wind",
+      "Weather",
+      "Anxiety"
+    ],
+    "hidden_tags": [
+      "stressed",
+      "seatbelt"
+    ]
+  },
+  {
+    "id": 32,
+    "title": "Mountain Waves",
+    "text": "Mountain waves (also known as lee waves or standing waves) are atmospheric oscillations created when strong, stable air flows perpendicularly over mountain ranges, forming alternating up-and-down waves that can extend tens of thousands of feet above the terrain and sometimes into the stratosphere. They often occur downwind of mountains (lee side) and can persist for long distances. In aviation, they produce clear air turbulence (CAT) at cruising altitudes, even in cloud-free skies. Typical locations: Downwind of major ranges like the Rockies, Alps, Andes, or Sierra Nevada. Max intensity: Rotor clouds or severe turbulence with vertical gusts exceeding 2–4g in extreme cases; wave crests can reach 40,000+ ft. Effects on body: Sudden, unpredictable jolts or drops cause fear, muscle bracing, nausea (worse if prone to motion sickness), potential minor injuries if unbelted, and increased stress or fatigue from repeated bumps. What to do: Keep your seatbelt fastened whenever seated (especially on routes over or near mountains—turbulence can be severe without warning); sit over the wings for reduced motion amplitude; if you feel severe shaking, brace by placing hands on armrests or headrest and keep feet flat; avoid standing or using lavatories during known mountain wave areas; inform flight attendants if you experience pain or distress—they can request altitude changes or route deviations when safe.",
+    "image": "https://skybrary.aero/sites/default/files/Mountainwaves.png",
+    "public_tags": [
+      "Weather",
+      "Mountains",
+      "Terrain"
+    ],
+    "hidden_tags": [
+      "turbulence",
+      "anxiety"
+    ]
+  },
+  {
+    "id": 33,
+    "title": "Fume Events (Cabin Air Contamination)",
+    "text": "Occasional incidents where engine oil, hydraulic fluid or fuel leaks into the bleed air system and enters the cabin through the environmental control system (ECS). This can produce a visible haze, acrid “dirty socks” or chemical odour, and sometimes eye/respiratory irritation. Most common during engine start, taxi, take-off, climb, or descent when bleed air demand is high. Typical frequency: Rare on modern aircraft (estimated 1 in 2,000–22,000 flights depending on reporting and aircraft type), though under-reporting is believed to occur. Effects on body: Short-term exposure can cause immediate symptoms such as stinging or burning eyes, nasal irritation, sore throat, coughing, headache, dizziness, nausea, metallic taste, or skin tingling. In sensitive individuals or with higher exposure: fatigue, difficulty concentrating, flu-like symptoms. Very rare severe cases have been linked to longer-lasting neurological complaints (controversial and not universally accepted). What to do: If you smell an unusual chemical odour or see haze and feel irritation, immediately inform a flight attendant—they are trained to assess and report fume events. Ask for fresh air (open gasper vents fully), breathe through a cloth or sleeve if possible, and request to move to another seat if the smell is localised. Stay calm—most events are brief and resolve quickly once the source stops or recirculation is adjusted. Drink water to help clear throat and nose. After landing, report symptoms to ground staff or seek medical attention if you experience persistent headache, dizziness, breathing difficulty, or neurological symptoms. If you are particularly sensitive (history of chemical sensitivity, asthma, migraines), consider wearing a well-fitting N95 or similar mask during boarding/taxi phases on aircraft known to have had prior issues (though this is rarely necessary). Airlines are required to investigate reported events and many now use improved seals, sensors, and bleed air filtration upgrades on newer fleets.",
+    "image": "https://www.thecanary.co/wp-content/uploads/2024/10/Untitled-design-2024-10-01T170329.910.jpg",
+    "public_tags": [
+      "Mechanical",
+      "leak",
+      "Haze",
+      "dizziness"
+    ],
+    "hidden_tags": [
+      "unconscious",
+      "coma"
+    ]
+  },
+  {
+    "id": 34,
+    "title": "How does an Aircraft Fly?",
+    "text": "An airplane flies because four main forces act on it: lift, weight, thrust, and drag.\nWeight pulls the plane down because of gravity.\nThrust pushes the plane forward. Engines (jet engines or propellers) create thrust.\nDrag is the air resistance that tries to slow the plane down.\nLift is the upward force that overcomes weight and keeps the plane in the air.\nThe wings create most of the lift. A wing has a special shape called an airfoil: curved on top and flatter (or less curved) on the bottom.\nWhen the plane moves forward, air flows over and under the wing.\nAir going over the curved top has to travel a longer path, so it moves faster than the air underneath.\nAccording to Bernoulli's principle, faster-moving air has lower pressure.\nSo pressure above the wing is lower than pressure below the wing.\nThis pressure difference pushes the wing upward — that is lift.\nAt the same time, the wing tilts slightly (angle of attack) and deflects a large amount of air downward.\nBy Newton's third law (every action has an equal and opposite reaction), when the wing pushes air down, the air pushes the wing up. This also creates lift.\nBoth explanations describe the same thing: the shape and angle of the wing make the air produce an upward force.\nFor steady level flight, lift equals weight, and thrust equals drag.\nTo take off or climb, the pilot increases thrust (more engine power) and raises the nose (higher angle of attack) so lift becomes greater than weight.\nTo land or slow down, lift is reduced (lower speed, flaps extended, nose down) and drag is increased.\nFlaps and slats on the wings change the shape to create more lift at low speeds during takeoff and landing.\nThe engines keep providing thrust to move the plane fast enough for the wings to generate sufficient lift.\nIn simple terms: engines push the plane forward → wings push air down and create lower pressure on top → lift holds the plane up → the plane flies.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV1pdQS0yCY3vvJyRBbJo0nnBDKjMcJBdNbg&s",
+    "public_tags": [
+      "Bernuli",
+      "Physics",
+      "Knowlage"
+    ],
+    "hidden_tags": [
+      "pressure",
+      "speed",
+      "thrust"
+    ]
+  },
+  {
+    "id": 35,
+    "title": "How does a Turbofan engine works",
+    "text": "A turbofan engine is the main jet engine used on modern airliners. It has a large fan at the front and a smaller jet core inside.\nAir comes in through the spinning front fan.\nThe fan pushes most of the air (70–90%) straight out the back through the outer duct. This bypass air creates most of the thrust.\nA smaller amount of air goes into the core.\nIn the core the air gets squeezed tight by compressors.\nFuel is added and burned, making very hot high-pressure gas.\nThe hot gas rushes out through turbines, spinning them.\nThe turbines turn the compressors and the big front fan with a shaft.\nThe hot exhaust from the core shoots out the back, adding extra thrust.\nThis design moves a lot of air at moderate speed, which is more efficient, uses less fuel, and is quieter than old pure jet engines.\nHigh-bypass turbofans (ratio 8–12) are best for airliners because they give good power for cruising long distances with low fuel burn.\nIn short: the big fan blasts most air backward for main thrust, while the core burns fuel to spin the fan and add hot exhaust thrust. This makes the engine powerful, economical, and much quieter.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/7/75/Turbofan_operation.svg",
+    "public_tags": [
+      "Jet engine",
+      "Flight",
+      "Engineering"
+    ],
+    "hidden_tags": [
+      "compression",
+      "combustion",
+      "turbine"
+    ]
+  },
+  {
+    "id": 36,
+    "title": "How does a Turboprop engine work?",
+    "text": "A turboprop engine is a type of jet engine that powers a propeller instead of producing jet thrust directly. It's used on many regional planes, cargo aircraft, and short-haul flights.\nSimple how it works:\nAir enters the front intake and flows into the gas turbine core.\nIn the core the air is squeezed tight by compressor blades.\nFuel is injected and burned, creating hot high-pressure gas.\nThe hot gas expands and rushes through the turbine blades, spinning them at very high speed.\nA shaft connects the turbine to a gearbox at the front of the engine.\nThe gearbox reduces the turbine's high speed to a suitable level for the large propeller.\nThe spinning propeller pulls a huge amount of air backward, creating most of the thrust to move the plane forward.\nA small extra thrust comes from the hot exhaust jet shooting out the back.\nWhy it's good: The big propeller moves a lot of air at relatively low speed, which is very efficient for slower speeds (up to around 400–500 mph) and gives excellent takeoff and climb performance on short runways. It burns much less fuel than pure jet engines on short routes.\nIn short: The core burns fuel to spin a turbine, the turbine drives a gearbox through a shaft, the gearbox turns a big propeller, and the propeller pulls the plane through the air like a powerful fan. This makes turboprops fuel-efficient, reliable, and ideal for regional and shorter flights.",
+    "image": "https://www.daviddarling.info/images/turboprop.png",
+    "public_tags": [
+      "Flight",
+      "Jetengine",
+      "Propeler",
+      "Engineering"
+    ],
+    "hidden_tags": [
+      "Combustion",
+      "compression",
+      "turbine"
+    ]
+  },
+  {
+    "id": 37,
+    "title": "Portugal",
+    "text": "Portugal is a captivating country on the western edge of Europe, blending ancient history, stunning coastlines, rolling vineyards, and a warm, welcoming culture that has drawn travelers for centuries. From the vibrant cities of Lisbon and Porto to remote Atlantic islands and sun-soaked southern shores, Portugal offers something for every kind of visitor—whether you're drawn to historic architecture, world-class wines, fresh seafood, or dramatic natural landscapes. The country's compact size makes it easy to explore multiple regions in one trip, and its people are known for their hospitality, often sharing stories over a glass of vinho verde or a plate of grilled sardines. Food is central to the experience, with classics like bacalhau prepared in countless creative ways, hearty cataplana stews bubbling with clams and chorizo, and the irresistible pastel de nata custard tarts that melt in your mouth. The landscape shifts beautifully from green northern hills to golden Algarve cliffs and volcanic Azores craters, while the mild climate, especially in spring and autumn, invites leisurely exploration without extreme heat or crowds.",
+    "image": "https://cdn.bunniktours.com.au/public/gallery_images/JPG%20IMAGES/Europe/Treasures%20of%20Portugal/2023%20-%20Portugal%20-%20Douro%20Valley%20-%20Zoe%20Francis-feature.jpg",
+    "public_tags": [
+      "Contries",
+      "Landscape",
+      "Wine",
+      "Cities"
+    ],
+    "hidden_tags": [
+      "vineyards",
+      "countyside",
+      "coastline",
+      "sunny",
+      "western",
+      "iberia"
+    ]
+  },
+  {
+    "id": 38,
+    "title": "Lisbon",
+    "text": "Lisbon, the hilly capital perched above the Tagus River, pulses with energy and charm, where yellow trams climb steep streets lined with pastel buildings and intricate azulejo tiles. Lose yourself in the winding alleys of Alfama, where fado singers pour emotion into haunting melodies late into the night, or ascend to São Jorge Castle for panoramic views over terracotta roofs and the glittering estuary. The Belém district showcases Portugal's golden Age of Discoveries with the ornate Jerónimos Monastery and the iconic Belém Tower, both UNESCO treasures, and no visit is complete without tasting those legendary pastéis de nata fresh from a historic bakery. Evenings buzz in Bairro Alto with lively bars spilling onto cobbled lanes, mixing old-world romance with youthful vibrancy.",
+    "image": "https://images.goway.com/production/styles/hero_s1_2xl/s3/hero/iStock-1137863101.jpg.webp?VersionId=TNqde4tjrqdi_HRPUjK4M.ozf0__Ik67&h=08f4e768&itok=_3r2F97l",
+    "public_tags": [
+      "City",
+      "Hills",
+      "River Tagus",
+      "Nightlife"
+    ],
+    "hidden_tags": [
+      "Natas",
+      "cobblestone",
+      "old",
+      "capital"
+    ]
+  },
+  {
+    "id": 39,
+    "title": "Porto",
+    "text": "Porto is a riverside gem that feels grand yet intimate, its steep banks draped in colorful houses and historic bridges. Wander the Ribeira waterfront with its tightly packed facades, then cross the soaring Dom Luís I Bridge for sweeping vistas, especially magical at sunset from the hilltop gardens. The city's soul shines through its azulejo masterpieces, particularly the breathtaking tile panels inside São Bento Station depicting epic Portuguese tales. Port wine remains the star, so venture to the cellars of Vila Nova de Gaia for tastings of the rich, ruby-hued fortified wine aged in vast oak barrels, or take a serene boat cruise along the Douro to admire terraced vineyards clinging to dramatic slopes. The bustling Bolhão Market bursts with fresh seafood, cheeses, and local produce, fueling days of discovery.",
+    "image": "https://www.revigorate.com/images/porto-portugal-europe.jpg",
+    "public_tags": [
+      "Ribera",
+      "Food",
+      "City"
+    ],
+    "hidden_tags": [
+      "Francesinha",
+      "Ribera",
+      "wine"
+    ]
+  },
+  {
+    "id": 40,
+    "title": "Azores (Açores)",
+    "text": "Out in the vast Atlantic, the Azores archipelago unfolds as nine volcanic islands of raw, untouched beauty, often likened to a greener, quieter Hawaii. São Miguel, the main gateway, captivates with the twin crater lakes of Sete Cidades shimmering in shades of blue and green beneath misty peaks, and the geothermal wonder of Furnas where hot springs bubble and traditional cozido dishes simmer underground. Hiking paths weave through ancient laurel forests, along dramatic coastal cliffs, and to hidden waterfalls, while the surrounding ocean teems with whales and dolphins visible on boat tours. Each island tells its own story—Pico's towering volcano rises above black-sand vineyards, Flores offers cascading waters and serene lagoons—creating a haven for nature lovers seeking peace, adventure, and landscapes that feel otherworldly.",
+    "image": "https://images.resosys.com/destinations/2/articles/pratical-information_en/inline/1688465434-s2-1231.jpg",
+    "public_tags": [
+      "Nature",
+      "lagoons. landscape"
+    ],
+    "hidden_tags": [
+      "Beauty",
+      "green",
+      "volcanic"
+    ]
+  },
+  {
+    "id": 41,
+    "title": "Madeira",
+    "text": "Madeira, rising sharply from the sea like a floating garden, delights with its subtropical climate and steep, terraced slopes bursting with bananas, vineyards, and exotic blooms. Funchal, the lively capital, invites strolls through its historic center and colorful markets overflowing with tropical fruits and Madeira wine, then a cable car ascent to Monte for sweeping ocean views followed by the exhilarating toboggan ride back down in woven baskets steered by locals. The island's levada walks follow ancient irrigation channels through lush laurel forests to thundering waterfalls and dizzying viewpoints like Cabo Girão, one of Europe's tallest sea cliffs. Natural volcanic pools at Porto Moniz provide refreshing swims in turquoise ocean-fed basins, while rugged trails climb to misty highlands, blending warm coastal vibes with invigorating mountain freshness.",
+    "image": "https://media.digitalnomads.world/wp-content/uploads/2021/08/20115713/Madeira-digital-nomads-1024x768.jpg",
+    "public_tags": [
+      "Nature",
+      "Cable car",
+      "Cliffs"
+    ],
+    "hidden_tags": [
+      "Cristiano Ronaldo",
+      "football",
+      "Bannanas"
+    ]
+  },
+  {
+    "id": 42,
+    "title": "Algarve",
+    "text": "The Algarve, Portugal's sunny southern coast, dazzles with golden cliffs, dramatic rock formations, and endless sandy beaches kissed by the Atlantic. In the west around Lagos, boat trips explore the sea caves and grottos of Ponta da Piedade, where turquoise waters carve fantastical shapes into sandstone. Broad beaches like Praia da Falésia or Praia da Rocha stretch for miles under reliable sunshine, perfect for relaxed days or invigorating walks, while the calmer eastern end near Tavira features the tranquil lagoons and barrier islands of Ria Formosa Natural Park, ideal for kayaking or spotting flamingos and other birds. Seaside eateries serve sizzling grilled fish and fragrant seafood rice dishes, and the region balances bustling resorts with peaceful whitewashed villages, offering the ultimate coastal escape.",
+    "image": "",
+    "public_tags": [
+      "Cliffs",
+      "Beach",
+      "Hot Beaches"
+    ],
+    "hidden_tags": [
+      "Seafood",
+      "luxury",
+      "sunny",
+      "coastal"
+    ]
+  },
+  {
+    "id": 43,
+    "title": "São Miguel",
+    "text": "São Miguel, the largest and most accessible of the Azores islands, serves as the perfect introduction to the archipelago's volcanic wonders, with lush green landscapes, dramatic crater lakes, and geothermal surprises around every bend. Ponta Delgada, the vibrant capital, offers a lively harborfront, charming historic streets, and excellent seafood restaurants where you can savor fresh fish and local cheeses. Head west to the iconic Sete Cidades crater, where twin lakes—one blue, one green—nestle beneath misty peaks, offering breathtaking viewpoints like Vista do Rei and Boca do Inferno, ideal for hikes along the rim or peaceful picnics. In the east, Furnas enchants with bubbling hot springs, fumaroles steaming from the earth, and the opportunity to taste cozido das Furnas, a traditional stew slow-cooked underground using geothermal heat. Relax in the thermal waters of Terra Nostra Park, surrounded by exotic gardens and towering trees, or swim in the warm ocean-fed pools at Ponta da Ferraria. Don't miss Lagoa do Fogo's serene caldera lake high in the mountains, often shrouded in clouds that part dramatically to reveal turquoise waters, and consider a whale-watching tour from Ponta Delgada to spot dolphins and massive cetaceans in the nutrient-rich Atlantic waters surrounding the island.",
+    "image": "https://byacores.com/wp-content/uploads/2019/11/lagoa-fogo-sao-miguel-acores.jpeg",
+    "public_tags": [
+      "Azores",
+      "Nature",
+      "Lagoon",
+      "Furnas"
+    ],
+    "hidden_tags": [
+      "Island",
+      "beauty",
+      "vulcanic"
+    ]
+  },
+  {
+    "id": 44,
+    "title": "Tercera",
+    "text": "Terceira, often called the cultural heart of the Azores, blends rich history with stunning natural beauty, its rolling hills dotted with cows and patchwork fields evoking an emerald countryside. Angra do Heroísmo, a UNESCO World Heritage Site, captivates with its baroque architecture, colorful gardens like Jardim Duque da Terceira, and historic forts overlooking the bay—stroll the old streets, visit the Sé Cathedral, and explore the maritime legacy that once made it a key stop for explorers. Venture inside the volcano at Algar do Carvão (reopened in recent years with an updated visitor center), a unique lava tube where sunlight filters through a skylight onto lush ferns growing deep underground. Catch sunrise or sunset from Miradouro da Serra do Cume for panoramic views over the island's largest caldera, or hike trails through laurel forests in the Serra de Santa Bárbara. Natural swimming pools at Biscoitos in the north offer refreshing dips in lava-rock basins with calm ocean access, while whale and dolphin watching tours reveal the Azores' status as a prime marine sanctuary. The island's festivals, especially in summer, fill the air with music and parades, and its renowned restaurants serve exceptional seafood, alcatra stews, and sweet pastries that highlight Terceira's culinary pride.",
+    "image": "https://asyaolson.com/wp-content/uploads/2024/07/Algar-do-Carvao-Cover.jpg",
+    "public_tags": [
+      "Azores",
+      "Barroque",
+      "Caves",
+      "Nature"
+    ],
+    "hidden_tags": [
+      "Military base",
+      "USA",
+      "Beauty",
+      "Island"
+    ]
+  },
+  {
+    "id": 45,
+    "title": "Pico",
+    "text": "Pico, dominated by Portugal's highest peak, delivers dramatic volcanic scenery, ancient vineyards, and a sense of raw adventure that sets it apart. Mount Pico rises imposingly to 2,351 meters, challenging hikers with a steep but rewarding ascent to the summit and Piquinho crater for sunrise views over the archipelago on clear days—guided night climbs add extra magic. The island's UNESCO-listed vineyard landscape features unique currais of black lava stone protecting vines from salty winds, producing crisp white wines best tasted at local wineries or the Museu do Vinho in Madalena. Explore Gruta das Torres, Europe's longest lava tube, on guided tours through its vast underground galleries formed by ancient eruptions. Whale and dolphin watching from Lajes do Pico or Madalena often yields spectacular sightings in the channel between Pico and Faial, while natural pools and black-sand beaches provide spots to unwind. Visit the Museu dos Baleeiros to learn about the island's whaling heritage, now turned to conservation, and wander charming villages like São Roque do Pico or savor fresh seafood in seaside eateries. Pico's rugged, windswept beauty rewards those seeking both adrenaline and tranquility amid its vineyards, mountains, and endless ocean horizons.",
+    "image": "https://byacores.com/wp-content/uploads/2018/09/pico.jpg",
+    "public_tags": [
+      "Mountain",
+      "Seafood",
+      "Peak",
+      "Wales"
+    ],
+    "hidden_tags": [
+      "Vulcanic",
+      "hike",
+      "climb"
+    ]
   }
 ]

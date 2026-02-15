@@ -52,8 +52,9 @@ export default function SearchScreen() {
                     title: item.title,
                     text: item.text,
                     image: item.image,
-                    tags: item.public_tags,
-                    hiddenTags: item.hidden_tags,
+                    public_tags: item.public_tags,
+                    hidden_tags: item.hidden_tags,
+                    fleet_ids: item.fleet_ids,
                 }));
                 setAllArticles(items);
                 setFilteredArticles(items);
@@ -85,8 +86,8 @@ export default function SearchScreen() {
         const filtered = allArticles.filter(article => {
             return terms.every(term => {
                 const titleMatch = article.title.toLowerCase().includes(term);
-                const tagMatch = article.tags.some(tag => tag.toLowerCase().includes(term));
-                const hiddenTagMatch = article.hiddenTags.some(tag => tag.toLowerCase().includes(term));
+                const tagMatch = article.public_tags.some(tag => tag.toLowerCase().includes(term));
+                const hiddenTagMatch = article.hidden_tags.some(tag => tag.toLowerCase().includes(term));
                 return titleMatch || tagMatch || hiddenTagMatch;
             });
         });
@@ -103,7 +104,7 @@ export default function SearchScreen() {
             <View style={styles.textContainer}>
                 <Text style={[styles.cardTitle, { color: theme.text }]}>{item.title}</Text>
                 <View style={styles.tagsContainer}>
-                    {item.tags.map((tag, index) => (
+                    {item.public_tags.map((tag, index) => (
                         <View key={index} style={[styles.tagBadge, { backgroundColor: theme.tint + '20' }]}>
                             <Text style={[styles.tagText, { color: theme.tint }]}>#{tag}</Text>
                         </View>
@@ -185,13 +186,35 @@ export default function SearchScreen() {
                             <View style={styles.modalTextContainer}>
                                 <Text style={[styles.modalTitle, { color: theme.text }]}>{selectedArticle.title}</Text>
                                 <View style={styles.tagsContainer}>
-                                    {selectedArticle.tags.map((tag, index) => (
+                                    {selectedArticle.public_tags.map((tag, index) => (
                                         <View key={index} style={[styles.tagBadge, { backgroundColor: theme.tint + '20' }]}>
                                             <Text style={[styles.tagText, { color: theme.tint }]}>#{tag}</Text>
                                         </View>
                                     ))}
                                 </View>
                                 <Text style={[styles.modalText, { color: theme.text }]}>{selectedArticle.text}</Text>
+                                {selectedArticle.fleet_ids && selectedArticle.fleet_ids.length > 0 && (
+                                    <View style={styles.fleetContainer}>
+                                        <Text style={[styles.fleetTitle, { color: theme.text }]}>Fleet:</Text>
+                                        <View style={styles.fleetLinks}>
+                                            {selectedArticle.fleet_ids.map((id) => {
+                                                const fleetItem = allArticles.find(a => a.id === id);
+                                                if (!fleetItem) return null;
+                                                return (
+                                                    <TouchableOpacity
+                                                        key={id}
+                                                        onPress={() => setSelectedArticle(fleetItem)}
+                                                        style={[styles.fleetLinkButton, { borderColor: theme.tint }]}
+                                                    >
+                                                        <Text style={[styles.fleetLinkText, { color: theme.tint }]}>
+                                                            {fleetItem.title}
+                                                        </Text>
+                                                    </TouchableOpacity>
+                                                );
+                                            })}
+                                        </View>
+                                    </View>
+                                )}
                             </View>
                         </ScrollView>
                     </View>
@@ -339,5 +362,32 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
         marginBottom: 2,
+    },
+    fleetContainer: {
+        marginTop: 24,
+        paddingTop: 16,
+        borderTopWidth: 1,
+        borderTopColor: '#ccc',
+    },
+    fleetTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 12,
+    },
+    fleetLinks: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    fleetLinkButton: {
+        borderWidth: 1,
+        borderRadius: 20,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        marginRight: 8,
+        marginBottom: 8,
+    },
+    fleetLinkText: {
+        fontSize: 14,
+        fontWeight: '600',
     },
 });

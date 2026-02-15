@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native'; // for Your Carrier and Your Aircraft articles MUST HAVE the hidden tag Carrier_(name) or Aircraft_(name), and these tags mus be removed from extra info
 
 export default function InFlightScreen() {
     return (

@@ -95,15 +95,14 @@ def initialize_database():
     try:
         create_tables(conn)
         
-        # Seed logic
+        # Always try to seed (Repository handles duplicates)
         from app.database.item_repository import ItemRepository
         from app.parsers.item_parser import ItemParser
         
-        if ItemRepository.is_empty():
-            print("[DB] Seeding items from JSON...")
-            items = ItemParser.load_items_from_json()
-            ItemRepository.load_items(items)
-            print(f"[DB] Seeded {len(items)} items.")
+        print("[DB] Checking for new items in items.json...")
+        items = ItemParser.load_items_from_json()
+        ItemRepository.load_items(items)
+        print(f"[DB] Seeded/Verified {len(items)} items.")
             
         print("[DB] Tables created and seeded successfully.")
     finally:

@@ -79,6 +79,7 @@ class Item(BaseModel):
     image: str
     public_tags: List[str]
     hidden_tags: List[str]
+    fleet_ids: Optional[List[int]] = None
 
 # --- User Models ---
 class UserCreate(BaseModel):

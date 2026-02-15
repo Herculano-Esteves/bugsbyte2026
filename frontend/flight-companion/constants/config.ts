@@ -1,10 +1,2 @@
-import { Platform } from 'react-native';
-
-const getApiBaseUrl = () => {
-  if (Platform.OS === 'web') {
-    return 'http://localhost:8000'; // for web
-  }
-  return 'http://10.191.183.123:8000'; // for devices on your LAN
-};
-
-export const API_BASE_URL = getApiBaseUrl();
+export const API_BASE_URL = 'http://localhost:8000'; // Replace with your actual backend URL
+export const GO_API_BASE_URL = 'http://localhost:8080'; // Go backend (barcode/pkpass parsing)

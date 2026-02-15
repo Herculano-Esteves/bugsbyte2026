@@ -5,6 +5,7 @@ export interface Article {
     title: string;
     text: string;
     image: string;
+    fleet_ids?: number[];
 }
 
 export const mockArticles: Article[] = [

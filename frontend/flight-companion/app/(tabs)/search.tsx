@@ -54,6 +54,7 @@ export default function SearchScreen() {
                     image: item.image,
                     tags: item.public_tags,
                     hiddenTags: item.hidden_tags,
+                    fleet_ids: item.fleet_ids,
                 }));
                 setAllArticles(items);
                 setFilteredArticles(items);
@@ -192,6 +193,28 @@ export default function SearchScreen() {
                                     ))}
                                 </View>
                                 <Text style={[styles.modalText, { color: theme.text }]}>{selectedArticle.text}</Text>
+                                {selectedArticle.fleet_ids && selectedArticle.fleet_ids.length > 0 && (
+                                    <View style={styles.fleetContainer}>
+                                        <Text style={[styles.fleetTitle, { color: theme.text }]}>Fleet:</Text>
+                                        <View style={styles.fleetLinks}>
+                                            {selectedArticle.fleet_ids.map((id) => {
+                                                const fleetItem = allArticles.find(a => a.id === id);
+                                                if (!fleetItem) return null;
+                                                return (
+                                                    <TouchableOpacity
+                                                        key={id}
+                                                        onPress={() => setSelectedArticle(fleetItem)}
+                                                        style={[styles.fleetLinkButton, { borderColor: theme.tint }]}
+                                                    >
+                                                        <Text style={[styles.fleetLinkText, { color: theme.tint }]}>
+                                                            {fleetItem.title}
+                                                        </Text>
+                                                    </TouchableOpacity>
+                                                );
+                                            })}
+                                        </View>
+                                    </View>
+                                )}
                             </View>
                         </ScrollView>
                     </View>
@@ -339,5 +362,32 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
         marginBottom: 2,
+    },
+    fleetContainer: {
+        marginTop: 24,
+        paddingTop: 16,
+        borderTopWidth: 1,
+        borderTopColor: '#ccc',
+    },
+    fleetTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 12,
+    },
+    fleetLinks: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    fleetLinkButton: {
+        borderWidth: 1,
+        borderRadius: 20,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        marginRight: 8,
+        marginBottom: 8,
+    },
+    fleetLinkText: {
+        fontSize: 14,
+        fontWeight: '600',
     },
 });

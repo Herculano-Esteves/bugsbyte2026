@@ -7,6 +7,7 @@ import { useBoardingPass } from '../../context/BoardingPassContext';
 import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL } from '../../constants/config';
 import { router } from 'expo-router';
+import { useAuth } from '../../context/AuthContext';
 
 // Reusing ImageWithLoader from search.tsx
 const ImageWithLoader = ({ uri, style }: { uri: string, style: any }) => {
@@ -49,14 +50,31 @@ export default function InFlightScreen() {
     const [loading, setLoading] = useState(true);
     // Debug logs state removed as it was unused
     const [allArticles, setAllArticles] = useState<Article[]>([]);
-    const { user, login, updateUser } = useAuth(); // Get user and login to refresh state if needed
+    const { user, updateUser } = useAuth();
 
     // Tips state
     const [destinationTips, setDestinationTips] = useState<any>(null);
     const [tipsLoading, setTipsLoading] = useState(false);
     const [showTipsModal, setShowTipsModal] = useState(false);
 
-    // addLog removed as debugLogs was unused
+    const handleOpenArticle = async (article: Article) => {
+        setSelectedArticle(article);
+
+        if (user) {
+            try {
+                await axios.post(`${API_BASE_URL}/api/users/${user.id}/articles/${article.id}/read`);
+                if (user.read_articles && !user.read_articles.includes(article.id)) {
+                    const updatedUser = {
+                        ...user,
+                        read_articles: [...user.read_articles, article.id]
+                    };
+                    updateUser(updatedUser);
+                }
+            } catch (error) {
+                console.log("Failed to track read article", error);
+            }
+        }
+    };
 
     useEffect(() => {
         const fetchArticles = async () => {

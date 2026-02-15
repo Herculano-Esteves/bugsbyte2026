@@ -33,17 +33,16 @@ function TabsLayout() {
 
                         {/* Tabs esquerda */}
                         <View style={styles.tabsLeft}>
-                            <TabButton label="Pré-voo" icon="✈️" onPress={() => props.navigation.navigate('prevoo')} />
+                            <TabButton label="PosFlight" icon="🛬" onPress={() => props.navigation.navigate('posFlight')} />
                             <TabButton label="In Flight" icon="🛫" onPress={() => props.navigation.navigate('inFlight')} />
                         </View>
 
                         {/* Botão central MAIOR - Home */}
-                        <TouchableOpacity
-                            style={styles.centerButton}
-                            onPress={handleCenterPress}
-                        >
-                            <Text style={styles.centerIcon}>🌐</Text>
-                        </TouchableOpacity>
+                        <TabButton
+                            label="Home"
+                            icon="🏠"
+                            onPress={() => router.push('/(tabs)/main')}
+                        />
 
                         {/* Tabs direita */}
                         <View style={styles.tabsRight}>
@@ -54,7 +53,7 @@ function TabsLayout() {
                 )}
             >
                 <Tabs.Screen name="main" options={{ tabBarButton: () => null }} />
-                <Tabs.Screen name="prevoo" options={{ tabBarButton: () => null }} />
+                <Tabs.Screen name="posFlight" options={{ tabBarButton: () => null }} />
                 <Tabs.Screen name="inFlight" options={{ tabBarButton: () => null }} />
                 <Tabs.Screen name="search" options={{ tabBarButton: () => null }} />
                 <Tabs.Screen name="perfil" options={{ tabBarButton: () => null }} />

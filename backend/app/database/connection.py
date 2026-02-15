@@ -61,6 +61,24 @@ def create_tables(conn):
     );
     """)
 
+    # Airports Table (OpenFlights data)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS airports (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        city TEXT,
+        country TEXT,
+        iata TEXT UNIQUE,
+        icao TEXT,
+        latitude REAL NOT NULL,
+        longitude REAL NOT NULL,
+        altitude INTEGER,
+        timezone_offset REAL,
+        dst TEXT,
+        timezone_name TEXT
+    );
+    """)
+    
     # Items Table (Search)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS items (
@@ -95,14 +113,30 @@ def initialize_database():
     try:
         create_tables(conn)
         
-        # Always try to seed (Repository handles duplicates)
+        # Seed items
         from app.database.item_repository import ItemRepository
         from app.parsers.item_parser import ItemParser
         
-        print("[DB] Checking for new items in items.json...")
-        items = ItemParser.load_items_from_json()
-        ItemRepository.load_items(items)
-        print(f"[DB] Seeded/Verified {len(items)} items.")
+        if ItemRepository.is_empty():
+            print("[DB] Seeding items from JSON...")
+            items = ItemParser.load_items_from_json()
+            ItemRepository.load_items(items)
+            print(f"[DB] Seeded {len(items)} items.")
+        
+        # Seed airports
+        from app.database.airport_repository import AirportRepository
+        from app.parsers.openflights_loader import OpenFlightsLoader
+        
+        if AirportRepository.is_empty():
+            print("[DB] Seeding airports from OpenFlights...")
+            # Try to download full dataset, fallback to sample
+            airports = OpenFlightsLoader.download_and_parse()
+            if not airports:
+                print("[DB] Download failed, using sample airports...")
+                airports = OpenFlightsLoader.get_sample_airports()
+            
+            AirportRepository.bulk_insert_airports(airports)
+            print(f"[DB] Seeded {len(airports)} airports.")
             
         print("[DB] Tables created and seeded successfully.")
     finally:

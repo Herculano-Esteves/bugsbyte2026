@@ -37,6 +37,8 @@ export default function MainScreen() {
     const [tripRoute, setTripRoute] = useState<SavedRoute | null>(null);
     const [hasReachedAirport, setHasReachedAirport] = useState(false);
     const [resolvedAirport, setResolvedAirport] = useState<any>(null);
+    const [showCheckInRecommendation, setShowCheckInRecommendation] = useState(false);
+    const [showFinalMessage, setShowFinalMessage] = useState(false);
 
     // Pre-fetch airport coordinates from the backend DB by IATA code
     const prefetchAirportFromDB = async (code: string) => {
@@ -492,7 +494,27 @@ export default function MainScreen() {
                             {/* Trip to Airport Card for Boarding Pass */}
                             {tripRoute && (
                                 <View style={styles.tripCardWrapper}>
-                                    {!hasReachedAirport ? (
+                                    {showFinalMessage ? (
+                                        <View style={styles.finalMessageContainer}>
+                                            <Ionicons name="airplane" size={64} color="#0a7ea4" style={{ marginBottom: 16 }} />
+                                            <Text style={styles.finalMessageText}>Have a nice flight :)</Text>
+                                            <TouchableOpacity
+                                                style={styles.restartButton}
+                                                onPress={() => {
+                                                    clearBoardingPass();
+                                                    setTripRoute(null);
+                                                    setHasReachedAirport(false);
+                                                    setSelectedAirport(null);
+                                                    setShowCheckInRecommendation(false);
+                                                    setShowFinalMessage(false);
+                                                    setResolvedAirport(null);
+                                                    AsyncStorage.removeItem('current_target_airport');
+                                                }}
+                                            >
+                                                <Text style={styles.restartButtonText}>Go to beginning</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    ) : !hasReachedAirport ? (
                                         <>
                                             <Text style={{
                                                 alignSelf: 'flex-start',
@@ -512,32 +534,77 @@ export default function MainScreen() {
                                                 style={styles.reachedButton}
                                                 onPress={() => setHasReachedAirport(true)}
                                             >
-                                                <Text style={styles.reachedButtonText}>Reached Airport 🏁</Text>
+                                                <Text style={styles.reachedButtonText}>Reached Airport</Text>
                                             </TouchableOpacity>
                                         </>
                                     ) : (
                                         <View style={{ flex: 1 }}>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 8 }}>
-                                                <Text style={{ color: '#fff', fontSize: 18, fontWeight: '700' }}>Airport Map</Text>
-                                                <TouchableOpacity
-                                                    style={{ backgroundColor: '#333', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8 }}
-                                                    onPress={() => setHasReachedAirport(false)}
-                                                >
-                                                    <Text style={{ color: '#ef5350', fontWeight: '600', fontSize: 13 }}>← Back</Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                            <View style={styles.mapWrapper}>
-                                                <AirportMap
-                                                    initialAirport={resolvedAirport ? { code: resolvedAirport.iata, city: resolvedAirport.city } : (boardingPass ? { code: boardingPass.departureAirport, city: boardingPass.departureAirport } : selectedAirport)}
-                                                />
-                                            </View>
-                                            <View style={{ padding: 16 }}>
-                                                <CheckInManager
-                                                    onCheckInDone={() => {
-                                                        Alert.alert("Check-in", "Check-in process marked as done!");
-                                                    }}
-                                                />
-                                            </View>
+                                            {showCheckInRecommendation ? (
+                                                <View style={styles.recommendationContainer}>
+                                                    <View style={styles.recommendationContent}>
+                                                        <Ionicons name="time-outline" size={48} color="#0a7ea4" style={{ marginBottom: 16 }} />
+                                                        <Text style={styles.recommendationTitle}>It&apos;s recommended:</Text>
+                                                        <Text style={styles.recommendationText}>
+                                                            Arrive at the gate by {(() => {
+                                                                if (!boardingPass?.departureTime) return "30 min before departure";
+                                                                try {
+                                                                    const dep = new Date(boardingPass.departureTime);
+                                                                    // Subtract 30 minutes
+                                                                    const gateTime = new Date(dep.getTime() - 30 * 60000);
+                                                                    return gateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                                                } catch {
+                                                                    return "30 min before departure";
+                                                                }
+                                                            })()}
+                                                        </Text>
+                                                        <Text style={styles.recommendationSubText}>
+                                                            (30 min before departure from the ticket)
+                                                        </Text>
+                                                    </View>
+
+                                                    <View style={styles.recommendationActions}>
+                                                        <TouchableOpacity
+                                                            style={styles.backButton}
+                                                            onPress={() => setShowCheckInRecommendation(false)}
+                                                        >
+                                                            <Text style={styles.backButtonText}>← Back</Text>
+                                                        </TouchableOpacity>
+
+                                                        <TouchableOpacity
+                                                            style={styles.checkInButton}
+                                                            onPress={() => {
+                                                                setShowFinalMessage(true);
+                                                                // Don't clear tripRoute yet
+                                                            }}
+                                                        >
+                                                            <Text style={styles.checkInButtonText}>Done</Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                </View>
+                                            ) : (
+                                                <>
+                                                    <View style={styles.mapHeaderControls}>
+                                                        <TouchableOpacity
+                                                            style={styles.backButton}
+                                                            onPress={() => setHasReachedAirport(false)}
+                                                        >
+                                                            <Text style={styles.backButtonText}>← Back</Text>
+                                                        </TouchableOpacity>
+
+                                                        <TouchableOpacity
+                                                            style={styles.checkInButton}
+                                                            onPress={() => setShowCheckInRecommendation(true)}
+                                                        >
+                                                            <Text style={styles.checkInButtonText}>Check in completed</Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                    <View style={styles.mapWrapper}>
+                                                        <AirportMap
+                                                            initialAirport={resolvedAirport ? { code: resolvedAirport.iata, city: resolvedAirport.city } : (boardingPass ? { code: boardingPass.departureAirport, city: boardingPass.departureAirport } : selectedAirport)}
+                                                        />
+                                                    </View>
+                                                </>
+                                            )}
                                         </View>
                                     )}
                                 </View>
@@ -618,7 +685,26 @@ export default function MainScreen() {
                             {/* Trip Card showing automatically after selection */}
                             {tripRoute && (
                                 <View style={styles.tripCardWrapper}>
-                                    {!hasReachedAirport ? (
+                                    {showFinalMessage ? (
+                                        <View style={styles.finalMessageContainer}>
+                                            <Ionicons name="airplane" size={64} color="#0a7ea4" style={{ marginBottom: 16 }} />
+                                            <Text style={styles.finalMessageText}>Have a nice flight :)</Text>
+                                            <TouchableOpacity
+                                                style={styles.restartButton}
+                                                onPress={() => {
+                                                    setTripRoute(null);
+                                                    setHasReachedAirport(false);
+                                                    setSelectedAirport(null);
+                                                    setShowCheckInRecommendation(false);
+                                                    setShowFinalMessage(false);
+                                                    setResolvedAirport(null);
+                                                    AsyncStorage.removeItem('current_target_airport');
+                                                }}
+                                            >
+                                                <Text style={styles.restartButtonText}>Go to beginning</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    ) : !hasReachedAirport ? (
                                         <>
                                             <RouteResultCard
                                                 saved={tripRoute}
@@ -633,32 +719,76 @@ export default function MainScreen() {
                                                 style={styles.reachedButton}
                                                 onPress={() => setHasReachedAirport(true)}
                                             >
-                                                <Text style={styles.reachedButtonText}>Reached Airport 🏁</Text>
+                                                <Text style={styles.reachedButtonText}>Reached Airport</Text>
                                             </TouchableOpacity>
                                         </>
                                     ) : (
                                         <View style={{ flex: 1 }}>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 8 }}>
-                                                <Text style={{ color: '#fff', fontSize: 18, fontWeight: '700' }}>Airport Map</Text>
-                                                <TouchableOpacity
-                                                    style={{ backgroundColor: '#333', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8 }}
-                                                    onPress={() => setHasReachedAirport(false)}
-                                                >
-                                                    <Text style={{ color: '#ef5350', fontWeight: '600', fontSize: 13 }}>← Back</Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                            <View style={styles.mapWrapper}>
-                                                <AirportMap
-                                                    initialAirport={resolvedAirport ? { code: resolvedAirport.iata, city: resolvedAirport.city } : selectedAirport}
-                                                />
-                                            </View>
-                                            <View style={{ padding: 16 }}>
-                                                <CheckInManager
-                                                    onCheckInDone={() => {
-                                                        Alert.alert("Check-in", "Check-in process marked as done!");
-                                                    }}
-                                                />
-                                            </View>
+                                            {showCheckInRecommendation ? (
+                                                <View style={styles.recommendationContainer}>
+                                                    <View style={styles.recommendationContent}>
+                                                        <Ionicons name="time-outline" size={48} color="#0a7ea4" style={{ marginBottom: 16 }} />
+                                                        <Text style={styles.recommendationTitle}>It&apos;s recommended:</Text>
+                                                        <Text style={styles.recommendationText}>
+                                                            Arrive at the gate by {(() => {
+                                                                // Use tripRoute or current time as fallback if no boarding pass
+                                                                if (tripRoute && tripRoute.query.to.stop_id !== 'UNKNOWN') {
+                                                                    // Mock logic: 30 min before "now" + some buffer if we don't have real flight time here
+                                                                    // But likely we are here because we picked a destination airport.
+                                                                    // Without a flight time, maybe just say "30 min before departure"
+                                                                    return "30 min before departure";
+                                                                }
+                                                                return "30 min before departure";
+                                                            })()}
+                                                        </Text>
+                                                        <Text style={styles.recommendationSubText}>
+                                                            (30 min before departure from the ticket)
+                                                        </Text>
+                                                    </View>
+
+                                                    <View style={styles.recommendationActions}>
+                                                        <TouchableOpacity
+                                                            style={styles.backButton}
+                                                            onPress={() => setShowCheckInRecommendation(false)}
+                                                        >
+                                                            <Text style={styles.backButtonText}>← Back</Text>
+                                                        </TouchableOpacity>
+
+                                                        <TouchableOpacity
+                                                            style={styles.checkInButton}
+                                                            onPress={() => {
+                                                                setShowFinalMessage(true);
+                                                                // Don't clear tripRoute yet
+                                                            }}
+                                                        >
+                                                            <Text style={styles.checkInButtonText}>Done</Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                </View>
+                                            ) : (
+                                                <>
+                                                    <View style={styles.mapHeaderControls}>
+                                                        <TouchableOpacity
+                                                            style={styles.backButton}
+                                                            onPress={() => setHasReachedAirport(false)}
+                                                        >
+                                                            <Text style={styles.backButtonText}>← Back</Text>
+                                                        </TouchableOpacity>
+
+                                                        <TouchableOpacity
+                                                            style={styles.checkInButton}
+                                                            onPress={() => setShowCheckInRecommendation(true)}
+                                                        >
+                                                            <Text style={styles.checkInButtonText}>Check in completed</Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                    <View style={styles.mapWrapper}>
+                                                        <AirportMap
+                                                            initialAirport={resolvedAirport ? { code: resolvedAirport.iata, city: resolvedAirport.city } : selectedAirport}
+                                                        />
+                                                    </View>
+                                                </>
+                                            )}
                                         </View>
                                     )}
                                 </View>
@@ -1157,6 +1287,123 @@ const styles = StyleSheet.create({
         fontSize: 14,
         lineHeight: 20,
         color: '#666',
+    },
+    mapHeaderControls: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 0,
+        paddingBottom: 12,
+        width: '100%',
+    },
+    backButton: {
+        backgroundColor: '#333',
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: 8,
+    },
+    backButtonText: {
+        color: '#ef5350',
+        fontWeight: '600',
+        fontSize: 14,
+    },
+    checkInButton: {
+        backgroundColor: '#2e7d32', // Darker green for contrast
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 3,
+    },
+    checkInButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 14,
+    },
+    recommendationContainer: {
+        flex: 1,
+        backgroundColor: '#fff',
+        borderRadius: 16,
+        padding: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 4,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        borderWidth: 1,
+        borderColor: '#eee',
+    },
+    recommendationContent: {
+        alignItems: 'center',
+        marginBottom: 32,
+    },
+    recommendationTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 12,
+        textAlign: 'center',
+    },
+    recommendationText: {
+        fontSize: 18,
+        color: '#333',
+        textAlign: 'center',
+        marginBottom: 8,
+    },
+    recommendationSubText: {
+        fontSize: 14,
+        color: '#666',
+        textAlign: 'center',
+    },
+    recommendationActions: {
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+        paddingHorizontal: 16,
+    },
+    finalMessageContainer: {
+        flex: 1,
+        backgroundColor: '#fff',
+        borderRadius: 16,
+        padding: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 4,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        borderWidth: 1,
+        borderColor: '#eee',
+        minHeight: 300,
+    },
+    finalMessageText: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 32,
+        textAlign: 'center',
+    },
+    restartButton: {
+        backgroundColor: '#0a7ea4',
+        paddingHorizontal: 24,
+        paddingVertical: 14,
+        borderRadius: 12,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 3,
+    },
+    restartButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 });
 

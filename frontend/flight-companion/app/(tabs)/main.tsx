@@ -633,7 +633,7 @@ export default function MainScreen() {
                         <>
                             {!hasReachedAirport && (
                                 <View style={styles.routeMapBox}>
-                                    <Text style={styles.boxTitle}>I don't have the ticket yet</Text>
+                                    <Text style={styles.boxTitle}>I do not have the ticket yet</Text>
                                     <Text style={styles.boxSubtitle}>Select your destination airport to plan a trip</Text>
 
                                     {/* Dropdown Trigger */}

@@ -107,14 +107,14 @@ export default function BoardingPassScreen() {
                     </View>
 
                     {/* Aircraft & Operator Info (if available) */}
-                    {(boardingPass.aircraftType || boardingPass.operator) && (
+                    {!!(boardingPass.aircraftType || boardingPass.operator) && (
                         <>
                             <View style={styles.dottedDivider} />
                             <View style={styles.detailsGrid}>
-                                {boardingPass.aircraftType && (
+                                {!!boardingPass.aircraftType && (
                                     <DetailItem label="Aircraft" value={boardingPass.aircraftType} />
                                 )}
-                                {boardingPass.operator && (
+                                {!!boardingPass.operator && (
                                     <DetailItem label="Operator" value={boardingPass.operator} />
                                 )}
                             </View>
@@ -122,20 +122,20 @@ export default function BoardingPassScreen() {
                     )}
 
                     {/* Gate & Terminal Info (if available) */}
-                    {(boardingPass.originGate || boardingPass.originTerminal || boardingPass.destinationGate || boardingPass.destinationTerminal) && (
+                    {!!(boardingPass.originGate || boardingPass.originTerminal || boardingPass.destinationGate || boardingPass.destinationTerminal) && (
                         <>
                             <View style={styles.dottedDivider} />
                             <View style={styles.detailsGrid}>
-                                {boardingPass.originGate && (
+                                {!!boardingPass.originGate && (
                                     <DetailItem label="Departure Gate" value={boardingPass.originGate} />
                                 )}
-                                {boardingPass.originTerminal && (
+                                {!!boardingPass.originTerminal && (
                                     <DetailItem label="Departure Terminal" value={boardingPass.originTerminal} />
                                 )}
-                                {boardingPass.destinationGate && (
+                                {!!boardingPass.destinationGate && (
                                     <DetailItem label="Arrival Gate" value={boardingPass.destinationGate} />
                                 )}
-                                {boardingPass.destinationTerminal && (
+                                {!!boardingPass.destinationTerminal && (
                                     <DetailItem label="Arrival Terminal" value={boardingPass.destinationTerminal} />
                                 )}
                             </View>

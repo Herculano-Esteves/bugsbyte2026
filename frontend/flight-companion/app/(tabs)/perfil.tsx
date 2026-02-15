@@ -8,6 +8,7 @@ import {
     Alert,
     Image,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useFocusEffect } from 'expo-router';
 import { useAuth } from '../../context/AuthContext';
@@ -18,12 +19,31 @@ import { VisitedAirport } from '../../types/user';
 export default function ProfileScreen() {
     const { user, isGuest, logout } = useAuth();
 
+    const [totalArticles, setTotalArticles] = React.useState(0);
+
+    React.useEffect(() => {
+        // Fetch total articles count
+        const fetchItems = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/items`);
+                if (response.ok) {
+                    const items = await response.json();
+                    setTotalArticles(items.length);
+                }
+            } catch (e) {
+                console.log("Failed to fetch items count", e);
+                setTotalArticles(10);
+            }
+        };
+        fetchItems();
+    }, []);
+
     // If guest mode, show login prompt
     if (isGuest || !user) {
         return (
             <View style={styles.container}>
                 <LinearGradient
-                    colors={['#667eea', '#764ba2']}
+                    colors={['#ef5350', '#b71c1c']}
                     style={styles.guestContainer}
                 >
                     <Image source={require('../../assets/Icons/Profile.png')} style={styles.guestIconImage} />
@@ -49,12 +69,8 @@ export default function ProfileScreen() {
     }
 
     const handleLogout = async () => {
-        console.log('Logout button pressed');
-
         try {
-            console.log('Calling logout function...');
             await logout();
-            console.log('Logout completed, navigating to login...');
             router.push('/auth/login');
         } catch (error) {
             console.error('Logout error:', error);
@@ -110,7 +126,7 @@ export default function ProfileScreen() {
         <View style={styles.container}>
             {/* Header with gradient */}
             <LinearGradient
-                colors={['#667eea', '#764ba2']}
+                colors={['#ef5350', '#b71c1c']}
                 style={styles.header}
             >
                 <View style={styles.avatarContainer}>
@@ -129,11 +145,11 @@ export default function ProfileScreen() {
                     <Text style={styles.sectionTitle}>Personal Information</Text>
 
                     <View style={styles.card}>
-                        <InfoRow icon="👤" label="Full Name" value={user.name} />
+                        <InfoRow icon="person" label="Full Name" value={user.name} />
                         <View style={styles.divider} />
-                        <InfoRow icon="📧" label="Email" value={user.email} />
+                        <InfoRow icon="mail" label="Email" value={user.email} />
                         <View style={styles.divider} />
-                        <InfoRow icon="📍" label="Address" value={user.address || 'Not set'} />
+                        <InfoRow icon="location" label="Address" value={user.address || 'Not set'} />
                     </View>
                 </View>
 
@@ -143,7 +159,7 @@ export default function ProfileScreen() {
                         <Text style={styles.sectionTitle}>Ticket Information</Text>
                         <View style={styles.card}>
                             <InfoRow
-                                icon="✈️"
+                                icon="airplane"
                                 label="Flight"
                                 value={user.ticket_info.flight || 'No ticket info'}
                             />
@@ -156,7 +172,7 @@ export default function ProfileScreen() {
                     <Text style={styles.sectionTitle}>Activity</Text>
                     <View style={styles.card}>
                         <InfoRow
-                            icon="📚"
+                            icon="book"
                             label="Read Articles"
                             value={`${user.read_articles ? user.read_articles.length : 0} / ${totalArticles}`}
                         />
@@ -211,7 +227,7 @@ export default function ProfileScreen() {
                     style={styles.logoutButton}
                     onPress={handleLogout}
                 >
-                    <Text style={styles.logoutIcon}>🚪</Text>
+                    <Ionicons name="log-out-outline" size={24} color="white" style={{ marginRight: 10 }} />
                     <Text style={styles.logoutText}>Logout</Text>
                 </TouchableOpacity>
 
@@ -225,7 +241,7 @@ function InfoRow({ icon, label, value }: { icon: string; label: string; value: s
     return (
         <View style={styles.infoRow}>
             <View style={styles.infoLeft}>
-                <Text style={styles.infoIcon}>{icon}</Text>
+                <Ionicons name={icon as any} size={22} color="#ef5350" style={{ marginRight: 12 }} />
                 <Text style={styles.infoLabel}>{label}</Text>
             </View>
             <Text style={styles.infoValue} numberOfLines={1}>
@@ -275,7 +291,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     loginButtonText: {
-        color: '#667eea',
+        color: '#ef5350',
         fontSize: 18,
         fontWeight: 'bold',
     },
@@ -320,7 +336,7 @@ const styles = StyleSheet.create({
     avatarText: {
         fontSize: 36,
         fontWeight: 'bold',
-        color: '#667eea',
+        color: '#ef5350',
     },
     headerName: {
         fontSize: 24,
@@ -404,10 +420,7 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         elevation: 5,
     },
-    logoutIcon: {
-        fontSize: 24,
-        marginRight: 10,
-    },
+
     logoutText: {
         color: 'white',
         fontSize: 18,

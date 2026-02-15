@@ -52,3 +52,21 @@ export async function getTransportInfo(): Promise<TransportInfo> {
   if (!res.ok) throw new Error('Failed to fetch transport info');
   return res.json();
 }
+
+/**
+ * Helper to create a Google Maps URL for directions.
+ * If origin is provided, creates a route from origin to destination.
+ * If only destination is provided, maps defaults to "Current Location" -> Destination.
+ */
+export function createGoogleMapsUrl(destLat: number, destLon: number, originLat?: number, originLon?: number): string {
+  const baseUrl = "https://www.google.com/maps/dir/?api=1";
+  let url = `${baseUrl}&destination=${destLat},${destLon}`;
+
+  if (originLat !== undefined && originLon !== undefined) {
+    url += `&origin=${originLat},${originLon}`;
+  }
+
+  // Default to public transport as requested
+  url += "&travelmode=transit";
+  return url;
+}

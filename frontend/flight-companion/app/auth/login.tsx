@@ -44,7 +44,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <LinearGradient colors={['#667eea', '#764ba2']} style={styles.container}>
+    <LinearGradient colors={['#ef5350', '#b71c1c']} style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
@@ -190,12 +190,12 @@ const styles = StyleSheet.create({
     borderColor: '#e0e0e0',
   },
   button: {
-    backgroundColor: '#667eea',
+    backgroundColor: '#ef5350',
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
     marginTop: 10,
-    shadowColor: '#667eea',
+    shadowColor: '#ef5350',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -213,13 +213,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#667eea',
+    borderColor: '#ef5350',
     padding: 14,
     alignItems: 'center',
     marginBottom: 10,
   },
   skipButtonText: {
-    color: '#667eea',
+    color: '#ef5350',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   linkBold: {
-    color: '#667eea',
+    color: '#ef5350',
     fontWeight: 'bold',
   },
 });

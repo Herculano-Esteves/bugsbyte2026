@@ -1,5 +1,6 @@
 from app.models.schemas import UserCreate, UserLogin, UserResponse
 from app.database.user_repository import UserRepository
+from app.database.visited_airport_repository import VisitedAirportRepository
 from fastapi import HTTPException
 import json
 import bcrypt
@@ -58,3 +59,18 @@ class UserLogic:
                 return {"message": "Article marked as read", "read_count": len(user.read_articles)}
             return {"message": "Article already read", "read_count": len(user.read_articles)}
         raise HTTPException(status_code=404, detail="User not found")
+
+    @staticmethod
+    def record_airport_visit(user_id: int, airport_iata: str):
+        user = UserRepository.get_user_by_id(user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        VisitedAirportRepository.add_visit(user_id, airport_iata)
+        return {"message": "Airport visit recorded", "airport_iata": airport_iata.upper()}
+
+    @staticmethod
+    def get_visited_airports(user_id: int):
+        user = UserRepository.get_user_by_id(user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        return VisitedAirportRepository.get_user_airport_stats(user_id)

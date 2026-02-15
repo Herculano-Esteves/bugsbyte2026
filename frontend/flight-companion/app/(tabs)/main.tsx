@@ -23,10 +23,13 @@ import CheckInManager from '../../components/CheckInManager';
 import type { SavedRoute, Stop } from '../../services/transportTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AIRPORTS from '../../assets/data/airports.json';
+import { useAuth } from '../../context/AuthContext';
+import { authService } from '../../services/auth';
 
 export default function MainScreen() {
     const { mode, setMode } = useFlightMode();
     const { boardingPass, setBoardingPass, clearBoardingPass, setSelectedAirport: setContextSelectedAirport } = useBoardingPass();
+    const { user, isGuest } = useAuth();
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [showScanner, setShowScanner] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -373,6 +376,22 @@ export default function MainScreen() {
                 destinationGate: flightInfo.destination?.gate || boardingPass.destination_gate || '',
                 destinationTerminal: flightInfo.destination?.terminal || boardingPass.destination_terminal || '',
             });
+
+            // Record visited airports for authenticated users
+            if (user && !isGuest) {
+                const depAirport = boardingPass.departure_airport;
+                const arrAirport = boardingPass.arrival_airport;
+                if (depAirport) {
+                    authService.recordAirportVisit(user.id, depAirport).catch(e =>
+                        console.warn('Failed to record departure airport visit:', e)
+                    );
+                }
+                if (arrAirport) {
+                    authService.recordAirportVisit(user.id, arrAirport).catch(e =>
+                        console.warn('Failed to record arrival airport visit:', e)
+                    );
+                }
+            }
         } catch (error: any) {
             console.error('Upload error:', error);
             Alert.alert('Error', error.message || 'Failed to parse barcode from image.');

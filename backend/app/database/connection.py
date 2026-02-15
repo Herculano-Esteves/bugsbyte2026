@@ -129,8 +129,20 @@ def create_tables(conn):
     );
     """)
     
+    # Visited Airports Table (tracks airports a user has visited)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS visited_airports (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        airport_iata TEXT NOT NULL,
+        visited_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+    """)
+
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_flight_number ON flight_schedules(flight_number);")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_airline_icao ON airlines(icao);")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_visited_user ON visited_airports(user_id);")
 
     conn.commit()
 

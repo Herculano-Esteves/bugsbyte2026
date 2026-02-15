@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, SafeAreaView, Platform, StatusBar, useColorScheme, TouchableOpacity, ScrollView, ActivityIndicator, Modal } from 'react-native';
+import { View, Text, StyleSheet, Image, SafeAreaView, Platform, StatusBar, TouchableOpacity, ScrollView, ActivityIndicator, Modal } from 'react-native';
 import axios from 'axios';
 import { mockArticles, Article } from '../../constants/mockSearchData';
-import { Colors } from '../../constants/theme';
 import { useBoardingPass } from '../../context/BoardingPassContext';
 import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL } from '../../constants/config';
@@ -12,11 +11,9 @@ import { useAuth } from '../../context/AuthContext';
 // Reusing ImageWithLoader from search.tsx
 const ImageWithLoader = ({ uri, style }: { uri: string, style: any }) => {
     const [loading, setLoading] = useState(true);
-    const colorScheme = useColorScheme();
-    const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
     return (
-        <View style={[style, { overflow: 'hidden', backgroundColor: theme.background }]}>
+        <View style={[style, { overflow: 'hidden', backgroundColor: '#fff' }]}>
             <Image
                 source={{ uri }}
                 style={{ width: '100%', height: '100%' }}
@@ -24,7 +21,7 @@ const ImageWithLoader = ({ uri, style }: { uri: string, style: any }) => {
             />
             {loading && (
                 <View style={[StyleSheet.absoluteFill, { justifyContent: 'center', alignItems: 'center' }]}>
-                    <ActivityIndicator size="small" color={theme.tint} />
+                    <ActivityIndicator size="small" color="#0a7ea4" />
                 </View>
             )}
         </View>
@@ -32,8 +29,6 @@ const ImageWithLoader = ({ uri, style }: { uri: string, style: any }) => {
 };
 
 export default function InFlightScreen() {
-    const colorScheme = useColorScheme();
-    const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
     // Get boarding pass data
     const { boardingPass, selectedAirport } = useBoardingPass();
@@ -48,7 +43,6 @@ export default function InFlightScreen() {
     const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
     const [loading, setLoading] = useState(true);
-    // Debug logs state removed as it was unused
     const [allArticles, setAllArticles] = useState<Article[]>([]);
     const { user, updateUser } = useAuth();
 
@@ -78,10 +72,8 @@ export default function InFlightScreen() {
 
     useEffect(() => {
         const fetchArticles = async () => {
-            // addLog removed
             try {
                 const response = await axios.get(`${API_BASE_URL}/api/items`, { timeout: 5000 });
-                // addLog removed
                 const items = response.data.map((item: any) => ({
                     id: item.id,
                     title: item.title,
@@ -94,12 +86,8 @@ export default function InFlightScreen() {
                 setAllArticles(items);
                 findCarrierArticle(items, yourCarrier);
                 findAircraftArticle(items, yourAircraft);
-                // addLog removed
             } catch (error: any) {
                 console.log('Error fetching articles, falling back to mock data:', error);
-                const errorMsg = error.message || 'Unknown error';
-                // addLog removed
-                // addLog removed
                 setAllArticles(mockArticles);
                 findCarrierArticle(mockArticles, yourCarrier);
                 findAircraftArticle(mockArticles, yourAircraft);
@@ -117,7 +105,7 @@ export default function InFlightScreen() {
     // Fetch destination tips when boarding pass or selected airport changes
     useEffect(() => {
         const fetchDestinationTips = async () => {
-            if (!boardingPass?.arrivalAirport) {
+            if (!tipsAirportCode) {
                 setDestinationTips(null);
                 return;
             }
@@ -134,7 +122,7 @@ export default function InFlightScreen() {
         };
 
         fetchDestinationTips();
-    }, [boardingPass?.arrivalAirport]);
+    }, [boardingPass?.arrivalAirport, selectedAirport?.code]);
 
     const [alsoImportantArticles, setAlsoImportantArticles] = useState<Article[]>([]);
 
@@ -180,7 +168,6 @@ export default function InFlightScreen() {
             if (prioritizedIds.includes(art.id)) return true;
 
             // EXCLUDE other carriers and aircraft
-            // We identify them by checking standard tags
             const isCarrierOrAircraft = art.public_tags.some(t => {
                 const lower = t.toLowerCase();
                 return lower.includes('carrier') || lower.includes('airline') || lower.includes('aircraft');
@@ -198,7 +185,7 @@ export default function InFlightScreen() {
 
             if (isSafety) return true;
 
-            // Check for related tags in title, public_tags, or hidden_tags
+            // Check for related tags
             const isRelated = contextTags.has(art.title.toLowerCase()) ||
                 art.public_tags.some(t => contextTags.has(t.toLowerCase())) ||
                 art.hidden_tags.some(t => contextTags.has(t.toLowerCase()));
@@ -210,12 +197,11 @@ export default function InFlightScreen() {
             const aPrio = prioritizedIds.indexOf(a.id);
             const bPrio = prioritizedIds.indexOf(b.id);
 
-            // If both are prioritized, maintain order in prioritizedIds (lower index = higher priority)
             if (aPrio !== -1 && bPrio !== -1) return aPrio - bPrio;
-            if (aPrio !== -1) return -1; // a is prioritized, b is not -> a comes first
-            if (bPrio !== -1) return 1;  // b is prioritized, a is not -> b comes first
+            if (aPrio !== -1) return -1;
+            if (bPrio !== -1) return 1;
 
-            return 0; // Keep original order
+            return 0;
         });
 
         setAlsoImportantArticles(interesting);
@@ -255,14 +241,13 @@ export default function InFlightScreen() {
             }
         }
 
-
         if (targetTag) {
             const found = articles.find(article =>
                 article.hidden_tags.some(tag => tag.toLowerCase() === targetTag.toLowerCase())
             );
             setCarrierArticle(found || null);
         } else {
-            setCarrierArticle(null); // Clear if no tag found 
+            setCarrierArticle(null);
         }
     };
 
@@ -343,20 +328,19 @@ export default function InFlightScreen() {
 
     const renderCard = (article: Article | null, type: 'carrier' | 'aircraft' | 'destination') => {
         if (!article) {
-            if (type === 'destination') return null; // Don't show "not found" for destination, just hide or show placeholder logic handles it
-            return <Text style={{ color: theme.text }}>{type === 'carrier' ? 'Carrier' : 'Aircraft'} info not found.</Text>;
+            if (type === 'destination') return null;
+            return <Text style={{ color: '#11181C' }}>{type === 'carrier' ? 'Carrier' : 'Aircraft'} info not found.</Text>;
         }
 
         return (
             <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => handleOpenArticle(article)}
-                style={[styles.card, { backgroundColor: theme.background, borderColor: colorScheme === 'dark' ? '#333' : '#eee' }]}
+                style={[styles.card, { backgroundColor: '#fff', borderColor: '#eee' }]}
             >
                 <ImageWithLoader uri={article.image} style={styles.cardImage} />
                 <View style={styles.textContainer}>
-                    <Text style={[styles.cardTitle, { color: theme.text }]}>{article.title}</Text>
-                    {/* Text and Tags removed from preview as requested */}
+                    <Text style={[styles.cardTitle, { color: '#11181C' }]}>{article.title}</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -364,8 +348,8 @@ export default function InFlightScreen() {
 
     if (loading) {
         return (
-            <SafeAreaView style={[styles.container, { backgroundColor: theme.background, justifyContent: 'center', alignItems: 'center' }]}>
-                <ActivityIndicator size="large" color={theme.tint} />
+            <SafeAreaView style={[styles.container, { backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center' }]}>
+                <ActivityIndicator size="large" color="#0a7ea4" />
             </SafeAreaView>
         );
     };
@@ -379,15 +363,15 @@ export default function InFlightScreen() {
             <TouchableOpacity
                 onPress={() => setShowTipsModal(true)}
                 style={[styles.card, {
-                    backgroundColor: theme.background,
-                    borderColor: colorScheme === 'dark' ? '#333' : '#eee',
+                    backgroundColor: '#fff',
+                    borderColor: '#eee',
                 }]}
             >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <View style={{ flex: 1 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
-                            <Ionicons name="location" size={20} color={theme.tint} style={{ marginRight: 8 }} />
-                            <Text style={{ color: theme.text, fontSize: 16, fontWeight: '600' }}>
+                            <Ionicons name="location" size={20} color="#0a7ea4" style={{ marginRight: 8 }} />
+                            <Text style={{ color: '#11181C', fontSize: 16, fontWeight: '600' }}>
                                 Travel Tips for {destinationTips.destination}
                             </Text>
                         </View>
@@ -402,16 +386,16 @@ export default function InFlightScreen() {
     };
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+        <SafeAreaView style={[styles.container, { backgroundColor: '#fff' }]}>
             <View style={styles.header}>
-                <Text style={[styles.headerTitle, { color: theme.text }]}>In Flight</Text>
+                <Text style={[styles.headerTitle, { color: '#11181C' }]}>In Flight</Text>
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollContent}>
 
                 {/* Destination Tips Card */}
                 <View style={styles.sectionContainer}>
-                    <Text style={[styles.sectionTitle, { color: theme.text }]}>Destination Tips</Text>
+                    <Text style={[styles.sectionTitle, { color: '#11181C' }]}>Destination Tips</Text>
 
                     {destinationArticle && renderCard(destinationArticle, 'destination')}
 
@@ -421,15 +405,15 @@ export default function InFlightScreen() {
                         <TouchableOpacity
                             onPress={() => router.push('/(tabs)/main')}
                             style={[styles.card, {
-                                backgroundColor: theme.background,
-                                borderColor: colorScheme === 'dark' ? '#333' : '#eee',
+                                backgroundColor: '#fff',
+                                borderColor: '#eee',
                                 padding: 24,
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }]}
                         >
-                            <Ionicons name="location-outline" size={48} color={theme.tint} />
-                            <Text style={{ color: theme.text, fontSize: 16, marginTop: 12, fontWeight: '600', textAlign: 'center' }}>
+                            <Ionicons name="location-outline" size={48} color="#0a7ea4" />
+                            <Text style={{ color: '#11181C', fontSize: 16, marginTop: 12, fontWeight: '600', textAlign: 'center' }}>
                                 Scan a boarding pass or select an airport to see tips & tricks
                             </Text>
                             <Text style={{ color: '#888', fontSize: 13, marginTop: 4, textAlign: 'center' }}>
@@ -442,28 +426,28 @@ export default function InFlightScreen() {
                 {boardingPass && (
                     <>
                         <View style={styles.sectionContainer}>
-                            <Text style={[styles.sectionTitle, { color: theme.text }]}>Your carrier</Text>
+                            <Text style={[styles.sectionTitle, { color: '#11181C' }]}>Your carrier</Text>
                             {renderCard(carrierArticle, 'carrier')}
                         </View>
 
                         <View style={styles.sectionContainer}>
-                            <Text style={[styles.sectionTitle, { color: theme.text }]}>Your Aircraft</Text>
+                            <Text style={[styles.sectionTitle, { color: '#11181C' }]}>Your Aircraft</Text>
                             {renderCard(aircraftArticle, 'aircraft')}
                         </View>
 
                         {alsoImportantArticles.length > 0 && (
                             <View style={styles.sectionContainer}>
-                                <Text style={[styles.sectionTitle, { color: theme.text }]}>Also Important</Text>
+                                <Text style={[styles.sectionTitle, { color: '#11181C' }]}>Also Important</Text>
                                 {alsoImportantArticles.map(article => (
                                     <TouchableOpacity
                                         key={article.id}
                                         activeOpacity={0.8}
                                         onPress={() => setSelectedArticle(article)}
-                                        style={[styles.card, { backgroundColor: theme.background, borderColor: colorScheme === 'dark' ? '#333' : '#eee' }]}
+                                        style={[styles.card, { backgroundColor: '#fff', borderColor: '#eee' }]}
                                     >
                                         <ImageWithLoader uri={article.image} style={styles.cardImage} />
                                         <View style={styles.textContainer}>
-                                            <Text style={[styles.cardTitle, { color: theme.text }]}>{article.title}</Text>
+                                            <Text style={[styles.cardTitle, { color: '#11181C' }]}>{article.title}</Text>
                                         </View>
                                     </TouchableOpacity>
                                 ))}
@@ -481,27 +465,27 @@ export default function InFlightScreen() {
                 onRequestClose={() => setSelectedArticle(null)}
             >
                 {selectedArticle && (
-                    <View style={[styles.modalContainer, { backgroundColor: theme.background }]}>
+                    <View style={[styles.modalContainer, { backgroundColor: '#fff' }]}>
                         <View style={styles.modalHeader}>
                             <TouchableOpacity onPress={() => setSelectedArticle(null)} style={styles.closeButton}>
-                                <Ionicons name="close" size={28} color={theme.tint} />
+                                <Ionicons name="close" size={28} color="#0a7ea4" />
                             </TouchableOpacity>
                         </View>
                         <ScrollView contentContainerStyle={styles.modalContent}>
                             <ImageWithLoader uri={selectedArticle.image} style={styles.modalImage} />
                             <View style={styles.modalTextContainer}>
-                                <Text style={[styles.modalTitle, { color: theme.text }]}>{selectedArticle.title}</Text>
+                                <Text style={[styles.modalTitle, { color: '#11181C' }]}>{selectedArticle.title}</Text>
                                 <View style={styles.tagsContainer}>
                                     {selectedArticle.public_tags.map((tag, index) => (
-                                        <View key={index} style={[styles.tagBadge, { backgroundColor: theme.tint + '20' }]}>
-                                            <Text style={[styles.tagText, { color: theme.tint }]}>#{tag}</Text>
+                                        <View key={index} style={[styles.tagBadge, { backgroundColor: '#0a7ea420' }]}>
+                                            <Text style={[styles.tagText, { color: '#0a7ea4' }]}>#{tag}</Text>
                                         </View>
                                     ))}
                                 </View>
-                                <Text style={[styles.modalText, { color: theme.text }]}>{selectedArticle.text}</Text>
+                                <Text style={[styles.modalText, { color: '#11181C' }]}>{selectedArticle.text}</Text>
                                 {selectedArticle.fleet_ids && selectedArticle.fleet_ids.length > 0 && (
                                     <View style={styles.fleetContainer}>
-                                        <Text style={[styles.fleetTitle, { color: theme.text }]}>Fleet:</Text>
+                                        <Text style={[styles.fleetTitle, { color: '#11181C' }]}>Fleet:</Text>
                                         <View style={styles.fleetLinks}>
                                             {selectedArticle.fleet_ids.map((id) => {
                                                 const fleetItem = allArticles.find(a => a.id === id);
@@ -510,9 +494,9 @@ export default function InFlightScreen() {
                                                     <TouchableOpacity
                                                         key={id}
                                                         onPress={() => handleOpenArticle(fleetItem)}
-                                                        style={[styles.fleetLinkButton, { borderColor: theme.tint }]}
+                                                        style={[styles.fleetLinkButton, { borderColor: '#0a7ea4' }]}
                                                     >
-                                                        <Text style={[styles.fleetLinkText, { color: theme.tint }]}>
+                                                        <Text style={[styles.fleetLinkText, { color: '#0a7ea4' }]}>
                                                             {fleetItem.title}
                                                         </Text>
                                                     </TouchableOpacity>
@@ -535,15 +519,15 @@ export default function InFlightScreen() {
                 onRequestClose={() => setShowTipsModal(false)}
             >
                 {destinationTips && (
-                    <View style={[styles.modalContainer, { backgroundColor: theme.background }]}>
+                    <View style={[styles.modalContainer, { backgroundColor: '#fff' }]}>
                         <View style={styles.modalHeader}>
                             <TouchableOpacity onPress={() => setShowTipsModal(false)} style={styles.closeButton}>
-                                <Ionicons name="close" size={28} color={theme.tint} />
+                                <Ionicons name="close" size={28} color="#0a7ea4" />
                             </TouchableOpacity>
                         </View>
                         <ScrollView contentContainerStyle={styles.modalContent}>
                             <View style={styles.modalTextContainer}>
-                                <Text style={[styles.modalTitle, { color: theme.text }]}>
+                                <Text style={[styles.modalTitle, { color: '#11181C' }]}>
                                     Travel Tips for {destinationTips.destination}
                                 </Text>
 
@@ -569,14 +553,14 @@ export default function InFlightScreen() {
                                     const severityColors: { [key: string]: string } = {
                                         'critical': '#ff4444',
                                         'warning': '#ff9800',
-                                        'info': theme.tint
+                                        'info': '#0a7ea4'
                                     };
 
                                     return (
                                         <View key={category} style={{ marginBottom: 24 }}>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
-                                                <Ionicons name={categoryIcons[category] as any || 'information-circle'} size={24} color={theme.tint} />
-                                                <Text style={{ color: theme.text, fontSize: 20, fontWeight: '700', marginLeft: 10 }}>
+                                                <Ionicons name={categoryIcons[category] as any || 'information-circle'} size={24} color="#0a7ea4" />
+                                                <Text style={{ color: '#11181C', fontSize: 20, fontWeight: '700', marginLeft: 10 }}>
                                                     {categoryLabels[category] || category}
                                                 </Text>
                                                 <Text style={{ color: '#888', fontSize: 16, marginLeft: 8 }}>({tips.length})</Text>
@@ -586,15 +570,15 @@ export default function InFlightScreen() {
                                                 <View
                                                     key={index}
                                                     style={{
-                                                        backgroundColor: colorScheme === 'dark' ? '#222' : '#f5f5f5',
+                                                        backgroundColor: '#f5f5f5',
                                                         borderLeftWidth: 4,
-                                                        borderLeftColor: severityColors[tip.severity] || theme.tint,
+                                                        borderLeftColor: severityColors[tip.severity] || '#0a7ea4',
                                                         borderRadius: 8,
                                                         padding: 14,
                                                         marginBottom: 10,
                                                     }}
                                                 >
-                                                    <Text style={{ color: theme.text, fontSize: 15, lineHeight: 22 }}>
+                                                    <Text style={{ color: '#11181C', fontSize: 15, lineHeight: 22 }}>
                                                         {tip.content}
                                                     </Text>
                                                 </View>

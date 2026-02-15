@@ -16,7 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL, GO_API_BASE_URL } from '../../constants/config';
 import { router } from 'expo-router';
 import AirportMap from '../../components/AirportMap';
-
+import CheckInManager from '../../components/CheckInManager';
 import RouteResultCard from '../../components/transport/RouteResultCard';
 import type { SavedRoute, Stop } from '../../services/transportTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -401,10 +401,6 @@ export default function MainScreen() {
 
 
 
-
-
-
-
     const openScanner = async () => {
         if (!hasPermission) {
             const { status } = await Camera.requestCameraPermissionsAsync();
@@ -496,25 +492,17 @@ export default function MainScreen() {
                                             </TouchableOpacity>
                                         </>
                                     ) : (
-                                        <View style={{ flex: 1 }}>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 8 }}>
-                                                <Text style={{ color: '#fff', fontSize: 18, fontWeight: '700' }}>Airport Map</Text>
-                                                <TouchableOpacity
-                                                    style={{ backgroundColor: '#333', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8 }}
-                                                    onPress={() => setHasReachedAirport(false)}
-                                                >
-                                                    <Text style={{ color: '#ef5350', fontWeight: '600', fontSize: 13 }}>← Back</Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                            <View style={styles.mapWrapper}>
-                                                <AirportMap
-                                                    initialAirport={resolvedAirport ? { code: resolvedAirport.iata, city: resolvedAirport.city } : (boardingPass ? { code: boardingPass.departureAirport, city: boardingPass.departureAirport } : selectedAirport)}
-                                                />
-                                            </View>
-                                        </View>
+                                        <CheckInManager
+                                            onCheckInDone={() => {
+                                                // Identify what "done" means; for now just an alert or console
+                                                Alert.alert("Check-in", "Check-in process marked as done!");
+                                            }}
+                                            onBack={() => setHasReachedAirport(false)}
+                                        />
                                     )}
                                 </View>
                             )}
+
                         </>
                     ) : (
                         <View style={styles.scannerContainer}>
@@ -540,7 +528,7 @@ export default function MainScreen() {
                         <>
                             {!hasReachedAirport && (
                                 <View style={styles.routeMapBox}>
-                                    <Text style={styles.boxTitle}>I don't have the ticket yet</Text>
+                                    <Text style={styles.boxTitle}>I don&apos;t have the ticket yet</Text>
                                     <Text style={styles.boxSubtitle}>Select your destination airport to plan a trip</Text>
 
                                     {/* Dropdown Trigger */}
@@ -1139,4 +1127,3 @@ const styles = StyleSheet.create({
         color: '#666',
     },
 });
-

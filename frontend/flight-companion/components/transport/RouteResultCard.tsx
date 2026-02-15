@@ -66,7 +66,6 @@ function StopPin({ stop }: { stop: { lat: number; lon: number; stop_name: string
       onPress={() => openStopInMaps(stop.lat, stop.lon)}
       activeOpacity={0.6}
     >
-      <Text style={styles.stopPinIcon}>📍</Text>
       <Text style={styles.stopPinName} numberOfLines={1}>{stop.stop_name}</Text>
     </TouchableOpacity>
   );
@@ -191,10 +190,10 @@ export default function RouteResultCard({ saved, onRemove }: Props) {
 
       {/* Date + remove row */}
       <View style={styles.dateRow}>
-        <Text style={styles.dateText}>📅 {query.date}  ·  🕐 {query.time}</Text>
+        <Text style={styles.dateText}>{query.date}  ·  {query.time}</Text>
         {onRemove && (
           <TouchableOpacity onPress={() => onRemove(saved.id)}>
-            <Text style={styles.removeBtn}>✕ Remove</Text>
+            <Text style={styles.removeBtn}>Remove</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -231,7 +230,7 @@ export default function RouteResultCard({ saved, onRemove }: Props) {
                 }}
                 activeOpacity={0.8}
               >
-                <Text style={styles.googleMapsBtnText}>Open in Google Maps 🗺️</Text>
+                <Text style={styles.googleMapsBtnText}>Open in Google Maps</Text>
               </TouchableOpacity>
             </View>
           ) : (

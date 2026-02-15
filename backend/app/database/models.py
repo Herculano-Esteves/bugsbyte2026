@@ -55,4 +55,26 @@ class ItemDB(BaseModel):
     public_tags: str # Stored as JSON list of strings
     hidden_tags: str # Stored as JSON list of strings
 
+class AirlineDB(BaseModel):
+    """
+    Represents an airline with ICAO/IATA codes and name.
+    """
+    id: Optional[int] = None
+    icao: str  # e.g., "RYR"
+    iata: Optional[str] = None  # e.g., "FR"
+    name: str  # e.g., "Ryanair"
+    logo_url: Optional[str] = None
+
+class FlightScheduleDB(BaseModel):
+    """
+    Represents a flight schedule entry with airline and aircraft info.
+    """
+    id: Optional[int] = None
+    flight_number: str  # e.g., "FR2160"
+    airline_icao: str  # e.g., "RYR"
+    aircraft_type: Optional[str] = None  # e.g., "Boeing 737-800"
+    origin_airport: Optional[str] = None  # e.g., "OPO"
+    destination_airport: Optional[str] = None  # e.g., "TSF"
+    last_updated: Optional[str] = None  # Timestamp
+
 

@@ -1,0 +1,155 @@
+{
+    "flights": [
+        {
+            "flight_number": "FR2160",
+            "airline_icao": "RYR",
+            "airline_iata": "FR",
+            "airline_name": "Ryanair",
+            "aircraft_type": "Boeing 737 MAX 8",
+            "origin": "OPO",
+            "destination": "TSF"
+        },
+        {
+            "flight_number": "S4183",
+            "airline_icao": "RZO",
+            "airline_iata": "S4",
+            "airline_name": "SATA Air Açores",
+            "aircraft_type": "Airbus A321neo",
+            "origin": "LIS",
+            "destination": "PDL"
+        },
+        {
+            "flight_number": "S4813",
+            "airline_icao": "RZO",
+            "airline_iata": "S4",
+            "airline_name": "SATA Air Açores",
+            "aircraft_type": "Airbus A320neo",
+            "origin": "CDG",
+            "destination": "PDL"
+        },
+        {
+            "flight_number": "S4513",
+            "airline_icao": "RZO",
+            "airline_iata": "S4",
+            "airline_name": "SATA Air Açores",
+            "aircraft_type": "Airbus A320neo",
+            "origin": "CDG",
+            "destination": "PDL"
+        },
+        {
+            "flight_number": "TP1234",
+            "airline_icao": "TAP",
+            "airline_iata": "TP",
+            "airline_name": "TAP Air Portugal",
+            "aircraft_type": "Airbus A320",
+            "origin": "LIS",
+            "destination": "OPO"
+        },
+        {
+            "flight_number": "TP1000",
+            "airline_icao": "TAP",
+            "airline_iata": "TP",
+            "airline_name": "TAP Air Portugal",
+            "aircraft_type": "Airbus A330-900neo",
+            "origin": "LIS",
+            "destination": "EWR"
+        },
+        {
+            "flight_number": "U22050",
+            "airline_icao": "EZY",
+            "airline_iata": "U2",
+            "airline_name": "easyJet",
+            "aircraft_type": "Airbus A320",
+            "origin": "LGW",
+            "destination": "FAO"
+        },
+        {
+            "flight_number": "VY8301",
+            "airline_icao": "VLG",
+            "airline_iata": "VY",
+            "airline_name": "Vueling",
+            "aircraft_type": "Airbus A320",
+            "origin": "BCN",
+            "destination": "MAD"
+        },
+        {
+            "flight_number": "LH400",
+            "airline_icao": "DLH",
+            "airline_iata": "LH",
+            "airline_name": "Lufthansa",
+            "aircraft_type": "Boeing 747-8",
+            "origin": "FRA",
+            "destination": "JFK"
+        },
+        {
+            "flight_number": "BA500",
+            "airline_icao": "BAW",
+            "airline_iata": "BA",
+            "airline_name": "British Airways",
+            "aircraft_type": "Airbus A350-1000",
+            "origin": "LHR",
+            "destination": "SYD"
+        },
+        {
+            "flight_number": "AF1234",
+            "airline_icao": "AFR",
+            "airline_iata": "AF",
+            "airline_name": "Air France",
+            "aircraft_type": "Boeing 777-300ER",
+            "origin": "CDG",
+            "destination": "JFK"
+        }
+    ],
+    "airlines": [
+        {
+            "icao": "RYR",
+            "iata": "FR",
+            "name": "Ryanair"
+        },
+        {
+            "icao": "RZO",
+            "iata": "S4",
+            "name": "SATA Air Açores"
+        },
+        {
+            "icao": "TAP",
+            "iata": "TP",
+            "name": "TAP Air Portugal"
+        },
+        {
+            "icao": "EZY",
+            "iata": "U2",
+            "name": "easyJet"
+        },
+        {
+            "icao": "VLG",
+            "iata": "VY",
+            "name": "Vueling"
+        },
+        {
+            "icao": "DLH",
+            "iata": "LH",
+            "name": "Lufthansa"
+        },
+        {
+            "icao": "BAW",
+            "iata": "BA",
+            "name": "British Airways"
+        },
+        {
+            "icao": "AFR",
+            "iata": "AF",
+            "name": "Air France"
+        },
+        {
+            "icao": "IBE",
+            "iata": "IB",
+            "name": "Iberia"
+        },
+        {
+            "icao": "KLM",
+            "iata": "KL",
+            "name": "KLM Royal Dutch Airlines"
+        }
+    ]
+}

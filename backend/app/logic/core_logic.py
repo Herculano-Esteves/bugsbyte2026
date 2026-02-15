@@ -2,7 +2,8 @@ from typing import Optional, List
 from app.parsers.airport_parser import AirportParser
 from app.parsers.flight_parser import FlightParser
 from app.parsers.weather_parser import WeatherParser
-from app.models.schemas import Airport, Flight, Weather, Ticket, FlightSchedule, Item
+from app.parsers.flightaware_client import FlightAwareClient
+from app.models.schemas import Airport, Flight, Weather, Ticket, FlightSchedule, FlightInfo, Item, FlightInfoAirport
 # Database & Logic Integration
 from app.database.ticket_repository import TicketRepository
 from app.database.trip_repository import TripRepository
@@ -30,6 +31,105 @@ class CoreLogic:
     @staticmethod
     def get_flight_schedule(flight_number: str) -> FlightSchedule:
         return FlightParser.get_flight_schedule(flight_number)
+
+    @staticmethod
+    def get_flight_info(flight_number: str) -> FlightInfo:
+        """
+        Fetch general flight info.
+        1. FlightAware AeroAPI (Official)
+        2. FlightBot (FlightRadar24 Unofficial - Live flights only)
+        3. Mock Schedule (Fallback)
+        """
+        # 1. Official API
+        info = FlightAwareClient.get_flight_info(flight_number)
+        if info:
+            return info
+
+        # 2. FlightBot (Live Data)
+        print(f"[CoreLogic] Using FlightBot (Live Radar) to search for {flight_number}...")
+        try:
+            from app.parsers.flight_bot import FlightBot
+            bot_info = FlightBot.get_flight_info(flight_number)
+            if bot_info:
+                return bot_info
+        except Exception as e:
+            print(f"[CoreLogic] FlightBot failed: {e}")
+
+        # 3. Check database for cached schedule
+        print(f"[CoreLogic] Checking database for {flight_number}...")
+        try:
+            from app.database.flight_schedule_repository import FlightScheduleRepository
+            from app.database.airline_repository import AirlineRepository
+            
+            cached_schedule = FlightScheduleRepository.get_by_flight_number(flight_number)
+            if cached_schedule:
+                print(f"[CoreLogic] Found cached data for {flight_number}")
+                
+                # Get airline name from database
+                airline_name = "Unknown Airline"
+                if cached_schedule.airline_icao:
+                    airline_db = AirlineRepository.get_by_icao(cached_schedule.airline_icao)
+                    if airline_db:
+                        airline_name = airline_db.name
+                
+                schedule = FlightParser.get_flight_schedule(flight_number)
+                return FlightInfo(
+                    flight_number=cached_schedule.flight_number,
+                    operator=airline_name,
+                    aircraft_type=cached_schedule.aircraft_type or "Unknown Aircraft",
+                    status="Scheduled",
+                    dep_time=schedule.dep_time,
+                    arr_time=schedule.arr_time,
+                    dep_timezone=schedule.dep_timezone,
+                    arr_timezone=schedule.arr_timezone,
+                )
+        except Exception as e:
+            print(f"[CoreLogic] Database lookup failed: {e}")
+
+        # 4. Scrape FlightAware and save to database
+        print(f"[CoreLogic] Scraping FlightAware for {flight_number}...")
+        try:
+            from app.parsers.flightaware_scraper import FlightAwareScraper
+            scraped_data = FlightAwareScraper.scrape_flight(flight_number)
+            
+            if scraped_data:
+                # Scraper already saved to database, now return the info
+                from app.database.airline_repository import AirlineRepository
+                
+                airline_name = "Unknown Airline"
+                if scraped_data.airline_icao:
+                    airline_db = AirlineRepository.get_by_icao(scraped_data.airline_icao)
+                    if airline_db:
+                        airline_name = airline_db.name
+                
+                schedule = FlightParser.get_flight_schedule(flight_number)
+                return FlightInfo(
+                    flight_number=scraped_data.flight_number,
+                    operator=airline_name,
+                    aircraft_type=scraped_data.aircraft_type or "Unknown Aircraft",
+                    status="Scheduled",
+                    dep_time=schedule.dep_time,
+                    arr_time=schedule.arr_time,
+                    dep_timezone=schedule.dep_timezone,
+                    arr_timezone=schedule.arr_timezone,
+                )
+        except Exception as e:
+            print(f"[CoreLogic] FlightAware scraping failed: {e}")
+
+        # 5. Final Fallback: Generic mock schedule
+        print(f"[CoreLogic] No data found, using generic mock for {flight_number}")
+        schedule = FlightParser.get_flight_schedule(flight_number)
+        
+        return FlightInfo(
+            flight_number=schedule.flight_number,
+            operator="Unknown Airline",
+            aircraft_type="Unknown Aircraft",
+            status="Scheduled",
+            dep_time=schedule.dep_time,
+            arr_time=schedule.arr_time,
+            dep_timezone=schedule.dep_timezone,
+            arr_timezone=schedule.arr_timezone,
+        )
 
     @staticmethod
     def get_weather(location: str) -> Weather:

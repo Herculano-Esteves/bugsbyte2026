@@ -3,8 +3,19 @@ import { View, Text, StyleSheet, Image, SafeAreaView, Platform, StatusBar, useCo
 import axios from 'axios';
 import { mockArticles, Article } from '../../constants/mockSearchData';
 import { Colors } from '../../constants/theme';
+import { useBoardingPass, mapCabinClass } from '../../context/BoardingPassContext';
+import { CameraView, Camera } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL } from '../../constants/config';
+import { router } from 'expo-router';
+
+// Helper to format time (copied from main.tsx to avoid circular dependency or move to utils)
+function formatTime(isoString: string) {
+    if (!isoString) return '--:--';
+    const date = new Date(isoString);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
 
 // Reusing ImageWithLoader from search.tsx
 const ImageWithLoader = ({ uri, style }: { uri: string, style: any }) => {
@@ -32,12 +43,14 @@ export default function InFlightScreen() {
     const colorScheme = useColorScheme();
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
-    // State for "Your Carrier" - defaulting to TAP as requested
-    const [yourCarrier, setYourCarrier] = useState<string>('SATA');
-    const [carrierArticle, setCarrierArticle] = useState<Article | null>(null);
+    // Get boarding pass data
+    const { boardingPass } = useBoardingPass();
 
-    // State for "Your Aircraft" - defaulting to A321neo as requested
-    const [yourAircraft, setYourAircraft] = useState<string>('A321neo');
+    // Use flight data or fallback to defaults if not scanning
+    const yourCarrier = boardingPass?.operator || boardingPass?.carrier || 'SATA';
+    const yourAircraft = boardingPass?.aircraftType || 'A321neo';
+
+    const [carrierArticle, setCarrierArticle] = useState<Article | null>(null);
     const [aircraftArticle, setAircraftArticle] = useState<Article | null>(null);
 
     const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
@@ -85,7 +98,7 @@ export default function InFlightScreen() {
         fetchArticles();
     }, []);
 
-    // Re-run filter if yourCarrier/yourAircraft changes
+    // Re-run filter if yourCarrier/yourAircraft changes (e.g. new scan)
     useEffect(() => {
         if (allArticles.length > 0) {
             findCarrierArticle(allArticles, yourCarrier);
@@ -95,11 +108,18 @@ export default function InFlightScreen() {
 
     const findCarrierArticle = (articles: Article[], carrier: string) => {
         let targetTag = '';
-        if (carrier === 'TAP') {
+        const c = carrier.toLowerCase();
+
+        if (c.includes('tap') || c.includes('portugal')) {
             targetTag = 'Carrier_TAP';
-        } else if (carrier === 'SATA' || carrier === 'Air Azores') {
+        } else if (c.includes('sata') || c.includes('azores') || c.includes('air azores')) {
+            targetTag = 'Carrier_Sata';
+        } else {
+            // Default to SATA for demo if no match found (or could show generic)
+            // For now, let's just default to SATA so something shows up
             targetTag = 'Carrier_Sata';
         }
+
 
         if (targetTag) {
             const found = articles.find(article =>
@@ -111,7 +131,12 @@ export default function InFlightScreen() {
 
     const findAircraftArticle = (articles: Article[], aircraft: string) => {
         let targetTag = '';
-        if (aircraft === 'A321neo') {
+        const a = aircraft.toLowerCase();
+
+        if (a.includes('321') || a.includes('neo') || a.includes('airbus')) {
+            targetTag = 'Aircraft_A321neo';
+        } else {
+            // Default to A321neo for demo
             targetTag = 'Aircraft_A321neo';
         }
 
@@ -156,6 +181,85 @@ export default function InFlightScreen() {
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollContent}>
+                {boardingPass ? (
+                    <View style={styles.sectionContainer}>
+                        <Text style={[styles.sectionTitle, { color: theme.text }]}>Live Flight Status</Text>
+                        <View style={[styles.card, { backgroundColor: theme.background, borderColor: colorScheme === 'dark' ? '#333' : '#eee', padding: 16 }]}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 }}>
+                                <View>
+                                    <Text style={{ color: theme.text, fontSize: 16, fontWeight: '600' }}>{boardingPass.flightNumber}</Text>
+                                    <Text style={{ color: '#888', fontSize: 13 }}>{boardingPass.operator || boardingPass.carrier}</Text>
+                                </View>
+                                <View style={{ alignItems: 'flex-end' }}>
+                                    <Text style={{
+                                        fontSize: 14,
+                                        fontWeight: '700',
+                                        color: (boardingPass.flightStatus?.toLowerCase().includes('en route') ? '#2e7d32' :
+                                            boardingPass.flightStatus?.toLowerCase().includes('landed') ? '#1565c0' : '#d32f2f')
+                                    }}>
+                                        {boardingPass.flightStatus || 'Scheduled'}
+                                    </Text>
+                                    <Text style={{ color: '#888', fontSize: 12 }}>Status</Text>
+                                </View>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View>
+                                    <Text style={{ color: '#888', fontSize: 12 }}>Departure</Text>
+                                    <Text style={{ color: theme.text, fontSize: 18, fontWeight: 'bold' }}>{boardingPass.departureAirport}</Text>
+                                    <Text style={{ color: theme.text, fontSize: 12 }}>
+                                        {formatTime(boardingPass.departureTime || '')}
+                                    </Text>
+                                    {boardingPass.originTerminal && (
+                                        <Text style={{ color: '#555', fontSize: 11, marginTop: 2 }}>
+                                            T{boardingPass.originTerminal} • G{boardingPass.originGate || '-'}
+                                        </Text>
+                                    )}
+                                </View>
+
+                                <View style={{ justifyContent: 'center' }}>
+                                    <Ionicons name="airplane" size={20} color={theme.tint} />
+                                </View>
+
+                                <View style={{ alignItems: 'flex-end' }}>
+                                    <Text style={{ color: '#888', fontSize: 12 }}>Arrival</Text>
+                                    <Text style={{ color: theme.text, fontSize: 18, fontWeight: 'bold' }}>{boardingPass.arrivalAirport}</Text>
+                                    <Text style={{ color: theme.text, fontSize: 12 }}>
+                                        {formatTime(boardingPass.estimatedArrival || boardingPass.arrivalTime || '')}
+                                    </Text>
+                                    {boardingPass.destinationTerminal && (
+                                        <Text style={{ color: '#555', fontSize: 11, marginTop: 2 }}>
+                                            T{boardingPass.destinationTerminal} • G{boardingPass.destinationGate || '-'}
+                                        </Text>
+                                    )}
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                ) : (
+                    <View style={styles.sectionContainer}>
+                        <Text style={[styles.sectionTitle, { color: theme.text }]}>Flight Status</Text>
+                        <TouchableOpacity
+                            onPress={() => router.push('/(tabs)/main')}
+                            style={[styles.card, {
+                                backgroundColor: theme.background,
+                                borderColor: colorScheme === 'dark' ? '#333' : '#eee',
+                                padding: 24,
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }]}
+                        >
+                            <Ionicons name="scan-circle-outline" size={48} color={theme.tint} />
+                            <Text style={{ color: theme.text, fontSize: 16, marginTop: 12, fontWeight: '600' }}>
+                                Scan a boarding pass to see live flight status
+                            </Text>
+                            <Text style={{ color: '#888', fontSize: 13, marginTop: 4, textAlign: 'center' }}>
+                                Using demo content (SATA / A321neo) below
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
+
                 <View style={styles.sectionContainer}>
                     <Text style={[styles.sectionTitle, { color: theme.text }]}>Your carrier</Text>
                     {renderCard(carrierArticle, 'carrier')}

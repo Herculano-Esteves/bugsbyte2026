@@ -28,6 +28,31 @@ class FlightSchedule(BaseModel):
     dep_timezone: str
     arr_timezone: str
 
+class FlightInfoAirport(BaseModel):
+    code: Optional[str] = None
+    name: Optional[str] = None
+    city: Optional[str] = None
+    gate: Optional[str] = None
+    terminal: Optional[str] = None
+
+class FlightInfo(BaseModel):
+    flight_number: str
+    operator: Optional[str] = None
+    aircraft_type: Optional[str] = None
+    status: Optional[str] = None
+    origin: Optional[FlightInfoAirport] = None
+    destination: Optional[FlightInfoAirport] = None
+    scheduled_departure: Optional[str] = None
+    scheduled_arrival: Optional[str] = None
+    estimated_departure: Optional[str] = None
+    estimated_arrival: Optional[str] = None
+    route_distance: Optional[str] = None
+    # Backward-compat schedule fields
+    dep_time: Optional[str] = None
+    arr_time: Optional[str] = None
+    dep_timezone: Optional[str] = None
+    arr_timezone: Optional[str] = None
+
 # --- Ticket Models ---
 # --- Ticket Nested Models ---
 class FlightEndpoint(BaseModel):

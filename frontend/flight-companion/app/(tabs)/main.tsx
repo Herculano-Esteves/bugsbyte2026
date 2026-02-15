@@ -115,19 +115,31 @@ export default function MainScreen() {
             const boardingPass = await parseResponse.json();
             console.log('Parsed boarding pass:', boardingPass);
 
-            let schedule = { dep_time: '', arr_time: '', dep_timezone: '', arr_timezone: '' };
+            let flightIdent = boardingPass.flight_number;
+            // If we have a carrier (e.g. "S4") and a numeric flight number (e.g. "0183"),
+            // combine them but STRIP leading zeros -> "S4183"
+            if (boardingPass.carrier && !isNaN(Number(flightIdent))) {
+                // parseInt("0183", 10) -> 183
+                flightIdent = `${boardingPass.carrier}${parseInt(flightIdent, 10)}`;
+            }
+            console.log('Fetching info for flight ident:', flightIdent);
+
+            let flightInfo: any = {};
             try {
-                const scheduleResponse = await fetch(
-                    `${API_BASE_URL}/api/flights/${encodeURIComponent(boardingPass.flight_number)}/schedule`
+                const infoResponse = await fetch(
+                    `${API_BASE_URL}/api/flights/${encodeURIComponent(flightIdent)}/info`
                 );
-                if (scheduleResponse.ok) {
-                    schedule = await scheduleResponse.json();
+                if (infoResponse.ok) {
+                    flightInfo = await infoResponse.json();
                 }
-            } catch (scheduleErr) {
-                console.warn('Schedule fetch error:', scheduleErr);
+            } catch (infoErr) {
+                console.warn('Flight info fetch error:', infoErr);
             }
 
-            const airTimeMinutes = calculateAirTimeMinutes(schedule.dep_time, schedule.arr_time);
+            const airTimeMinutes = calculateAirTimeMinutes(
+                flightInfo.dep_time || '',
+                flightInfo.arr_time || ''
+            );
 
             const cabinCode = boardingPass.cabin_class || '';
             setBoardingPass({
@@ -141,11 +153,14 @@ export default function MainScreen() {
                 cabinClassCode: cabinCode,
                 cabinClassName: mapCabinClass(cabinCode),
                 boardingZone: '',
-                departureTime: schedule.dep_time || '',
-                arrivalTime: schedule.arr_time || '',
-                departureTimezone: schedule.dep_timezone || '',
-                arrivalTimezone: schedule.arr_timezone || '',
+                departureTime: flightInfo.dep_time || '',
+                arrivalTime: flightInfo.arr_time || '',
+                departureTimezone: flightInfo.dep_timezone || '',
+                arrivalTimezone: flightInfo.arr_timezone || '',
                 airTimeMinutes: airTimeMinutes,
+                // FlightAware general info
+                operator: flightInfo.operator || boardingPass.carrier || 'Unknown Airline',
+                aircraftType: flightInfo.aircraft_type || 'Unknown Aircraft',
             });
         } catch (error: any) {
             console.error('Upload error:', error);
@@ -202,16 +217,60 @@ export default function MainScreen() {
                             activeOpacity={0.7}
                         >
                             <View style={styles.flightCardHeader}>
-                                <Text style={styles.flightCardCarrier}>{boardingPass.carrier}</Text>
-                                <Text style={styles.flightCardFlight}>{boardingPass.flightNumber}</Text>
+                                <View>
+                                    <Text style={styles.flightCardCarrier}>
+                                        {boardingPass.operator || boardingPass.carrier}
+                                    </Text>
+                                    {boardingPass.aircraftType ? (
+                                        <Text style={styles.flightCardSubDetail}>{boardingPass.aircraftType}</Text>
+                                    ) : null}
+                                </View>
+                                <View style={{ alignItems: 'flex-end' }}>
+                                    <Text style={styles.flightCardFlight}>{boardingPass.flightNumber}</Text>
+                                    {boardingPass.flightStatus ? (
+                                        <Text style={[
+                                            styles.statusText,
+                                            boardingPass.flightStatus.toLowerCase().includes('en route') ? { color: '#2e7d32' } :
+                                                boardingPass.flightStatus.toLowerCase().includes('arrive') ? { color: '#1565c0' } :
+                                                    { color: '#757575' }
+                                        ]}>
+                                            {boardingPass.flightStatus}
+                                        </Text>
+                                    ) : null}
+                                </View>
                             </View>
 
                             <View style={styles.flightCardRoute}>
-                                <Text style={styles.flightCardAirport}>{boardingPass.departureAirport}</Text>
-                                <View style={styles.flightCardLine} />
-                                <Ionicons name="airplane" size={18} color="#007AFF" />
-                                <View style={styles.flightCardLine} />
-                                <Text style={styles.flightCardAirport}>{boardingPass.arrivalAirport}</Text>
+                                <View style={{ alignItems: 'center' }}>
+                                    <Text style={styles.flightCardAirport}>{boardingPass.departureAirport}</Text>
+                                    {boardingPass.originTerminal || boardingPass.originGate ? (
+                                        <Text style={styles.terminalText}>
+                                            {boardingPass.originTerminal ? `T${boardingPass.originTerminal}` : ''}
+                                            {boardingPass.originTerminal && boardingPass.originGate ? ' · ' : ''}
+                                            {boardingPass.originGate ? `Gate ${boardingPass.originGate}` : ''}
+                                        </Text>
+                                    ) : null}
+                                    <Text style={styles.timeText}>{formatTime(boardingPass.departureTime)}</Text>
+                                </View>
+
+                                <View style={{ alignItems: 'center', flex: 1 }}>
+                                    <Ionicons name="airplane" size={18} color="#007AFF" />
+                                    <Text style={styles.durationText}>
+                                        {boardingPass.airTimeMinutes ? `${Math.floor(boardingPass.airTimeMinutes / 60)}h ${boardingPass.airTimeMinutes % 60}m` : ''}
+                                    </Text>
+                                </View>
+
+                                <View style={{ alignItems: 'center' }}>
+                                    <Text style={styles.flightCardAirport}>{boardingPass.arrivalAirport}</Text>
+                                    {boardingPass.destinationTerminal || boardingPass.destinationGate ? (
+                                        <Text style={styles.terminalText}>
+                                            {boardingPass.destinationTerminal ? `T${boardingPass.destinationTerminal}` : ''}
+                                            {boardingPass.destinationTerminal && boardingPass.destinationGate ? ' · ' : ''}
+                                            {boardingPass.destinationGate ? `Gate ${boardingPass.destinationGate}` : ''}
+                                        </Text>
+                                    ) : null}
+                                    <Text style={styles.timeText}>{formatTime(boardingPass.arrivalTime)}</Text>
+                                </View>
                             </View>
 
                             <View style={styles.flightCardDetails}>
@@ -561,4 +620,37 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: '#d32f2f',
     },
+    flightCardSubDetail: {
+        fontSize: 12,
+        color: '#757575',
+        marginTop: 2,
+    },
+    statusText: {
+        fontSize: 12,
+        fontWeight: '600',
+        marginTop: 2,
+    },
+    terminalText: {
+        fontSize: 12,
+        color: '#555',
+        marginTop: 2,
+        fontWeight: '500',
+    },
+    timeText: {
+        fontSize: 14,
+        fontWeight: '700',
+        color: '#333',
+        marginTop: 4,
+    },
+    durationText: {
+        fontSize: 11,
+        color: '#999',
+        marginTop: 4,
+    },
 });
+
+function formatTime(isoString: string) {
+    if (!isoString) return '';
+    const date = new Date(isoString);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}

@@ -59,6 +59,11 @@ export default function InFlightScreen() {
     const [debugLogs, setDebugLogs] = useState<string[]>([]);
     const [allArticles, setAllArticles] = useState<Article[]>([]);
 
+    // Tips state
+    const [destinationTips, setDestinationTips] = useState<any>(null);
+    const [tipsLoading, setTipsLoading] = useState(false);
+    const [showTipsModal, setShowTipsModal] = useState(false);
+
     const addLog = (message: string) => {
         setDebugLogs(prev => [`[${new Date().toLocaleTimeString()}] ${message}`, ...prev]);
     };
@@ -97,6 +102,29 @@ export default function InFlightScreen() {
 
         fetchArticles();
     }, []);
+
+    // Fetch destination tips when boarding pass changes
+    useEffect(() => {
+        const fetchDestinationTips = async () => {
+            if (!boardingPass?.arrivalAirport) {
+                return;
+            }
+
+            setTipsLoading(true);
+            try {
+                const response = await axios.get(`${API_BASE_URL}/api/tips?destination=${boardingPass.arrivalAirport}`, { timeout: 5000 });
+                setDestinationTips(response.data);
+                addLog(`Loaded tips for ${boardingPass.arrivalAirport}`);
+            } catch (error: any) {
+                console.log('Error fetching tips:', error);
+                addLog(`Error fetching tips: ${error.message}`);
+            } finally {
+                setTipsLoading(false);
+            }
+        };
+
+        fetchDestinationTips();
+    }, [boardingPass?.arrivalAirport]);
 
     // Re-run filter if yourCarrier/yourAircraft changes (e.g. new scan)
     useEffect(() => {
@@ -172,7 +200,38 @@ export default function InFlightScreen() {
                 <ActivityIndicator size="large" color={theme.tint} />
             </SafeAreaView>
         );
-    }
+    };
+
+    const renderTipsCard = () => {
+        if (!destinationTips || !destinationTips.tips) return null;
+
+        const totalTips = Object.values(destinationTips.tips).reduce((sum: number, tips: any) => sum + tips.length, 0);
+
+        return (
+            <TouchableOpacity
+                onPress={() => setShowTipsModal(true)}
+                style={[styles.card, {
+                    backgroundColor: theme.background,
+                    borderColor: colorScheme === 'dark' ? '#333' : '#eee',
+                }]}
+            >
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <View style={{ flex: 1 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
+                            <Ionicons name="location" size={20} color={theme.tint} style={{ marginRight: 8 }} />
+                            <Text style={{ color: theme.text, fontSize: 16, fontWeight: '600' }}>
+                                Travel Tips for {destinationTips.destination}
+                            </Text>
+                        </View>
+                        <Text style={{ color: '#888', fontSize: 14 }}>
+                            {totalTips} tips across {Object.keys(destinationTips.tips).length} categories
+                        </Text>
+                    </View>
+                    <Ionicons name="chevron-forward" size={24} color="#888" />
+                </View>
+            </TouchableOpacity>
+        );
+    };
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
@@ -181,64 +240,13 @@ export default function InFlightScreen() {
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollContent}>
-                {boardingPass ? (
-                    <View style={styles.sectionContainer}>
-                        <Text style={[styles.sectionTitle, { color: theme.text }]}>Live Flight Status</Text>
-                        <View style={[styles.card, { backgroundColor: theme.background, borderColor: colorScheme === 'dark' ? '#333' : '#eee', padding: 16 }]}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 }}>
-                                <View>
-                                    <Text style={{ color: theme.text, fontSize: 16, fontWeight: '600' }}>{boardingPass.flightNumber}</Text>
-                                    <Text style={{ color: '#888', fontSize: 13 }}>{boardingPass.operator || boardingPass.carrier}</Text>
-                                </View>
-                                <View style={{ alignItems: 'flex-end' }}>
-                                    <Text style={{
-                                        fontSize: 14,
-                                        fontWeight: '700',
-                                        color: (boardingPass.flightStatus?.toLowerCase().includes('en route') ? '#2e7d32' :
-                                            boardingPass.flightStatus?.toLowerCase().includes('landed') ? '#1565c0' : '#d32f2f')
-                                    }}>
-                                        {boardingPass.flightStatus || 'Scheduled'}
-                                    </Text>
-                                    <Text style={{ color: '#888', fontSize: 12 }}>Status</Text>
-                                </View>
-                            </View>
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <View>
-                                    <Text style={{ color: '#888', fontSize: 12 }}>Departure</Text>
-                                    <Text style={{ color: theme.text, fontSize: 18, fontWeight: 'bold' }}>{boardingPass.departureAirport}</Text>
-                                    <Text style={{ color: theme.text, fontSize: 12 }}>
-                                        {formatTime(boardingPass.departureTime || '')}
-                                    </Text>
-                                    {boardingPass.originTerminal && (
-                                        <Text style={{ color: '#555', fontSize: 11, marginTop: 2 }}>
-                                            T{boardingPass.originTerminal} • G{boardingPass.originGate || '-'}
-                                        </Text>
-                                    )}
-                                </View>
-
-                                <View style={{ justifyContent: 'center' }}>
-                                    <Ionicons name="airplane" size={20} color={theme.tint} />
-                                </View>
-
-                                <View style={{ alignItems: 'flex-end' }}>
-                                    <Text style={{ color: '#888', fontSize: 12 }}>Arrival</Text>
-                                    <Text style={{ color: theme.text, fontSize: 18, fontWeight: 'bold' }}>{boardingPass.arrivalAirport}</Text>
-                                    <Text style={{ color: theme.text, fontSize: 12 }}>
-                                        {formatTime(boardingPass.estimatedArrival || boardingPass.arrivalTime || '')}
-                                    </Text>
-                                    {boardingPass.destinationTerminal && (
-                                        <Text style={{ color: '#555', fontSize: 11, marginTop: 2 }}>
-                                            T{boardingPass.destinationTerminal} • G{boardingPass.destinationGate || '-'}
-                                        </Text>
-                                    )}
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                ) : (
-                    <View style={styles.sectionContainer}>
-                        <Text style={[styles.sectionTitle, { color: theme.text }]}>Flight Status</Text>
+                {/* Destination Tips Card */}
+                <View style={styles.sectionContainer}>
+                    <Text style={[styles.sectionTitle, { color: theme.text }]}>Destination Tips</Text>
+                    {destinationTips && destinationTips.tips && Object.keys(destinationTips.tips).length > 0 ? (
+                        renderTipsCard()
+                    ) : (
                         <TouchableOpacity
                             onPress={() => router.push('/(tabs)/main')}
                             style={[styles.card, {
@@ -249,16 +257,16 @@ export default function InFlightScreen() {
                                 justifyContent: 'center'
                             }]}
                         >
-                            <Ionicons name="scan-circle-outline" size={48} color={theme.tint} />
-                            <Text style={{ color: theme.text, fontSize: 16, marginTop: 12, fontWeight: '600' }}>
-                                Scan a boarding pass to see live flight status
+                            <Ionicons name="location-outline" size={48} color={theme.tint} />
+                            <Text style={{ color: theme.text, fontSize: 16, marginTop: 12, fontWeight: '600', textAlign: 'center' }}>
+                                Scan a boarding pass to see tips & tricks for your destination
                             </Text>
                             <Text style={{ color: '#888', fontSize: 13, marginTop: 4, textAlign: 'center' }}>
-                                Using demo content (SATA / A321neo) below
+                                Get local insights, safety tips, and travel advice
                             </Text>
                         </TouchableOpacity>
-                    </View>
-                )}
+                    )}
+                </View>
 
                 <View style={styles.sectionContainer}>
                     <Text style={[styles.sectionTitle, { color: theme.text }]}>Your carrier</Text>
@@ -319,6 +327,87 @@ export default function InFlightScreen() {
                                         </View>
                                     </View>
                                 )}
+                            </View>
+                        </ScrollView>
+                    </View>
+                )}
+            </Modal>
+
+            {/* Modal for Tips View */}
+            <Modal
+                visible={showTipsModal}
+                animationType="slide"
+                presentationStyle="pageSheet"
+                onRequestClose={() => setShowTipsModal(false)}
+            >
+                {destinationTips && (
+                    <View style={[styles.modalContainer, { backgroundColor: theme.background }]}>
+                        <View style={styles.modalHeader}>
+                            <TouchableOpacity onPress={() => setShowTipsModal(false)} style={styles.closeButton}>
+                                <Ionicons name="close" size={28} color={theme.tint} />
+                            </TouchableOpacity>
+                        </View>
+                        <ScrollView contentContainerStyle={styles.modalContent}>
+                            <View style={styles.modalTextContainer}>
+                                <Text style={[styles.modalTitle, { color: theme.text }]}>
+                                    Travel Tips for {destinationTips.destination}
+                                </Text>
+
+                                {Object.entries(destinationTips.tips || {}).map(([category, tips]: [string, any]) => {
+                                    const categoryIcons: { [key: string]: string } = {
+                                        'scam': 'alert-circle',
+                                        'transport': 'bus',
+                                        'culture': 'people',
+                                        'place': 'location',
+                                        'food': 'restaurant',
+                                        'language': 'chatbubbles'
+                                    };
+
+                                    const categoryLabels: { [key: string]: string } = {
+                                        'scam': 'Stay Safe',
+                                        'transport': 'Transport',
+                                        'culture': 'Culture & Etiquette',
+                                        'place': 'Places to See',
+                                        'food': 'Food & Dining',
+                                        'language': 'Language'
+                                    };
+
+                                    const severityColors: { [key: string]: string } = {
+                                        'critical': '#ff4444',
+                                        'warning': '#ff9800',
+                                        'info': theme.tint
+                                    };
+
+                                    return (
+                                        <View key={category} style={{ marginBottom: 24 }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+                                                <Ionicons name={categoryIcons[category] as any || 'information-circle'} size={24} color={theme.tint} />
+                                                <Text style={{ color: theme.text, fontSize: 20, fontWeight: '700', marginLeft: 10 }}>
+                                                    {categoryLabels[category] || category}
+                                                </Text>
+                                                <Text style={{ color: '#888', fontSize: 16, marginLeft: 8 }}>({tips.length})</Text>
+                                            </View>
+
+                                            {tips.map((tip: any, index: number) => (
+                                                <View
+                                                    key={index}
+                                                    style={{
+                                                        backgroundColor: colorScheme === 'dark' ? '#222' : '#f5f5f5',
+                                                        borderLeftWidth: 4,
+                                                        borderLeftColor: severityColors[tip.severity] || theme.tint,
+                                                        borderRadius: 8,
+                                                        padding: 14,
+                                                        marginBottom: 10,
+                                                    }}
+                                                >
+                                                    <Text style={{ color: theme.text, fontSize: 15, lineHeight: 22 }}>
+                                                        {tip.content}
+                                                    </Text>
+                                                </View>
+                                            ))}
+                                        </View>
+                                    );
+                                })}
                             </View>
                         </ScrollView>
                     </View>

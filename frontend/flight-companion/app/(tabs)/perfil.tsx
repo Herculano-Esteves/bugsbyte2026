@@ -38,6 +38,18 @@ export default function ProfileScreen() {
         fetchItems();
     }, []);
 
+    const [visitedAirports, setVisitedAirports] = React.useState<VisitedAirport[]>([]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            if (user) {
+                authService.getVisitedAirports(user.id)
+                    .then(setVisitedAirports)
+                    .catch(e => console.log('Failed to fetch visited airports', e));
+            }
+        }, [user])
+    );
+
     // If guest mode, show login prompt
     if (isGuest || !user) {
         return (
@@ -87,38 +99,6 @@ export default function ProfileScreen() {
             .toUpperCase()
             .slice(0, 2);
     };
-
-    //const [totalArticles, setTotalArticles] = React.useState(0);
-
-    React.useEffect(() => {
-        // Fetch total articles count
-        const fetchItems = async () => {
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/items`);
-                if (response.ok) {
-                    const items = await response.json();
-                    setTotalArticles(items.length);
-                }
-            } catch (e) {
-                console.log("Failed to fetch items count", e);
-                // Fallback to rough estimate or mock count if needed
-                setTotalArticles(10);
-            }
-        };
-        fetchItems();
-    }, []);
-
-    const [visitedAirports, setVisitedAirports] = React.useState<VisitedAirport[]>([]);
-
-    useFocusEffect(
-        React.useCallback(() => {
-            if (user) {
-                authService.getVisitedAirports(user.id)
-                    .then(setVisitedAirports)
-                    .catch(e => console.log('Failed to fetch visited airports', e));
-            }
-        }, [user])
-    );
 
     const RANK_COLORS = ['#FFD700', '#C0C0C0', '#CD7F32'];
 

@@ -12,6 +12,7 @@ interface AuthContextType {
   register: (data: RegisterData) => Promise<void>;
   logout: () => Promise<void>;
   continueAsGuest: () => void;
+  updateUser: (user: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -124,6 +125,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         register,
         logout,
         continueAsGuest,
+        updateUser: (userData: User) => {
+          setUser(userData);
+          AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
+        },
       }}
     >
       {children}

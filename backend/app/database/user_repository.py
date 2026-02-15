@@ -31,7 +31,7 @@ class UserRepository:
                 email=user.email,
                 address=user.address,
                 ticket_info=user.ticket_info,
-                sent_items=[]
+                read_articles=[]
             )
         except sqlite3.IntegrityError:
             return None
@@ -67,15 +67,15 @@ class UserRepository:
                 email=row['email'],
                 address=row['address'],
                 ticket_info=json.loads(row['ticket_info']),
-                sent_items=json.loads(row['sent_items'])
+                read_articles=json.loads(row['sent_items'])
             )
         return None
 
     @staticmethod
-    def update_sent_items(user_id: int, sent_items: List[int]):
+    def update_read_articles(user_id: int, read_articles: List[int]):
         conn = get_db_connection()
         cursor = conn.cursor()
         
-        cursor.execute("UPDATE users SET sent_items = ? WHERE id = ?", (json.dumps(sent_items), user_id))
+        cursor.execute("UPDATE users SET sent_items = ? WHERE id = ?", (json.dumps(read_articles), user_id))
         conn.commit()
         conn.close()

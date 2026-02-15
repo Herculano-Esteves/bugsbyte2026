@@ -9,6 +9,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL } from '../../constants/config';
 import { router } from 'expo-router';
+import { useAuth } from '../../context/AuthContext';
 
 // Helper to format time (copied from main.tsx to avoid circular dependency or move to utils)
 function formatTime(isoString: string) {
@@ -58,6 +59,7 @@ export default function InFlightScreen() {
     const [loading, setLoading] = useState(true);
     const [debugLogs, setDebugLogs] = useState<string[]>([]);
     const [allArticles, setAllArticles] = useState<Article[]>([]);
+    const { user, login, updateUser } = useAuth(); // Get user and login to refresh state if needed
 
     // Tips state
     const [destinationTips, setDestinationTips] = useState<any>(null);
@@ -66,6 +68,28 @@ export default function InFlightScreen() {
 
     const addLog = (message: string) => {
         setDebugLogs(prev => [`[${new Date().toLocaleTimeString()}] ${message}`, ...prev]);
+    };
+
+    const handleOpenArticle = async (article: Article) => {
+        setSelectedArticle(article);
+
+        if (user) {
+            try {
+                // Call API to mark as read
+                await axios.post(`${API_BASE_URL}/api/users/${user.id}/articles/${article.id}/read`);
+
+                // Optimistically update local user state if needed
+                if (user.read_articles && !user.read_articles.includes(article.id)) {
+                    const updatedUser = {
+                        ...user,
+                        read_articles: [...user.read_articles, article.id]
+                    };
+                    updateUser(updatedUser);
+                }
+            } catch (error) {
+                console.log("Failed to track read article", error);
+            }
+        }
     };
 
     useEffect(() => {
@@ -182,7 +206,7 @@ export default function InFlightScreen() {
         return (
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => setSelectedArticle(article)}
+                onPress={() => handleOpenArticle(article)}
                 style={[styles.card, { backgroundColor: theme.background, borderColor: colorScheme === 'dark' ? '#333' : '#eee' }]}
             >
                 <ImageWithLoader uri={article.image} style={styles.cardImage} />
@@ -315,7 +339,7 @@ export default function InFlightScreen() {
                                                 return (
                                                     <TouchableOpacity
                                                         key={id}
-                                                        onPress={() => setSelectedArticle(fleetItem)}
+                                                        onPress={() => handleOpenArticle(fleetItem)}
                                                         style={[styles.fleetLinkButton, { borderColor: theme.tint }]}
                                                     >
                                                         <Text style={[styles.fleetLinkText, { color: theme.tint }]}>

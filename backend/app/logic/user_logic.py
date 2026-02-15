@@ -32,14 +32,13 @@ class UserLogic:
                 email=user_data['email'],
                 address=user_data['address'],
                 ticket_info=json.loads(user_data['ticket_info']) if isinstance(user_data['ticket_info'], str) else user_data['ticket_info'],
-                sent_items=json.loads(user_data['sent_items']) if isinstance(user_data['sent_items'], str) else user_data['sent_items']
+                read_articles=json.loads(user_data['sent_items']) if isinstance(user_data['sent_items'], str) else user_data['sent_items']
             )
 
     @staticmethod
     def logout_user(user_id: int):
-        # Reset sent items on logout as per requirements
-        UserRepository.update_sent_items(user_id, [])
-        return {"message": "Logged out successfully and history reset"}
+        # Do not reset history on logout
+        return {"message": "Logged out successfully"}
 
     @staticmethod
     def get_user(user_id: int) -> UserResponse:
@@ -49,9 +48,13 @@ class UserLogic:
         return user
         
     @staticmethod
-    def add_sent_item(user_id: int, item_id: int):
+    def mark_article_as_read(user_id: int, article_id: int):
         user = UserRepository.get_user_by_id(user_id)
         if user:
-            if item_id not in user.sent_items:
-                user.sent_items.append(item_id)
-                UserRepository.update_sent_items(user_id, user.sent_items)
+            # Check if article is already read (unique history)
+            if article_id not in user.read_articles:
+                user.read_articles.append(article_id)
+                UserRepository.update_read_articles(user_id, user.read_articles)
+                return {"message": "Article marked as read", "read_count": len(user.read_articles)}
+            return {"message": "Article already read", "read_count": len(user.read_articles)}
+        raise HTTPException(status_code=404, detail="User not found")

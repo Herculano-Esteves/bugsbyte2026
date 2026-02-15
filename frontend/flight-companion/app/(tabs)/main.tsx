@@ -7,7 +7,6 @@ import {
     Modal,
     Alert,
     ActivityIndicator,
-    ScrollView,
 } from 'react-native';
 import { useFlightMode } from '../../context/FlightModeContext';
 import { useBoardingPass, mapCabinClass } from '../../context/BoardingPassContext';
@@ -339,6 +338,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 32,
         paddingHorizontal: 20,
+        paddingBottom: 100,
     },
 
     title: {

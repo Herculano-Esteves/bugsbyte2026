@@ -1,0 +1,141 @@
+import React from 'react';
+import { View, StyleSheet, Platform } from 'react-native';
+
+interface FlightRouteMapProps {
+    departure: { code: string; name: string; lat: number; lng: number };
+    arrival: { code: string; name: string; lat: number; lng: number };
+}
+
+export default function FlightRouteMap({ departure, arrival }: FlightRouteMapProps) {
+    const centerLat = (departure.lat + arrival.lat) / 2;
+    const centerLng = (departure.lng + arrival.lng) / 2;
+
+    const mapHTML = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"><\/script>
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; width: 100%; overflow: hidden; }
+        #map { height: 100vh; width: 100vw; position: absolute; top: 0; left: 0; }
+      </style>
+    </head>
+    <body>
+      <div id="map"></div>
+      <script>
+        var depLat = ${departure.lat};
+        var depLng = ${departure.lng};
+        var arrLat = ${arrival.lat};
+        var arrLng = ${arrival.lng};
+        var depCode = "${departure.code}";
+        var arrCode = "${arrival.code}";
+        var depName = "${departure.name}";
+        var arrName = "${arrival.name}";
+
+        var map = L.map('map', {
+          zoomControl: false,
+          attributionControl: false,
+          dragging: true,
+          touchZoom: true,
+          scrollWheelZoom: true,
+        }).setView([${centerLat}, ${centerLng}], 5);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+          maxZoom: 19,
+          minZoom: 2
+        }).addTo(map);
+
+        var bounds = L.latLngBounds([depLat, depLng], [arrLat, arrLng]);
+        map.fitBounds(bounds, { padding: [40, 40] });
+
+        function createIcon(code) {
+          return L.divIcon({
+            className: 'airport-marker',
+            html: '<div style="background: #ef5350; color: white; font-weight: bold; font-size: 12px; padding: 4px 8px; border-radius: 4px; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.4);">' + code + '</div>',
+            iconSize: [50, 24],
+            iconAnchor: [25, 12]
+          });
+        }
+
+        L.marker([depLat, depLng], { icon: createIcon(depCode) })
+          .addTo(map).bindPopup('<b>' + depCode + '</b><br>' + depName);
+        L.marker([arrLat, arrLng], { icon: createIcon(arrCode) })
+          .addTo(map).bindPopup('<b>' + arrCode + '</b><br>' + arrName);
+
+        function getCurvedPoints(start, end, numPoints) {
+          var points = [];
+          var midLat = (start[0] + end[0]) / 2;
+          var midLng = (start[1] + end[1]) / 2;
+          var dx = end[1] - start[1];
+          var dy = end[0] - start[0];
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          var curvature = dist * 0.15;
+          var offsetLat = midLat - (dx / dist) * curvature;
+          var offsetLng = midLng + (dy / dist) * curvature;
+          for (var i = 0; i <= numPoints; i++) {
+            var t = i / numPoints;
+            var lat = (1-t)*(1-t)*start[0] + 2*(1-t)*t*offsetLat + t*t*end[0];
+            var lng = (1-t)*(1-t)*start[1] + 2*(1-t)*t*offsetLng + t*t*end[1];
+            points.push([lat, lng]);
+          }
+          return points;
+        }
+
+        var curvedPoints = getCurvedPoints([depLat, depLng], [arrLat, arrLng], 50);
+
+        L.polyline(curvedPoints, {
+          color: '#ef5350',
+          weight: 2.5,
+          opacity: 0.9,
+          dashArray: '8, 6',
+        }).addTo(map);
+
+        document.addEventListener('touchmove', function(e) {
+          e.preventDefault();
+        }, { passive: false });
+      <\/script>
+    </body>
+    </html>
+  `;
+
+    if (Platform.OS === 'web') {
+        return (
+            <View style={styles.container}>
+                <iframe
+                    srcDoc={mapHTML}
+                    style={{ width: '100%', height: '100%', border: 'none', borderRadius: 8 } as any}
+                />
+            </View>
+        );
+    }
+
+    // Native: use WebView
+    const { WebView } = require('react-native-webview');
+    return (
+        <View style={styles.container}>
+            <WebView
+                originWhitelist={['*']}
+                source={{ html: mapHTML }}
+                style={styles.map}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                scrollEnabled={false}
+                bounces={false}
+            />
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        borderRadius: 12,
+        overflow: 'hidden',
+    },
+    map: {
+        flex: 1,
+    },
+});

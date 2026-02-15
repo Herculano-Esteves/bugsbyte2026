@@ -155,6 +155,7 @@ export default function SearchScreen() {
             </View>
 
             <FlatList
+                showsVerticalScrollIndicator={false}
                 data={filteredArticles}
                 keyExtractor={item => item.id.toString()}
                 renderItem={renderItem}
@@ -255,7 +256,7 @@ const styles = StyleSheet.create({
     },
     listContent: {
         paddingHorizontal: 16,
-        paddingBottom: 20,
+        paddingBottom: 100,
     },
     card: {
         borderRadius: 16,

@@ -57,7 +57,7 @@ export default function BoardingPassScreen() {
             style={{ flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-            <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
+            <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 {/* Top bar */}
                 <View style={styles.topBar}>
                     <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>

@@ -1,113 +1,9 @@
 [
   {
-    "id": 1,
-    "title": "Visit Rio de Janeiro",
-    "text": "Experience the vibrant culture, stunning beaches, and iconic landmarks of Rio de Janeiro. Don't miss the Christ the Redeemer statue.",
-    "image": "https://example.com/rio.jpg",
-    "public_tags": [
-      "rio",
-      "brazil",
-      "beach",
-      "culture",
-      "tourism"
-    ],
-    "hidden_tags": [
-      "south america",
-      "summer",
-      "vacation"
-    ]
-  },
-  {
-    "id": 2,
-    "title": "Paris Travel Guide",
-    "text": "The ultimate guide to the City of Light. Discover the best museums, cafes, and romantic spots in Paris.",
-    "image": "https://example.com/paris.jpg",
-    "public_tags": [
-      "paris",
-      "france",
-      "europe",
-      "museum",
-      "romance"
-    ],
-    "hidden_tags": [
-      "eiffel tower",
-      "louvre",
-      "food"
-    ]
-  },
-  {
-    "id": 3,
-    "title": "Packing Tips for Long Flights",
-    "text": "Master the art of packing for long-haul travel. Learn what to bring in your carry-on for a comfortable journey.",
-    "image": "https://example.com/packing.jpg",
-    "public_tags": [
-      "travel tips",
-      "flights",
-      "packing",
-      "comfort"
-    ],
-    "hidden_tags": [
-      "airplane",
-      "luggage",
-      "essentials"
-    ]
-  },
-  {
-    "id": 4,
-    "title": "Top 10 Airports in the World",
-    "text": "A ranking of the best airports based on passenger experience, amenities, and efficiency. Singapore Changi tops the list.",
-    "image": "https://example.com/changi.jpg",
-    "public_tags": [
-      "airport",
-      "ranking",
-      "travel",
-      "luxury"
-    ],
-    "hidden_tags": [
-      "singapore",
-      "transit",
-      "layover"
-    ]
-  },
-  {
-    "id": 5,
-    "title": "Budget Travel in Southeast Asia",
-    "text": "Explore Thailand, Vietnam, and Cambodia without breaking the bank. Tips for cheap accommodation and street food.",
-    "image": "https://example.com/asia.jpg",
-    "public_tags": [
-      "budget",
-      "asia",
-      "backpacking",
-      "food"
-    ],
-    "hidden_tags": [
-      "thailand",
-      "vietnam",
-      "cheap"
-    ]
-  },
-  {
-    "id": 6,
-    "title": "New York City in Winter",
-    "text": "NYC transforms into a winter wonderland. Skate at Rockefeller Center and enjoy the holiday lights.",
-    "image": "https://example.com/nyc_winter.jpg",
-    "public_tags": [
-      "nyc",
-      "usa",
-      "winter",
-      "holiday"
-    ],
-    "hidden_tags": [
-      "snow",
-      "christmas",
-      "shopping"
-    ]
-  },
-  {
     "id": 7,
     "title": "Understanding Airport Security",
-    "text": "How to breeze through TSA and security checks. What liquids you can bring and how to pack electronics.",
-    "image": "https://example.com/security.jpg",
+    "text": "Airport security screening is a multi-layered process designed to detect threats and keep air travel safe, blending visible checks with behind-the-scenes intelligence, random measures, and advanced technology that evolves to match risks. It starts well before you reach the checkpoint: airlines and authorities share passenger data (like advance passenger information or API), watchlists are cross-checked against intelligence from law enforcement, and behavioral observation often begins in the terminal where trained officers look for unusual patterns in demeanor or actions. Once you approach security, the process typically begins with document verification—your boarding pass and government-issued ID (or passport for international flights) are scanned and matched, with many airports now using facial recognition or biometric systems for faster, touchless ID checks, especially in expedited lanes like TSA PreCheck where a quick facial scan can replace handing over physical documents in participating locations. You then move to the divestment area: remove shoes, belts, light jackets, hats, and anything with metal that might trigger alarms (though in many upgraded checkpoints with new CT scanners, you can often leave laptops, liquids in compliant bags, and even some electronics inside carry-ons without pulling them out). Place everything—along with your carry-on, personal items, and empty pockets—into provided bins that go through high-resolution X-ray or computed tomography (CT) machines, which create detailed 3D images to spot prohibited items like weapons, explosives, or dense anomalies more accurately than older 2D scanners. For your body, you'll walk through a full-body scanner (usually millimeter-wave or advanced imaging technology) that detects concealed objects under clothing without physical pat-downs in most cases; it displays a generic outline highlighting any anomalies for further inspection rather than a detailed body image. If the system flags something—whether from the scanner, bag X-ray, or random selection—you might face additional screening like a hand-swab for explosive trace detection (a quick wipe on hands, devices, or bags analyzed for chemical residues), a manual pat-down (which can be private if requested), or a bag search where officers carefully examine contents while aiming to repack everything neatly. Throughout, unpredictable elements keep things unpredictable: random additional checks, behavioral analysis, or secondary screening even if nothing obvious shows up. Programs like TSA PreCheck streamline this for enrolled members by allowing you to keep shoes/belts/jackets on, leave laptops/liquids in bags, and use dedicated faster lanes—often under 10 minutes—while CLEAR adds biometric speed for ID verification. In 2026, many U.S. airports feature expanded automated/self-service lanes, more CT scanners reducing item removal, touchless ID expansion to dozens more locations, and stricter REAL ID enforcement for domestic flights (requiring compliant IDs or alternatives like passports to avoid fees or delays). Globally the process varies—EU follows similar liquid rules (100ml max in clear bags), but tech and procedures differ by country—yet the core goal remains consistent: layered defenses to catch prohibited items without unnecessary intrusion. The experience can feel invasive or inconsistent due to human elements, tech variations across airports, or evolving rules, but preparation (packing liquids properly, dressing simply, enrolling in trusted traveler programs) makes it smoother and quicker for most travelers.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXWKPad94t9AOOKHqGd-QFLSNL2VxRFTtN4w&s",
     "public_tags": [
       "airport",
       "security",
@@ -121,27 +17,10 @@
     ]
   },
   {
-    "id": 8,
-    "title": "Tokyo: Traditional vs Modern",
-    "text": "A journey through Tokyo's historic temples and futuristic neon districts. The perfect blend of old and new.",
-    "image": "https://example.com/tokyo.jpg",
-    "public_tags": [
-      "tokyo",
-      "japan",
-      "asia",
-      "culture"
-    ],
-    "hidden_tags": [
-      "sushi",
-      "technology",
-      "temples"
-    ]
-  },
-  {
     "id": 9,
     "title": "Flying Advice for First Timers",
-    "text": "Nervous about your first flight? Here is everything you need to know from check-in to landing.",
-    "image": "https://example.com/flight.jpg",
+    "text": "Flying for the first time can feel exciting and a bit overwhelming, but with some basic preparation it becomes a straightforward and enjoyable experience that opens up the world. Start by booking your ticket early through the airline's website or app, choosing a seat that suits you—like a window for views or an aisle for easier access—and checking in online 24 hours before departure to get your mobile boarding pass, which saves time and lets you skip some lines. Pack smart the day before: follow your airline's baggage rules for carry-on size (usually around 22x14x9 inches including handles/wheels) and weight limits, put essentials like ID, passport (for international), medications, charger, snacks, change of clothes, and valuables in your carry-on in case checked bags get delayed or lost. For liquids in carry-on, stick to the 3-1-1 rule—containers of 3.4 ounces (100 ml) or less in one clear quart-sized bag, which you'll pull out at security. On travel day, arrive at the airport early—aim for 2 hours before domestic flights and 3 hours for international to account for lines, check-in, security, and any surprises. Dress comfortably in layers since cabins can swing from chilly to warm, wear easy-to-remove shoes for security (slip-ons are ideal), and keep metal minimal to speed things up—no heavy belts, jewelry, or full pockets. At check-in (if needed), drop checked bags, then head to security with ID and boarding pass ready. Follow signs and announcements: empty pockets into a bin, remove laptops/tablets/liquids/jackets/belts/shoes as required (newer CT scanners at many airports let you leave some items in bags), walk through the body scanner, and collect belongings calmly. If flagged for a quick swab or pat-down, it's routine—stay polite and cooperative. Once airside, find your gate via screens or apps (gates can change, so double-check), grab food/water (refill an empty bottle post-security), use the restroom, and relax. Boarding usually starts 30-45 minutes before departure by group/zone—listen for your number, have boarding pass and ID handy, and stow carry-on overhead or under the seat (wheels go in first for overhead). On the plane, listen to the safety demo (even if familiar), fasten your seatbelt low and tight, and keep it on when seated. Expect some sensations: takeoff feels like a fast acceleration with a climb (ears may pop—chew gum, yawn, or swallow to equalize pressure), cruising is smooth with possible light turbulence (like bumps in a road; the plane is designed for it), and landing brings a gentle thud and reverse thrust noise. The cabin pressure at altitude can make ears feel stuffy and dull tastes slightly, so drink water to stay hydrated and avoid too much alcohol or caffeine. During the flight, enjoy the service (meals/drinks on longer routes), use the seatback screen or your device for entertainment, stretch periodically on longer flights, and follow crew instructions. After landing, stay seated until the plane stops and the seatbelt sign is off, then deplane row by row. For connections, check monitors for your next gate and allow enough time—most airports have clear signage. Finally, at baggage claim, wait for your bags (they often come on carousels shown on screens), then head to arrivals or ground transport. With these steps, your first flight will likely go smoother than expected, and you'll quickly feel like a pro—safe travels, and enjoy the journey!",
+    "image": "https://edge.ua.edu/wp-content/uploads/2014/02/Airplane.jpg",
     "public_tags": [
       "flight",
       "beginner",
@@ -152,23 +31,6 @@
       "airplane",
       "check-in",
       "boarding"
-    ]
-  },
-  {
-    "id": 10,
-    "title": "Best Coffee Shops in Rome",
-    "text": "Where to find the best espresso in Rome. Avoid the tourist traps and drink like a local.",
-    "image": "https://example.com/rome_coffee.jpg",
-    "public_tags": [
-      "rome",
-      "italy",
-      "coffee",
-      "food"
-    ],
-    "hidden_tags": [
-      "espresso",
-      "europe",
-      "cafe"
     ]
   },
   {
@@ -247,7 +109,8 @@
     "text": "Advanced stretched narrow-body with new engines for better efficiency and range. Max speed: Mach 0.82 (~876 km/h). Typical cruise speed: Mach 0.78 (~833 km/h). Service ceiling: 39,000–39,800 ft (11,900–12,100 m). Typical range: Up to 4,000 nm (7,400 km). Passengers: 180–244 seats. Special features: Airspace cabin with largest overhead bins in single-aisle market, customizable mood lighting, integrated window shades, and optional Cabin-Flex layout for more seats/efficiency",
     "image": "https://www.aircraft.airbus.com/sites/g/files/jlcbta126/files/styles/w1200h675/public/2025-10/Aircraft.Airbus%20Figma%20Images%20V2_A321neo_0.png?h=eb58b4d6&itok=gAu23q7j",
     "public_tags": [
-      "Aircraft_A321neo"
+      "Aircraft",
+      "Turbofan"
     ],
     "hidden_tags": [
       "Aircraft_A321neo"
@@ -403,7 +266,7 @@
     "public_tags": [
       "Mechanics",
       "bootsrap",
-      "tired",
+      "tiredness",
       "ears"
     ],
     "hidden_tags": [
@@ -453,7 +316,7 @@
     "public_tags": [
       "Prolonged sitting",
       "Pressure",
-      "Degydration",
+      "Dehydration",
       "Pain"
     ],
     "hidden_tags": [
@@ -547,7 +410,7 @@
     "image": "https://www.daviddarling.info/images/turboprop.png",
     "public_tags": [
       "Flight",
-      "Jetengine",
+      "Jet engine",
       "Propeler",
       "Engineering"
     ],
@@ -602,6 +465,7 @@
     "image": "https://www.revigorate.com/images/porto-portugal-europe.jpg",
     "public_tags": [
       "Ribera",
+      "nightlife",
       "Food",
       "City"
     ],
@@ -618,7 +482,8 @@
     "image": "https://images.resosys.com/destinations/2/articles/pratical-information_en/inline/1688465434-s2-1231.jpg",
     "public_tags": [
       "Nature",
-      "lagoons. landscape"
+      "lagoons",
+      "landscape"
     ],
     "hidden_tags": [
       "Beauty",
@@ -646,7 +511,7 @@
     "id": 42,
     "title": "Algarve",
     "text": "The Algarve, Portugal's sunny southern coast, dazzles with golden cliffs, dramatic rock formations, and endless sandy beaches kissed by the Atlantic. In the west around Lagos, boat trips explore the sea caves and grottos of Ponta da Piedade, where turquoise waters carve fantastical shapes into sandstone. Broad beaches like Praia da Falésia or Praia da Rocha stretch for miles under reliable sunshine, perfect for relaxed days or invigorating walks, while the calmer eastern end near Tavira features the tranquil lagoons and barrier islands of Ria Formosa Natural Park, ideal for kayaking or spotting flamingos and other birds. Seaside eateries serve sizzling grilled fish and fragrant seafood rice dishes, and the region balances bustling resorts with peaceful whitewashed villages, offering the ultimate coastal escape.",
-    "image": "",
+    "image": "https://content.r9cdn.net/rimg/dimg/2d/b4/c4f97754-freereg-2000971-16c868057fe.jpg?width=1366&height=768&xhint=1355&yhint=1138&crop=true",
     "public_tags": [
       "Cliffs",
       "Beach",
@@ -709,6 +574,97 @@
       "Vulcanic",
       "hike",
       "climb"
+    ]
+  },
+  {
+    "id": 46,
+    "title": "Sata Catering",
+    "text": "On SATA flights the catering style is quite classic, simple and traditional with a strong Portuguese and Azorean character. On medium and long-haul flights (especially to/from North America) you usually get a hot meal served on proper china-like dishes with real metal cutlery. The main meal normally consists of a choice between two hot options — most of the time one is a Portuguese-style dish (cod, pork with clams, chicken with rice/potatoes, beef stew, lasagne with a Portuguese twist…) and the second one is usually a more international choice. Before the main course you normally get a small starter (salad, soup or a little appetizer plate), bread with butter, followed by the hot meal, and then dessert (very often a typical Portuguese/Azorean sweet — bolo lêvedo cake, queijada, pudding, rice pudding, fruit…).\nDrinks are generous: free wine (usually Portuguese red/white + Madeira wine on many routes), beer, a few spirits, all kinds of soft drinks, juices, water and of course coffee/tea. On shorter flights (inter-island and some Europe–Azores routes) the service becomes lighter: usually a sandwich (very often the famous Azorean bolo lêvedo sandwich with ham & cheese), a small sweet, a drink of your choice and sometimes a tiny extra snack on longer European sectors.\nOverall the food is considered honest, tasty, very Portuguese in spirit, generous in quantity on transatlantic flights, and clearly above average compared to most other low-cost and many mid-cost long-haul carriers.",
+    "image": "https://inflightfeed.com/wp-content/uploads/2017/02/sat8.jpg",
+    "public_tags": [
+      "Food",
+      "Azores Airlines"
+    ],
+    "hidden_tags": [
+      "fancy",
+      "foof",
+      "dishes"
+    ]
+  },
+  {
+    "id": 47,
+    "title": "Sata cabin",
+    "text": "The cabin on SATA Azores Airlines flights feels modern and clean, especially on their newer Airbus aircraft like the A321neo and A321LR used for medium- and long-haul routes to North America or Europe. In economy class the seats are comfortable with decent padding, adjustable headrests that often have foldable side flaps for better neck support, and a standard layout of 3-3 across (six seats per row with a single aisle), which some passengers note can feel a bit narrow on transatlantic flights compared to widebodies but is typical for narrow-body long-haul. The official average seat pitch is 31 inches (about 79 cm) with around 10 degrees of recline, which is solid for a European carrier and noticeably better than the ultra-tight setups on many low-cost or short-haul competitors—most average-height travelers find it acceptable, though taller passengers often prefer paying extra for exit-row or bulkhead seats with more legroom.\nFor those wanting significantly more space there's Comfort Class (sometimes split into Comfort Light or Comfort Plus depending on the fare), which features a much more generous 40 inches (102 cm) pitch, seats with moldable headrests, greater recline (around 40 degrees), USB/power outlets at every seat, and often a more private feel with fewer rows. On some aircraft this is configured in a 2-2 layout for even easier aisle access and a premium vibe without being a full flat-bed business class. The cabin overall is kept tidy, with good overhead bin space on the newer planes, personal IFE screens on long-haul aircraft (plus Wi-Fi on some like the A321LR), and a relaxed, unpretentious atmosphere that matches the airline's Azorean roots—nothing flashy, but practical, welcoming, and generally praised for feeling fresher than many budget transatlantic options. On shorter inter-island or regional flights (using smaller turboprops like the Q400), the cabins are simpler with tighter 29-31 inch pitch seats in a high-density setup, but the flights are brief so space feels less critical.",
+    "image": "https://i0.wp.com/azoresairlinesblog.com/wp-content/uploads/2021/04/MicrosoftTeams-image-1.jpg?resize=1000%2C667&ssl=1",
+    "public_tags": [
+      "Seats",
+      "Azores Airlines"
+    ],
+    "hidden_tags": [
+      "confort",
+      "chairs",
+      "trays"
+    ]
+  },
+  {
+    "id": 48,
+    "title": "TAP Air Portugal catering",
+    "text": "On TAP Air Portugal flights the catering emphasizes Portuguese flavors and ingredients, aiming for a fresh and authentic touch even in economy. On long-haul transatlantic routes (like to/from North America, Brazil, or Africa) you get complimentary hot meals served on a tray with real cutlery and often a choice of two main dishes—typically one featuring Portuguese-inspired options such as cod fish, chicken in a sauce, pork-based stew, or pasta with a local twist, and the other a more international or neutral alternative like beef or vegetarian. The tray usually includes a small starter salad or side (like couscous or potato salad), bread roll with butter, the hot entree with vegetables or rice/potatoes, a dessert (often rice pudding, cake, or fruit), and sometimes cheese or crackers. Drinks are free and include Portuguese red and white wines poured generously, beer, soft drinks, juices, water, coffee, and tea; spirits might be limited or available on request. On overnight flights a full dinner is served shortly after takeoff, followed later by a pre-landing snack box containing a sandwich, sweet item, or light bite with another drinks round—reviews often describe the portions as decent and the quality as solid for economy, sometimes surprisingly good with highlights like fresh fish or tasty sauces standing out above average airline fare.\nOn shorter medium-haul or European/domestic flights the service shifts to buy-on-board for most routes, where you purchase sandwiches (often ham and cheese or similar on bolo do caco-style bread), snacks, cold items, and drinks from a menu—no complimentary hot meals except perhaps on longer European sectors or specific times. Inter-island or very short hops might offer just a small paid snack or nothing at all. Overall the food leans into Portuguese cuisine with good ingredients, feels honest and hearty on the longer flights, comes across as better than many budget transatlantic competitors but not gourmet, and gets praise for being tasty and filling when the mains hit the mark—though some find it variable or bland in execution depending on the route and day. Special meals are available on flights over 5 hours if requested in advance for dietary needs.",
+    "image": "data:image/jpeg;base64,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",
+    "public_tags": [
+      "Food",
+      "Regional"
+    ],
+    "hidden_tags": [
+      "plates",
+      "cuttlery",
+      "trays"
+    ]
+  },
+  {
+    "id": 49,
+    "title": "TAP Air Portugal cabin",
+    "text": "The cabin on TAP Air Portugal flights feels modern and straightforward, especially on their newer widebodies like the Airbus A330-900neo and long-range narrowbodies like the A321neo LR used for transatlantic routes to North America, Brazil, or Africa. In standard economy class the seats are slimline Recaro-style with cloth upholstery in a steel blue or gray tone, adjustable headrests on many (especially the red \"Comfort\" marked ones), and a typical 2-4-2 layout on the A330s for a less cramped feel than 3-3 on some competitors, while the A321neo LR uses 3-3 across. The average seat pitch is around 31 inches (about 79 cm) with 3-5 inches of recline depending on the aircraft and row—it's acceptable for most people on long-haul but can feel tight for taller passengers after several hours, though the seats are often described as well-padded and surprisingly comfortable with good cushioning. Overhead bins are generous on the newer Airspace cabins, personal IFE screens are standard on long-haul with a solid selection of movies and shows, USB/power outlets at most seats, and Wi-Fi available on many aircraft for messaging or browsing.\nTAP distinguishes economy into two zones: the standard green seats offer basic choice and sometimes slightly less features, while the red Comfort (or EconomyXtra/Comfort Area) seats provide noticeably more space—typically 32-34 inches pitch, extra recline (up to 7-8 degrees on some), adjustable headrests with wings for neck support, and often positioned at the front of the economy cabin or in exit rows for easier access and a quieter vibe. This upgrade feels like a worthwhile step up for transatlantic flights without jumping to full business class, giving a more relaxed experience with better legroom and sometimes priority perks depending on the fare. The overall cabin is kept clean and fresh-looking with mood lighting on newer planes, large windows, and a practical Portuguese flair—nothing overly luxurious, but efficient, welcoming, and generally rated as decent value compared to other transatlantic carriers, especially when avoiding the very back rows where pitch might dip or recline is limited.\nOn shorter European, domestic, or regional flights (often A320/A321 or Embraer), the cabins are simpler with tighter 28-31 inch pitch in high-density 3-3 setups, non-reclining seats in some rear rows, and a more no-frills feel—fine for short durations but less forgiving on legs over 3-4 hours. For premium, TAP's Executive (business) class offers lie-flat beds (full flat on long-haul A330 and A321LR, around 77-80 inches long and 22-27 inches wide) in configurations like 1-2-1 reverse herringbone on A330neo for direct aisle access or staggered 1-1/2-2 on A321LR with coveted \"throne\" solo seats—private, spacious, and comfortable for sleep, though the hard product is solid rather than ultra-luxury. The business cabin is smaller and more intimate with softer fabrics, better lighting, and enhanced storage. Recent announcements point to an evolving premium economy-like option launching around summer 2026 with \"neighbor-free\" blocked middle seats for extra privacy and space right behind business, bridging the gap further. Overall the cabins strike a balance—practical, modern on the flagship aircraft, and above many budget long-haul options in comfort and consistency.",
+    "image": "https://www.aviationtoday.com/wp-content/uploads/2019/09/a330_interior_2.jpg",
+    "public_tags": [
+      "Seats",
+      "Entertainment"
+    ],
+    "hidden_tags": [
+      "steats",
+      "screens",
+      "wc"
+    ]
+  },
+  {
+    "id": 50,
+    "title": "Why does palne food taste different?",
+    "text": "At cruising altitude in a commercial airplane cabin—typically pressurized to the equivalent of around 6,000–8,000 feet above sea level—your taste buds and sense of flavor undergo noticeable changes due to the unique environment. The combination of lower air pressure, extremely dry cabin air (often below 12% humidity, drier than most deserts), reduced oxygen levels in the blood, cooler temperatures, and constant background engine noise (around 80–85 dB) dulls perception significantly. Studies, including those from the Fraunhofer Institute and various sensory researchers, show that sensitivity to sweet and salty tastes drops by up to 30%, while umami (savory) flavors can actually intensify somewhat, and sour, bitter, or spicy elements remain relatively unaffected. Much of what we call \"taste\" is actually flavor from smell, and the dry air dries out nasal passages and mucus membranes, suppressing olfaction (which contributes up to 80% of flavor perception) and making aromas harder to detect—it's similar to having a bad cold where food seems bland.\nThis explains why airline meals often taste muted or off compared to on the ground: subtle sweetness in desserts or balanced saltiness in mains gets lost, prompting chefs to compensate by boosting salt, sugar, herbs, spices, and umami-rich ingredients (like tomatoes, which is why Bloody Marys or tomato-based sauces can taste surprisingly good in the air). Noise from the engines further suppresses sweet perception while enhancing savory notes, adding to the overall shift. On shorter flights the effects are milder since you're not at altitude as long, but on long-haul transatlantic or intercontinental routes the changes are pronounced, contributing to why even decent catering can feel underwhelming mid-flight—it's not always the food quality itself, but your temporarily altered palate at 35,000 feet making everything taste different until you land and your senses normalize.",
+    "image": "https://media.cnn.com/api/v1/images/stellar/prod/181231103500-airplane-food-taste.jpg?q=x_0,y_0,h_900,w_1599,c_fill/w_800",
+    "public_tags": [
+      "Flavour",
+      "Body at altittude"
+    ],
+    "hidden_tags": [
+      "pressure",
+      "mouth",
+      "bitter"
+    ]
+  },
+  {
+    "id": 53,
+    "title": "In-Flight Safety Guide",
+    "text": "In-flight safety on commercial airplanes is built around simple, proven principles that dramatically increase your chances of a safe journey, even though flying remains one of the safest ways to travel—statistically far safer than driving. The most critical rule, emphasized by authorities like the FAA and ICAO, is to always keep your seat belt fastened low and tight around your hips whenever you're seated, not just when the seat belt sign is illuminated; turbulence can strike suddenly without warning (clear-air turbulence in particular), and unrestrained passengers are the primary source of in-flight injuries, turning you into a potential projectile in rough air—keeping it on even during smooth cruising provides that extra layer of protection throughout the flight.\nPay close attention to the pre-flight safety briefing from the flight attendants or the video demonstration—it's tailored to your specific aircraft and covers essential equipment and procedures that can vary by plane type, so treat it as vital information rather than routine background noise; follow along with the safety card in your seat pocket, which illustrates exit locations, how to operate oxygen masks, life vests (if equipped), and brace positions. Locate your nearest emergency exits both in front of and behind your seat right after boarding—count the rows to them so you can find them even in low visibility, smoke, or darkness—and mentally note that in an evacuation, you must leave all carry-on bags behind immediately, as they can obstruct aisles, damage inflatable slides, or slow everyone down critically.\nDuring takeoff and landing—the phases with the highest (though still very low) risk—ensure your seatback is upright, tray table stowed, window shade up (for better crew visibility outside), and personal items secured under the seat; listen for crew commands and follow them promptly without hesitation. If oxygen masks drop due to a sudden cabin depressurization, secure your own mask first (pull it toward you to start the flow, place it over nose and mouth, tighten elastic bands) before helping others—yours needs to be on for you to assist effectively, and the bag may not inflate visibly but oxygen is flowing. For life vests (on over-water flights), don it before exiting the aircraft, inflate only after you're outside (pull red tabs or blow into tubes), and activate the water light if needed.\nBrace for impact if instructed: place your feet flat on the floor, lean forward with head down (hands protecting neck/head or grasping ankles depending on seat type), stay low to reduce whiplash risk—studies show this significantly improves survivability in rare severe events. In any emergency, stay calm, follow crew directions precisely (they're trained professionals for these scenarios), and move quickly but orderly to exits without pushing or retrieving items. Avoid smoking or using open flames (strictly prohibited, including in lavatories), and report any suspicious activity or issues to crew immediately. By staying seated with belt on, heeding briefings, knowing your exits, and cooperating with the crew, you're actively contributing to the layered safety system that makes modern air travel remarkably secure—relax, enjoy the flight, and know these habits have saved lives countless times. Safe skies!",
+    "image": "https://i.sstatic.net/O7mFt.jpg",
+    "public_tags": [
+      "Life-saving",
+      "Important"
+    ],
+    "hidden_tags": [
+      "death",
+      "coma",
+      "fire",
+      "smoke"
     ]
   }
 ]

@@ -18,10 +18,12 @@ import {
     KeyboardAvoidingView,
     Platform,
 } from 'react-native';
+import { useFocusEffect } from 'expo-router';
 import StopSearchInput from '../../components/transport/StopSearchInput';
 import RouteResultCard from '../../components/transport/RouteResultCard';
 import { findRoute } from '../../services/transportApi';
 import type { Stop, SavedRoute } from '../../services/transportTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // ── Helpers ──────────────────────────────────────────────────────────────
 
@@ -68,6 +70,62 @@ export default function PostFlightScreen() {
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<SavedRoute[]>([]);
     const [error, setError] = useState<string | null>(null);
+
+    // Auto-load saved airport trip
+    useFocusEffect(
+        React.useCallback(() => {
+            const checkSavedAirport = async () => {
+                try {
+                    const saved = await AsyncStorage.getItem('current_target_airport');
+                    if (saved) {
+                        const airport = JSON.parse(saved);
+                        // Create a specific search for this airport
+                        const myLocationStop: Stop = {
+                            stop_id: 'MY_LOCATION',
+                            stop_name: 'My Location',
+                            lat: 0,
+                            lon: 0
+                        };
+
+                        const airportStop: Stop = {
+                            stop_id: airport.code,
+                            stop_name: airport.name,
+                            lat: airport.lat,
+                            lon: airport.lng
+                        };
+
+                        setFromStop(myLocationStop);
+                        setToStop(airportStop);
+
+                        // Auto-add result
+                        const virtualRoute: SavedRoute = {
+                            id: `TRIP-${Date.now()}`,
+                            query: { from: myLocationStop, to: airportStop, date: todayStr(), time: nowTimeStr() },
+                            result: {
+                                legs: [],
+                                total_duration_minutes: 0,
+                                total_transfers: 0,
+                                departure_time: nowTimeStr(),
+                                arrival_time: '...',
+                                origin_name: 'My Location',
+                                destination_name: airport.name,
+                                summary: `Trip to ${airport.city}`
+                            },
+                            timestamp: Date.now()
+                        };
+
+                        setResults(prev => [virtualRoute, ...prev]);
+
+                        // Clear it so it doesn't trigger again
+                        await AsyncStorage.removeItem('current_target_airport');
+                    }
+                } catch (e) {
+                    console.error('Error checking saved airport:', e);
+                }
+            };
+            checkSavedAirport();
+        }, [])
+    );
 
     // Validation
     const canSearch = useMemo(() => {

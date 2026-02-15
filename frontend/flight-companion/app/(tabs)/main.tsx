@@ -18,6 +18,11 @@ import { API_BASE_URL, GO_API_BASE_URL } from '../../constants/config';
 import { router } from 'expo-router';
 import AirportMap from '../../components/AirportMap';
 import FlightRouteMap from '../../components/FlightRouteMap';
+import RouteResultCard from '../../components/transport/RouteResultCard';
+import CheckInManager from '../../components/CheckInManager';
+import type { SavedRoute, Stop } from '../../services/transportTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AIRPORTS from '../../assets/data/airports.json';
 
 export default function MainScreen() {
     const { mode, setMode } = useFlightMode();
@@ -26,15 +31,128 @@ export default function MainScreen() {
     const [showScanner, setShowScanner] = useState(false);
     const [loading, setLoading] = useState(false);
     const cameraRef = useRef<CameraView>(null);
+    const [selectedAirport, setSelectedAirport] = useState<any>(null);
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
+    const [tripRoute, setTripRoute] = useState<SavedRoute | null>(null);
+    const [hasReachedAirport, setHasReachedAirport] = useState(false);
 
+    const handleAirportSelect = async (airport: any) => {
+        try {
+            await AsyncStorage.setItem('current_target_airport', JSON.stringify(airport));
+            setSelectedAirport(airport);
+            setDropdownOpen(false); // Close dropdown
+
+            // Create valid Stops for the route
+            const myLocationStop: Stop = {
+                stop_id: 'MY_LOCATION',
+                stop_name: 'My Location',
+                lat: 0,
+                lon: 0
+            };
+
+            const airportStop: Stop = {
+                stop_id: airport.code,
+                stop_name: airport.name,
+                lat: airport.lat,
+                lon: airport.lng
+            };
+
+            // Generate "virtual" route card
+            const newRoute: SavedRoute = {
+                id: `HOME-TRIP-${Date.now()}`,
+                query: {
+                    from: myLocationStop,
+                    to: airportStop,
+                    date: new Date().toISOString().slice(0, 10),
+                    time: `${String(new Date().getHours()).padStart(2, '0')}:${String(new Date().getMinutes()).padStart(2, '0')}`
+                },
+                result: {
+                    legs: [],
+                    total_duration_minutes: 0,
+                    total_transfers: 0,
+                    departure_time: 'Now',
+                    arrival_time: '...',
+                    origin_name: 'My Location',
+                    destination_name: airport.name,
+                    // URL summary triggers "Deep Link Mode" in RouteResultCard (hides specific stats, shows button)
+                    summary: `https://www.google.com/maps/dir/?api=1&destination=${airport.lat},${airport.lng}`
+                },
+                timestamp: Date.now()
+            };
+
+            setTripRoute(newRoute);
+
+        } catch (error) {
+            console.error('Failed to save airport:', error);
+        }
+    };
+
+    // Auto-create trip when Boarding Pass is added
     useEffect(() => {
-        const getCameraPermissions = async () => {
-            const { status } = await Camera.requestCameraPermissionsAsync();
-            setHasPermission(status === 'granted');
-        };
+        if (boardingPass && boardingPass.departureAirport) {
+            // Find airport by ID (code) or Name match
+            const airport = AIRPORTS.find(a =>
+                a.code === boardingPass.departureAirport ||
+                a.city.toLowerCase() === boardingPass.departureAirport.toLowerCase()
+            );
 
-        getCameraPermissions();
-    }, []);
+            // Create Trip Route to Departure Airport
+            const myLocationStop: Stop = {
+                stop_id: 'MY_LOCATION',
+                stop_name: 'My Location',
+                lat: 0,
+                lon: 0
+            };
+
+            let airportStop: Stop;
+            let summaryUrl: string;
+            let destName: string;
+
+            if (airport) {
+                airportStop = {
+                    stop_id: airport.code,
+                    stop_name: airport.name,
+                    lat: airport.lat,
+                    lon: airport.lng
+                };
+                summaryUrl = `https://www.google.com/maps/dir/?api=1&destination=${airport.lat},${airport.lng}`;
+                destName = airport.name;
+            } else {
+                // Fallback: Use the string from boarding pass for search
+                airportStop = {
+                    stop_id: 'UNKNOWN',
+                    stop_name: boardingPass.departureAirport,
+                    lat: 0,
+                    lon: 0
+                };
+                // Google Maps Search/Dir with query
+                summaryUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(boardingPass.departureAirport + ' Airport')}`;
+                destName = boardingPass.departureAirport;
+            }
+
+            const newRoute: SavedRoute = {
+                id: `BP-TRIP-${Date.now()}`,
+                query: {
+                    from: myLocationStop,
+                    to: airportStop,
+                    date: new Date().toISOString().slice(0, 10),
+                    time: `${String(new Date().getHours()).padStart(2, '0')}:${String(new Date().getMinutes()).padStart(2, '0')}`
+                },
+                result: {
+                    legs: [],
+                    total_duration_minutes: 0,
+                    total_transfers: 0,
+                    departure_time: 'Now',
+                    arrival_time: '...',
+                    origin_name: 'My Location',
+                    destination_name: destName,
+                    summary: summaryUrl
+                },
+                timestamp: Date.now()
+            };
+            setTripRoute(newRoute);
+        }
+    }, [boardingPass]);
 
     const calculateAirTimeMinutes = (depTime: string, arrTime: string): number | null => {
         try {
@@ -171,13 +289,14 @@ export default function MainScreen() {
         }
     };
 
-    const openScanner = () => {
-        if (hasPermission === null) {
-            Alert.alert('Requesting Permission', 'Requesting camera permission...');
-        }
-        if (hasPermission === false) {
-            Alert.alert('No Access', 'Camera permission was denied.');
-            return;
+    const openScanner = async () => {
+        if (!hasPermission) {
+            const { status } = await Camera.requestCameraPermissionsAsync();
+            setHasPermission(status === 'granted');
+            if (status !== 'granted') {
+                Alert.alert('No Access', 'Camera permission is required to scan tickets.');
+                return;
+            }
         }
         setShowScanner(true);
     };
@@ -194,42 +313,84 @@ export default function MainScreen() {
                         showsVerticalScrollIndicator={false}
                     >
                         {boardingPass ? (
-                            <TouchableOpacity
-                                style={styles.flightCard}
-                                onPress={() => router.push('/(tabs)/boardingpass')}
-                                activeOpacity={0.7}
-                            >
-                                <View style={styles.flightCardHeader}>
-                                    <Text style={styles.flightCardCarrier}>{boardingPass.carrier}</Text>
-                                    <Text style={styles.flightCardFlight}>{boardingPass.flightNumber}</Text>
-                                </View>
-
-                                <View style={styles.flightCardRoute}>
-                                    <Text style={styles.flightCardAirport}>{boardingPass.departureAirport}</Text>
-                                    <View style={styles.flightCardLine} />
-                                    <Ionicons name="airplane" size={18} color="#007AFF" />
-                                    <View style={styles.flightCardLine} />
-                                    <Text style={styles.flightCardAirport}>{boardingPass.arrivalAirport}</Text>
-                                </View>
-
-                                <View style={styles.flightCardDetails}>
-                                    <Text style={styles.flightCardDetail}>Seat {boardingPass.seat}</Text>
-                                    <Text style={styles.flightCardDetail}>{boardingPass.cabinClassName}</Text>
-                                </View>
-
-                                <Text style={styles.flightCardHint}>Tap for details</Text>
-
+                            <>
                                 <TouchableOpacity
-                                    style={styles.rescanButton}
-                                    onPress={(e) => {
-                                        e.stopPropagation();
-                                        clearBoardingPass();
-                                    }}
+                                    style={styles.flightCard}
+                                    onPress={() => router.push('/(tabs)/boardingpass')}
+                                    activeOpacity={0.7}
                                 >
-                                    <Ionicons name="refresh-outline" size={16} color="#d32f2f" />
-                                    <Text style={styles.rescanText}>Scan new</Text>
+                                    <View style={styles.flightCardHeader}>
+                                        <Text style={styles.flightCardCarrier}>{boardingPass.carrier}</Text>
+                                        <Text style={styles.flightCardFlight}>{boardingPass.flightNumber}</Text>
+                                    </View>
+
+                                    <View style={styles.flightCardRoute}>
+                                        <Text style={styles.flightCardAirport}>{boardingPass.departureAirport}</Text>
+                                        <View style={styles.flightCardLine} />
+                                        <Ionicons name="airplane" size={18} color="#007AFF" />
+                                        <View style={styles.flightCardLine} />
+                                        <Text style={styles.flightCardAirport}>{boardingPass.arrivalAirport}</Text>
+                                    </View>
+
+                                    <View style={styles.flightCardDetails}>
+                                        <Text style={styles.flightCardDetail}>Seat {boardingPass.seat}</Text>
+                                        <Text style={styles.flightCardDetail}>{boardingPass.cabinClassName}</Text>
+                                    </View>
+
+                                    <Text style={styles.flightCardHint}>Tap for details</Text>
+
+                                    <TouchableOpacity
+                                        style={styles.rescanButton}
+                                        onPress={(e) => {
+                                            e.stopPropagation();
+                                            clearBoardingPass();
+                                            setTripRoute(null);
+                                            setSelectedAirport(null);
+                                        }}
+                                    >
+                                        <Ionicons name="refresh-outline" size={16} color="#d32f2f" />
+                                        <Text style={styles.rescanText}>Scan new</Text>
+                                    </TouchableOpacity>
                                 </TouchableOpacity>
-                            </TouchableOpacity>
+
+                                {/* Trip to Airport Card for Boarding Pass */}
+                                {tripRoute && (
+                                    <View style={styles.tripCardWrapper}>
+                                        {!hasReachedAirport ? (
+                                            <>
+                                                <Text style={{
+                                                    alignSelf: 'flex-start',
+                                                    marginLeft: 8,
+                                                    marginBottom: 8,
+                                                    fontSize: 16,
+                                                    fontWeight: 'bold',
+                                                    color: '#333'
+                                                }}>
+                                                    Trip to Airport
+                                                </Text>
+                                                <RouteResultCard
+                                                    saved={tripRoute}
+                                                // No remove button when linked to boarding pass
+                                                />
+                                                <TouchableOpacity
+                                                    style={styles.reachedButton}
+                                                    onPress={() => setHasReachedAirport(true)}
+                                                >
+                                                    <Text style={styles.reachedButtonText}>Reached Airport 🏁</Text>
+                                                </TouchableOpacity>
+                                            </>
+                                        ) : (
+                                            <CheckInManager
+                                                onCheckInDone={() => {
+                                                    // Identify what "done" means; for now just an alert or console
+                                                    Alert.alert("Check-in", "Check-in process marked as done!");
+                                                }}
+                                                onBack={() => setHasReachedAirport(false)}
+                                            />
+                                        )}
+                                    </View>
+                                )}
+                            </>
                         ) : (
                             <View style={styles.scannerContainer}>
                                 <Text style={styles.scannerTitle}>Get ticket from:</Text>
@@ -249,16 +410,89 @@ export default function MainScreen() {
                             </View>
                         )}
 
-                        {/* Flight Route Map */}
-                        <View style={styles.routeMapBox}>
-                            <Text style={styles.boxTitle}>Flight Route</Text>
-                            <View style={styles.routeMapWrapper}>
-                                <FlightRouteMap
-                                    departure={{ code: 'OPO', name: 'Porto Airport', lat: 41.2481, lng: -8.6814 }}
-                                    arrival={{ code: 'TER', name: 'Lajes Airport, Terceira', lat: 38.7618, lng: -27.0908 }}
-                                />
-                            </View>
-                        </View>
+                        {/* Flight Route Map / Airport Selection - Hide if Boarding Pass exists */}
+                        {!boardingPass && (
+                            <>
+                                {!hasReachedAirport && (
+                                    <View style={styles.routeMapBox}>
+                                        <Text style={styles.boxTitle}>I don't have the ticket yet</Text>
+                                        <Text style={styles.boxSubtitle}>Select your destination airport to plan a trip</Text>
+
+                                        {/* Dropdown Trigger */}
+                                        <TouchableOpacity
+                                            style={styles.dropdownTrigger}
+                                            onPress={() => setDropdownOpen(!isDropdownOpen)}
+                                            activeOpacity={0.8}
+                                        >
+                                            <View style={styles.triggerContent}>
+                                                <Ionicons name="airplane-outline" size={20} color="#666" />
+                                                <Text style={[
+                                                    styles.triggerText,
+                                                    !selectedAirport && { color: '#999' }
+                                                ]}>
+                                                    {selectedAirport ? `${selectedAirport.city} (${selectedAirport.code})` : 'Select destination airport...'}
+                                                </Text>
+                                            </View>
+                                            <Ionicons
+                                                name={isDropdownOpen ? "chevron-up" : "chevron-down"}
+                                                size={20}
+                                                color="#666"
+                                            />
+                                        </TouchableOpacity>
+
+                                        {/* Dropdown List */}
+                                        {isDropdownOpen && (
+                                            <View style={styles.dropdownList}>
+                                                {AIRPORTS.map((airport) => (
+                                                    <TouchableOpacity
+                                                        key={airport.code}
+                                                        style={styles.dropdownItem}
+                                                        onPress={() => handleAirportSelect(airport)}
+                                                    >
+                                                        <View style={styles.airportIconBadge}>
+                                                            <Text style={styles.airportCodeText}>{airport.code}</Text>
+                                                        </View>
+                                                        <View style={{ flex: 1 }}>
+                                                            <Text style={styles.airportNameText}>{airport.city}</Text>
+                                                            <Text style={styles.airportFullText}>{airport.name}</Text>
+                                                        </View>
+                                                        <Ionicons name="chevron-forward" size={20} color="#ccc" />
+                                                    </TouchableOpacity>
+                                                ))}
+                                            </View>
+                                        )}
+                                    </View>
+                                )}
+
+                                {/* Trip Card showing automatically after selection */}
+                                {tripRoute && (
+                                    <View style={styles.tripCardWrapper}>
+                                        {!hasReachedAirport ? (
+                                            <>
+                                                <RouteResultCard
+                                                    saved={tripRoute}
+                                                    onRemove={() => {
+                                                        setTripRoute(null);
+                                                        setSelectedAirport(null);
+                                                        AsyncStorage.removeItem('current_target_airport');
+                                                    }}
+                                                />
+                                                <TouchableOpacity
+                                                    style={styles.reachedButton}
+                                                    onPress={() => setHasReachedAirport(true)}
+                                                >
+                                                    <Text style={styles.reachedButtonText}>Reached Airport 🏁</Text>
+                                                </TouchableOpacity>
+                                            </>
+                                        ) : (
+                                            <CheckInManager
+                                                onBack={() => setHasReachedAirport(false)}
+                                            />
+                                        )}
+                                    </View>
+                                )}
+                            </>
+                        )}
                     </ScrollView>
                 ) : (
                     <View style={styles.grdContainer}>
@@ -394,12 +628,14 @@ const styles = StyleSheet.create({
     scannerContainer: {
         width: '100%',
         maxWidth: 420,
+        height: 210,
         padding: 24,
         backgroundColor: '#fffbe6',
         borderWidth: 1.5,
         borderColor: '#fbc02d',
         borderRadius: 16,
         alignItems: 'center',
+        justifyContent: 'center',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.12,
@@ -489,6 +725,84 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         overflow: 'hidden',
     },
+    boxSubtitle: {
+        fontSize: 14,
+        color: '#666',
+        marginTop: -8,
+        marginBottom: 16,
+    },
+    dropdownTrigger: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#f9f9f9',
+        borderWidth: 1,
+        borderColor: '#e0e0e0',
+        borderRadius: 12,
+        paddingHorizontal: 16,
+        paddingVertical: 14,
+        marginBottom: 8,
+    },
+    triggerContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+    },
+    triggerText: {
+        fontSize: 16,
+        color: '#333',
+        fontWeight: '500',
+    },
+    dropdownList: {
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#eee',
+        borderTopWidth: 0,
+        borderRadius: 12,
+        marginTop: -8,
+        paddingTop: 8,
+        paddingHorizontal: 4,
+        paddingBottom: 4,
+        elevation: 4,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        zIndex: 100,
+        gap: 8,
+    },
+    dropdownItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10,
+        backgroundColor: '#fff',
+        borderRadius: 8,
+        gap: 12,
+    },
+    airportIconBadge: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: '#e3f2fd',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#bbdefb',
+    },
+    airportCodeText: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: '#1976d2',
+    },
+    airportNameText: {
+        fontSize: 15,
+        fontWeight: '600',
+        color: '#333',
+    },
+    airportFullText: {
+        fontSize: 11,
+        color: '#757575',
+    },
 
     modalContainer: {
         flex: 1,
@@ -538,24 +852,32 @@ const styles = StyleSheet.create({
     flightCard: {
         width: '100%',
         maxWidth: 420,
-        padding: 24,
+        height: 210,
+        padding: 16,
         backgroundColor: '#fff',
         borderRadius: 16,
         borderWidth: 1.5,
         borderColor: '#007AFF',
         alignItems: 'center',
+        justifyContent: 'space-between',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.12,
         shadowRadius: 6,
         elevation: 4,
     },
+
+    tripCardWrapper: {
+        width: '100%',
+        maxWidth: 420,
+        marginTop: 20,
+    },
     flightCardHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
-        marginBottom: 16,
+        marginBottom: 0,
     },
     flightCardCarrier: {
         fontSize: 16,
@@ -572,10 +894,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 12,
-        marginBottom: 12,
+        marginBottom: 0,
     },
     flightCardAirport: {
-        fontSize: 28,
+        fontSize: 26,
         fontWeight: 'bold',
         color: '#222',
     },
@@ -587,7 +909,7 @@ const styles = StyleSheet.create({
     flightCardDetails: {
         flexDirection: 'row',
         gap: 20,
-        marginBottom: 8,
+        marginBottom: 6,
     },
     flightCardDetail: {
         fontSize: 14,
@@ -603,8 +925,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 6,
-        marginTop: 16,
-        paddingVertical: 8,
+        marginTop: 4,
+        paddingVertical: 6,
         paddingHorizontal: 16,
         borderRadius: 8,
         borderWidth: 1,
@@ -615,6 +937,23 @@ const styles = StyleSheet.create({
         fontSize: 13,
         fontWeight: '600',
         color: '#d32f2f',
+    },
+    reachedButton: {
+        backgroundColor: '#4caf50',
+        paddingVertical: 12,
+        borderRadius: 12,
+        alignItems: 'center',
+        marginTop: 12,
+        shadowColor: '#4caf50',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 4,
+    },
+    reachedButtonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#fff',
     },
     flightCardSubDetail: {
         fontSize: 12,

@@ -1,0 +1,58 @@
+[
+  {
+    "code": "LIS",
+    "name": "Humberto Delgado Airport",
+    "city": "Lisbon",
+    "lat": 38.7742,
+    "lng": -9.1342
+  },
+  {
+    "code": "OPO",
+    "name": "Francisco Sá Carneiro Airport",
+    "city": "Porto",
+    "lat": 41.2481,
+    "lng": -8.6814
+  },
+  {
+    "code": "FAO",
+    "name": "Faro Airport",
+    "city": "Faro",
+    "lat": 37.0176,
+    "lng": -7.9697
+  },
+  {
+    "code": "FNC",
+    "name": "Madeira Airport",
+    "city": "Funchal",
+    "lat": 32.6979,
+    "lng": -16.7745
+  },
+  {
+    "code": "PDL",
+    "name": "João Paulo II Airport",
+    "city": "Ponta Delgada",
+    "lat": 37.7412,
+    "lng": -25.6979
+  },
+  {
+    "code": "TER",
+    "name": "Lajes Airport",
+    "city": "Terceira",
+    "lat": 38.7618,
+    "lng": -27.0908
+  },
+  {
+    "code": "HOR",
+    "name": "Horta Airport",
+    "city": "Horta",
+    "lat": 38.5199,
+    "lng": -28.7164
+  },
+  {
+    "code": "PXO",
+    "name": "Porto Santo Airport",
+    "city": "Porto Santo",
+    "lat": 33.0709,
+    "lng": -16.3415
+  }
+]

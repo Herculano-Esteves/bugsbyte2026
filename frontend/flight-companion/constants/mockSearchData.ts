@@ -10,46 +10,6 @@ export interface Article {
 
 export const mockArticles: Article[] = [
     {
-        id: 1,
-        public_tags: ['safety', 'emergency'],
-        hidden_tags: ['procedure', 'evacuation', 'mask', 'mock'],
-        title: 'In-Flight Safety Guide',
-        text: 'Learn about the safety procedures and emergency protocols for your flight. Always pay attention to the flight attendants during the safety briefing.',
-        image: 'https://images.unsplash.com/photo-1542296332-2e44a99cfef0?q=80&w=2666&auto=format&fit=crop',
-    },
-    {
-        id: 2,
-        public_tags: ['tips', 'comfort'],
-        hidden_tags: ['sleep', 'jetlag', 'health', 'mock'],
-        title: 'Avoiding Jet Lag',
-        text: 'Tips and tricks to stay fresh during long haul flights. Drink plenty of water and try to adjust your sleep schedule before you fly.',
-        image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2674&auto=format&fit=crop',
-    },
-    {
-        id: 3,
-        public_tags: ['food', 'dining'],
-        hidden_tags: ['menu', 'drinks', 'snacks', 'mock'],
-        title: 'In-Flight Dining Experience',
-        text: 'Discover our gourmet meal options and beverage selection. We offer a variety of meals to cater to different dietary requirements.',
-        image: 'https://images.unsplash.com/photo-1542296332-2e44a99cfef0?q=80&w=2666&auto=format&fit=crop',
-    },
-    {
-        id: 4,
-        public_tags: ['entertainment', 'movies'],
-        hidden_tags: ['wifi', 'music', 'games', 'mock'],
-        title: 'Entertainment System',
-        text: 'Explore our vast library of movies, music, and games available on your personal screen. Wi-Fi is also available on select flights.',
-        image: 'https://images.unsplash.com/photo-1517400508447-f8dd518b86db?q=80&w=2670&auto=format&fit=crop',
-    },
-    {
-        id: 5,
-        public_tags: ['destination', 'travel'],
-        hidden_tags: ['paris', 'france', 'europe', 'mock'],
-        title: 'Destination Guide: Paris',
-        text: 'Top attractions and hidden gems in the City of Light. Visit the Eiffel Tower, the Louvre, and enjoy authentic French pastries.',
-        image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2673&auto=format&fit=crop',
-    },
-    {
         id: 11,
         title: "TAP Air Portugal",
         text: "TAP Air Portugal is the flag carrier and national airline of Portugal, officially known as TAP – Transportes Aéreos Portugueses. Founded in 1945 and headquartered in Lisbon, it serves as a key connector between Europe, Africa, North America, and South America, with a strong focus on routes to Brazil and other Lusophone countries.\n\nAs a proud member of the Star Alliance since 2005, TAP operates an average of around 2,500 weekly flights to over 85–90 destinations in dozens of countries. Its main hub is Lisbon Humberto Delgado Airport, with secondary hubs in Porto and Madeira (Funchal).\n\nThe airline boasts a modern, primarily all-Airbus fleet of approximately 100–101 aircraft (including TAP Express regional operations), with a few additional planes on order. Key models include the fuel-efficient Airbus A330-900neo (for long-haul, with lie-flat business class seats and enhanced comfort), A321neo/LR (great for transatlantic efficiency), and the A320 family for short/medium-haul routes. The average fleet age is currently around 10.9 years (as of early 2026), reflecting ongoing modernization efforts that have kept the fleet relatively young and eco-friendly compared to many legacy carriers.\n\nTAP is well-known for its competitive pricing on transatlantic flights, comfortable seating (including Recaro seats in many cabins for better recline and adjustable headrests), a solid in-flight entertainment selection, and the popular Portugal Stopover program, which lets passengers add a free multi-day visit to Lisbon or Porto on qualifying international tickets.\n\nOverall, TAP Air Portugal combines Portuguese hospitality with reliable service, making it a go-to choice for affordable yet comfortable travel across the Atlantic and beyond!",

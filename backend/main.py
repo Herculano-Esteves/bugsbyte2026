@@ -66,6 +66,10 @@ app.add_middleware(
 # Include Routes
 app.include_router(router, prefix="/api")
 
+# Include Planner Routes
+from app.planner.routes import router as planner_router
+app.include_router(planner_router, prefix="/api")
+
 if __name__ == "__main__":
     uvicorn.run(
         "main:app",

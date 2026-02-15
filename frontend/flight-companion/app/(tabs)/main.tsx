@@ -20,6 +20,7 @@ import AirportMap from '../../components/AirportMap';
 import FlightRouteMap from '../../components/FlightRouteMap';
 import RouteResultCard from '../../components/transport/RouteResultCard';
 import CheckInManager from '../../components/CheckInManager';
+import TourPlanner from '../../components/TourPlanner';
 import type { SavedRoute, Stop } from '../../services/transportTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AIRPORTS from '../../assets/data/airports.json';
@@ -533,6 +534,11 @@ export default function MainScreen() {
                             </>
                         )}
                     </ScrollView>
+
+                ) : mode === 'TOUR' ? (
+                    <View style={styles.tourContainer}>
+                        <TourPlanner />
+                    </View>
                 ) : (
                     <View style={styles.grdContainer}>
                         {/* Airport Map Box */}
@@ -567,6 +573,17 @@ export default function MainScreen() {
                         GRD
                     </Text>
                 </TouchableOpacity>
+
+                <View style={styles.separator} />
+
+                <TouchableOpacity
+                    style={[styles.modeButton, mode === 'TOUR' && styles.activeModeButton]}
+                    onPress={() => setMode('TOUR')}
+                >
+                    <Text style={[styles.modeButtonText, mode === 'TOUR' && styles.activeModeButtonText]}>
+                        TOUR
+                    </Text>
+                </TouchableOpacity>
             </View>
 
             {/* Camera Modal */}
@@ -585,7 +602,7 @@ export default function MainScreen() {
                     </TouchableOpacity>
                 </View>
             </Modal>
-        </View>
+        </View >
     );
 }
 
@@ -722,6 +739,11 @@ const styles = StyleSheet.create({
     grdContainer: {
         width: '100%',
         gap: 20,
+    },
+
+    tourContainer: {
+        width: '100%',
+        flex: 1,
     },
 
     mapBox: {

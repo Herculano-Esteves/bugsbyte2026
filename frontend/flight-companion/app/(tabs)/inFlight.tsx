@@ -3,20 +3,11 @@ import { View, Text, StyleSheet, Image, SafeAreaView, Platform, StatusBar, useCo
 import axios from 'axios';
 import { mockArticles, Article } from '../../constants/mockSearchData';
 import { Colors } from '../../constants/theme';
-import { useBoardingPass, mapCabinClass } from '../../context/BoardingPassContext';
-import { CameraView, Camera } from 'expo-camera';
-import * as ImagePicker from 'expo-image-picker';
+import { useBoardingPass } from '../../context/BoardingPassContext';
 import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL } from '../../constants/config';
 import { router } from 'expo-router';
 import { useAuth } from '../../context/AuthContext';
-
-// Helper to format time (copied from main.tsx to avoid circular dependency or move to utils)
-function formatTime(isoString: string) {
-    if (!isoString) return '--:--';
-    const date = new Date(isoString);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-}
 
 // Reusing ImageWithLoader from search.tsx
 const ImageWithLoader = ({ uri, style }: { uri: string, style: any }) => {
@@ -48,7 +39,7 @@ export default function InFlightScreen() {
     const { boardingPass, selectedAirport } = useBoardingPass();
 
     // Use flight data or fallback to defaults if not scanning
-    const yourCarrier = boardingPass?.operator || boardingPass?.carrier || 'SATA';
+    const yourCarrier = boardingPass?.operator || boardingPass?.carrier || '';
     const yourAircraft = boardingPass?.aircraftType || 'A321neo';
 
     const [carrierArticle, setCarrierArticle] = useState<Article | null>(null);
@@ -57,28 +48,21 @@ export default function InFlightScreen() {
     const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
     const [loading, setLoading] = useState(true);
-    const [debugLogs, setDebugLogs] = useState<string[]>([]);
+    // Debug logs state removed as it was unused
     const [allArticles, setAllArticles] = useState<Article[]>([]);
-    const { user, login, updateUser } = useAuth(); // Get user and login to refresh state if needed
+    const { user, updateUser } = useAuth();
 
     // Tips state
     const [destinationTips, setDestinationTips] = useState<any>(null);
     const [tipsLoading, setTipsLoading] = useState(false);
     const [showTipsModal, setShowTipsModal] = useState(false);
 
-    const addLog = (message: string) => {
-        setDebugLogs(prev => [`[${new Date().toLocaleTimeString()}] ${message}`, ...prev]);
-    };
-
     const handleOpenArticle = async (article: Article) => {
         setSelectedArticle(article);
 
         if (user) {
             try {
-                // Call API to mark as read
                 await axios.post(`${API_BASE_URL}/api/users/${user.id}/articles/${article.id}/read`);
-
-                // Optimistically update local user state if needed
                 if (user.read_articles && !user.read_articles.includes(article.id)) {
                     const updatedUser = {
                         ...user,
@@ -94,10 +78,10 @@ export default function InFlightScreen() {
 
     useEffect(() => {
         const fetchArticles = async () => {
-            addLog(`Fetching from: ${API_BASE_URL}/api/items`);
+            // addLog removed
             try {
                 const response = await axios.get(`${API_BASE_URL}/api/items`, { timeout: 5000 });
-                addLog(`Success! Status: ${response.status}`);
+                // addLog removed
                 const items = response.data.map((item: any) => ({
                     id: item.id,
                     title: item.title,
@@ -110,12 +94,12 @@ export default function InFlightScreen() {
                 setAllArticles(items);
                 findCarrierArticle(items, yourCarrier);
                 findAircraftArticle(items, yourAircraft);
-                addLog(`Loaded ${items.length} items from backend.`);
+                // addLog removed
             } catch (error: any) {
                 console.log('Error fetching articles, falling back to mock data:', error);
                 const errorMsg = error.message || 'Unknown error';
-                addLog(`Error: ${errorMsg}`);
-                addLog('Falling back to mock data.');
+                // addLog removed
+                // addLog removed
                 setAllArticles(mockArticles);
                 findCarrierArticle(mockArticles, yourCarrier);
                 findAircraftArticle(mockArticles, yourAircraft);
@@ -133,7 +117,7 @@ export default function InFlightScreen() {
     // Fetch destination tips when boarding pass or selected airport changes
     useEffect(() => {
         const fetchDestinationTips = async () => {
-            if (!tipsAirportCode) {
+            if (!boardingPass?.arrivalAirport) {
                 setDestinationTips(null);
                 return;
             }
@@ -142,17 +126,101 @@ export default function InFlightScreen() {
             try {
                 const response = await axios.get(`${API_BASE_URL}/api/tips?destination=${tipsAirportCode}`, { timeout: 5000 });
                 setDestinationTips(response.data);
-                addLog(`Loaded tips for ${tipsAirportCode}`);
             } catch (error: any) {
                 console.log('Error fetching tips:', error);
-                addLog(`Error fetching tips: ${error.message}`);
             } finally {
                 setTipsLoading(false);
             }
         };
 
         fetchDestinationTips();
-    }, [tipsAirportCode]);
+    }, [boardingPass?.arrivalAirport]);
+
+    const [alsoImportantArticles, setAlsoImportantArticles] = useState<Article[]>([]);
+
+    useEffect(() => {
+        if (!allArticles || allArticles.length === 0) {
+            setAlsoImportantArticles([]);
+            return;
+        }
+
+        // Define exclusion IDs
+        const excludeIds = new Set<number>();
+        if (carrierArticle) excludeIds.add(carrierArticle.id);
+        if (aircraftArticle) excludeIds.add(aircraftArticle.id);
+
+        // Define search tags from current context
+        const contextTags = new Set<string>();
+        [carrierArticle, aircraftArticle].forEach(art => {
+            if (art) {
+                art.public_tags.forEach(t => contextTags.add(t.toLowerCase()));
+                art.hidden_tags.forEach(t => contextTags.add(t.toLowerCase()));
+            }
+        });
+
+        // Determine prioritized IDs based on Carrier
+        // TAP: 48 (Catering), 49 (Cabin)
+        // SATA: 46 (Catering), 47 (Cabin)
+        let prioritizedIds: number[] = [];
+        if (carrierArticle) {
+            const t = carrierArticle.title.toLowerCase();
+            const tags = carrierArticle.hidden_tags.map(ht => ht.toLowerCase());
+
+            if (t.includes('tap') || tags.includes('carrier_tap')) {
+                prioritizedIds = [49, 48]; // Cabin, Catering
+            } else if (t.includes('sata') || t.includes('azores') || tags.includes('carrier_sata')) {
+                prioritizedIds = [47, 46]; // Cabin, Catering
+            }
+        }
+
+        const interesting = allArticles.filter(art => {
+            if (excludeIds.has(art.id)) return false;
+
+            // Always include prioritized items for this carrier
+            if (prioritizedIds.includes(art.id)) return true;
+
+            // EXCLUDE other carriers and aircraft
+            // We identify them by checking standard tags
+            const isCarrierOrAircraft = art.public_tags.some(t => {
+                const lower = t.toLowerCase();
+                return lower.includes('carrier') || lower.includes('airline') || lower.includes('aircraft');
+            }) || art.hidden_tags.some(t => {
+                const lower = t.toLowerCase();
+                return lower.includes('carrier') || lower.includes('airline') || lower.includes('aircraft');
+            });
+
+            if (isCarrierOrAircraft) return false;
+
+            // Check for "Safety" match in title, public_tags, or hidden_tags
+            const isSafety = art.title.toLowerCase().includes('safety') ||
+                art.public_tags.some(t => t.toLowerCase().includes('safety')) ||
+                art.hidden_tags.some(t => t.toLowerCase().includes('safety'));
+
+            if (isSafety) return true;
+
+            // Check for related tags in title, public_tags, or hidden_tags
+            const isRelated = contextTags.has(art.title.toLowerCase()) ||
+                art.public_tags.some(t => contextTags.has(t.toLowerCase())) ||
+                art.hidden_tags.some(t => contextTags.has(t.toLowerCase()));
+
+            return isRelated;
+        });
+
+        interesting.sort((a, b) => {
+            const aPrio = prioritizedIds.indexOf(a.id);
+            const bPrio = prioritizedIds.indexOf(b.id);
+
+            // If both are prioritized, maintain order in prioritizedIds (lower index = higher priority)
+            if (aPrio !== -1 && bPrio !== -1) return aPrio - bPrio;
+            if (aPrio !== -1) return -1; // a is prioritized, b is not -> a comes first
+            if (bPrio !== -1) return 1;  // b is prioritized, a is not -> b comes first
+
+            return 0; // Keep original order
+        });
+
+        setAlsoImportantArticles(interesting);
+
+    }, [allArticles, carrierArticle, aircraftArticle]);
 
     // Re-run filter if yourCarrier/yourAircraft changes (e.g. new scan)
     useEffect(() => {
@@ -163,17 +231,28 @@ export default function InFlightScreen() {
     }, [yourCarrier, yourAircraft, allArticles]);
 
     const findCarrierArticle = (articles: Article[], carrier: string) => {
-        let targetTag = '';
-        const c = carrier.toLowerCase();
+        if (!boardingPass) {
+            setCarrierArticle(null);
+            return;
+        }
 
-        if (c.includes('tap') || c.includes('portugal')) {
+        let targetTag = '';
+        const carrierCode = (boardingPass.carrier || '').trim().toUpperCase();
+        const flightNum = (boardingPass.flightNumber || '').trim().toUpperCase();
+
+        if (carrierCode.startsWith('TP')) {
             targetTag = 'Carrier_TAP';
-        } else if (c.includes('sata') || c.includes('azores') || c.includes('air azores')) {
-            targetTag = 'Carrier_Sata';
-        } else {
-            // Default to SATA for demo if no match found (or could show generic)
-            // For now, let's just default to SATA so something shows up
-            targetTag = 'Carrier_Sata';
+        } else if (carrierCode.startsWith('SP') || carrierCode.startsWith('S4')) {
+            targetTag = 'Carrier_SATA';
+        }
+
+        // Fallback to check flight number if carrier code didn't match
+        if (!targetTag) {
+            if (flightNum.startsWith('TP')) {
+                targetTag = 'Carrier_TAP';
+            } else if (flightNum.startsWith('SP') || flightNum.startsWith('S4')) {
+                targetTag = 'Carrier_SATA';
+            }
         }
 
 
@@ -182,18 +261,42 @@ export default function InFlightScreen() {
                 article.hidden_tags.some(tag => tag.toLowerCase() === targetTag.toLowerCase())
             );
             setCarrierArticle(found || null);
+        } else {
+            setCarrierArticle(null); // Clear if no tag found 
         }
     };
 
     const findAircraftArticle = (articles: Article[], aircraft: string) => {
-        let targetTag = '';
-        const a = aircraft.toLowerCase();
+        if (!boardingPass) {
+            setAircraftArticle(null);
+            return;
+        }
 
-        if (a.includes('321') || a.includes('neo') || a.includes('airbus')) {
-            targetTag = 'Aircraft_A321neo';
+        let targetTag = '';
+        const carrierCode = (boardingPass.carrier || '').trim().toUpperCase();
+        const flightNum = (boardingPass.flightNumber || '').trim().toUpperCase();
+
+        // Construct full flight code (e.g. S4183)
+        let fullCode = flightNum;
+        if (carrierCode && !fullCode.startsWith(carrierCode)) {
+            fullCode = carrierCode + fullCode;
+        }
+
+        // Specific overrides based on flight code
+        if (fullCode === 'S4183') {
+            targetTag = 'Aicraft_A320neo'; // Note: Matches typo in items.json
+        } else if (fullCode === 'SP7601') {
+            targetTag = 'Aircraft_Q400';
+        } else if (fullCode === 'TP1713') {
+            targetTag = 'Aircraft_A320/A320-200';
         } else {
-            // Default to A321neo for demo
-            targetTag = 'Aircraft_A321neo';
+            // Default logic based on aircraft type string
+            const a = aircraft.toLowerCase();
+            if (a.includes('321') || a.includes('neo') || a.includes('airbus')) {
+                targetTag = 'Aircraft_A321neo';
+            } else {
+                targetTag = 'Aircraft_A321neo';
+            }
         }
 
         if (targetTag) {
@@ -204,8 +307,45 @@ export default function InFlightScreen() {
         }
     };
 
-    const renderCard = (article: Article | null, type: 'carrier' | 'aircraft') => {
-        if (!article) return <Text style={{ color: theme.text }}>{type === 'carrier' ? 'Carrier' : 'Aircraft'} info not found.</Text>;
+    const [destinationArticle, setDestinationArticle] = useState<Article | null>(null);
+
+    useEffect(() => {
+        if (!boardingPass || !boardingPass.arrivalAirport || allArticles.length === 0) {
+            setDestinationArticle(null);
+            return;
+        }
+
+        const arrival = boardingPass.arrivalAirport.toUpperCase();
+        let targetTitle = '';
+
+        if (arrival === 'FNC') {
+            targetTitle = 'Madeira';
+        } else if (arrival === 'TER') {
+            targetTitle = 'Tercera'; // Matches item.json typo/title
+        }
+
+        if (targetTitle) {
+            const found = allArticles.find(a => a.title.toLowerCase() === targetTitle.toLowerCase());
+            // Fallback for Tercera/Terceira variation if needed
+            if (!found && targetTitle === 'Tercera') {
+                const alt = allArticles.find(a => a.title.toLowerCase() === 'terceira' || a.title.toLowerCase() === 'terceira island');
+                if (alt) {
+                    setDestinationArticle(alt);
+                    return;
+                }
+            }
+            setDestinationArticle(found || null);
+        } else {
+            setDestinationArticle(null);
+        }
+
+    }, [boardingPass, allArticles]);
+
+    const renderCard = (article: Article | null, type: 'carrier' | 'aircraft' | 'destination') => {
+        if (!article) {
+            if (type === 'destination') return null; // Don't show "not found" for destination, just hide or show placeholder logic handles it
+            return <Text style={{ color: theme.text }}>{type === 'carrier' ? 'Carrier' : 'Aircraft'} info not found.</Text>;
+        }
 
         return (
             <TouchableOpacity
@@ -272,9 +412,12 @@ export default function InFlightScreen() {
                 {/* Destination Tips Card */}
                 <View style={styles.sectionContainer}>
                     <Text style={[styles.sectionTitle, { color: theme.text }]}>Destination Tips</Text>
-                    {destinationTips && destinationTips.tips && Object.keys(destinationTips.tips).length > 0 ? (
-                        renderTipsCard()
-                    ) : (
+
+                    {destinationArticle && renderCard(destinationArticle, 'destination')}
+
+                    {destinationTips && destinationTips.tips && Object.keys(destinationTips.tips).length > 0 && renderTipsCard()}
+
+                    {!destinationArticle && (!destinationTips || !destinationTips.tips || Object.keys(destinationTips.tips).length === 0) && (
                         <TouchableOpacity
                             onPress={() => router.push('/(tabs)/main')}
                             style={[styles.card, {
@@ -296,15 +439,38 @@ export default function InFlightScreen() {
                     )}
                 </View>
 
-                <View style={styles.sectionContainer}>
-                    <Text style={[styles.sectionTitle, { color: theme.text }]}>Your carrier</Text>
-                    {renderCard(carrierArticle, 'carrier')}
-                </View>
+                {boardingPass && (
+                    <>
+                        <View style={styles.sectionContainer}>
+                            <Text style={[styles.sectionTitle, { color: theme.text }]}>Your carrier</Text>
+                            {renderCard(carrierArticle, 'carrier')}
+                        </View>
 
-                <View style={styles.sectionContainer}>
-                    <Text style={[styles.sectionTitle, { color: theme.text }]}>Your Aircraft</Text>
-                    {renderCard(aircraftArticle, 'aircraft')}
-                </View>
+                        <View style={styles.sectionContainer}>
+                            <Text style={[styles.sectionTitle, { color: theme.text }]}>Your Aircraft</Text>
+                            {renderCard(aircraftArticle, 'aircraft')}
+                        </View>
+
+                        {alsoImportantArticles.length > 0 && (
+                            <View style={styles.sectionContainer}>
+                                <Text style={[styles.sectionTitle, { color: theme.text }]}>Also Important</Text>
+                                {alsoImportantArticles.map(article => (
+                                    <TouchableOpacity
+                                        key={article.id}
+                                        activeOpacity={0.8}
+                                        onPress={() => setSelectedArticle(article)}
+                                        style={[styles.card, { backgroundColor: theme.background, borderColor: colorScheme === 'dark' ? '#333' : '#eee' }]}
+                                    >
+                                        <ImageWithLoader uri={article.image} style={styles.cardImage} />
+                                        <View style={styles.textContainer}>
+                                            <Text style={[styles.cardTitle, { color: theme.text }]}>{article.title}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        )}
+                    </>
+                )}
             </ScrollView>
 
             {/* Modal for Full Article View */}

@@ -88,7 +88,7 @@ export default function ProfileScreen() {
             .slice(0, 2);
     };
 
-    const [totalArticles, setTotalArticles] = React.useState(0);
+    //const [totalArticles, setTotalArticles] = React.useState(0);
 
     React.useEffect(() => {
         // Fetch total articles count

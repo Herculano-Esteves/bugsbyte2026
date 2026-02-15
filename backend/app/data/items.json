@@ -109,7 +109,8 @@
     "text": "Advanced stretched narrow-body with new engines for better efficiency and range. Max speed: Mach 0.82 (~876 km/h). Typical cruise speed: Mach 0.78 (~833 km/h). Service ceiling: 39,000–39,800 ft (11,900–12,100 m). Typical range: Up to 4,000 nm (7,400 km). Passengers: 180–244 seats. Special features: Airspace cabin with largest overhead bins in single-aisle market, customizable mood lighting, integrated window shades, and optional Cabin-Flex layout for more seats/efficiency",
     "image": "https://www.aircraft.airbus.com/sites/g/files/jlcbta126/files/styles/w1200h675/public/2025-10/Aircraft.Airbus%20Figma%20Images%20V2_A321neo_0.png?h=eb58b4d6&itok=gAu23q7j",
     "public_tags": [
-      "Aircraft_A321neo"
+      "Aircraft",
+      "Turbofan"
     ],
     "hidden_tags": [
       "Aircraft_A321neo"
@@ -265,7 +266,7 @@
     "public_tags": [
       "Mechanics",
       "bootsrap",
-      "tired",
+      "tiredness",
       "ears"
     ],
     "hidden_tags": [
@@ -315,7 +316,7 @@
     "public_tags": [
       "Prolonged sitting",
       "Pressure",
-      "Degydration",
+      "Dehydration",
       "Pain"
     ],
     "hidden_tags": [
@@ -409,7 +410,7 @@
     "image": "https://www.daviddarling.info/images/turboprop.png",
     "public_tags": [
       "Flight",
-      "Jetengine",
+      "Jet engine",
       "Propeler",
       "Engineering"
     ],
@@ -464,6 +465,7 @@
     "image": "https://www.revigorate.com/images/porto-portugal-europe.jpg",
     "public_tags": [
       "Ribera",
+      "nightlife",
       "Food",
       "City"
     ],
@@ -480,7 +482,8 @@
     "image": "https://images.resosys.com/destinations/2/articles/pratical-information_en/inline/1688465434-s2-1231.jpg",
     "public_tags": [
       "Nature",
-      "lagoons. landscape"
+      "lagoons",
+      "landscape"
     ],
     "hidden_tags": [
       "Beauty",
@@ -508,7 +511,7 @@
     "id": 42,
     "title": "Algarve",
     "text": "The Algarve, Portugal's sunny southern coast, dazzles with golden cliffs, dramatic rock formations, and endless sandy beaches kissed by the Atlantic. In the west around Lagos, boat trips explore the sea caves and grottos of Ponta da Piedade, where turquoise waters carve fantastical shapes into sandstone. Broad beaches like Praia da Falésia or Praia da Rocha stretch for miles under reliable sunshine, perfect for relaxed days or invigorating walks, while the calmer eastern end near Tavira features the tranquil lagoons and barrier islands of Ria Formosa Natural Park, ideal for kayaking or spotting flamingos and other birds. Seaside eateries serve sizzling grilled fish and fragrant seafood rice dishes, and the region balances bustling resorts with peaceful whitewashed villages, offering the ultimate coastal escape.",
-    "image": "",
+    "image": "https://content.r9cdn.net/rimg/dimg/2d/b4/c4f97754-freereg-2000971-16c868057fe.jpg?width=1366&height=768&xhint=1355&yhint=1138&crop=true",
     "public_tags": [
       "Cliffs",
       "Beach",

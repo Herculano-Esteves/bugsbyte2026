@@ -9,6 +9,7 @@ import {
   Platform,
   Alert,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
@@ -51,7 +52,7 @@ export default function LoginScreen() {
         <View style={styles.card}>
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.logo}>✈️</Text>
+            <Image source={require('../../assets/Icons/MainDark.png')} style={styles.logoImage} />
             <Text style={styles.title}>Flight Companion</Text>
             <Text style={styles.subtitle}>Welcome back, traveler!</Text>
           </View>
@@ -119,7 +120,7 @@ export default function LoginScreen() {
               disabled={loading}
             >
               <Text style={styles.linkText}>
-                Don't have an account? <Text style={styles.linkBold}>Sign Up</Text>
+                Don´t have an account? <Text style={styles.linkBold}>Sign Up</Text>
               </Text>
             </TouchableOpacity>
           </View>
@@ -152,8 +153,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 30,
   },
-  logo: {
-    fontSize: 60,
+  logoImage: {
+    width: 80,
+    height: 80,
+    resizeMode: 'contain',
     marginBottom: 10,
   },
   title: {

@@ -5,7 +5,7 @@ import {
 
 export default function PreFlightScreen() {
     return (
-        <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
+        <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
             <Text style={styles.screenTitle}>Pre-Flight</Text>
 
             <View style={styles.card}>

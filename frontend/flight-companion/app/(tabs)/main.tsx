@@ -15,16 +15,16 @@ import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL, GO_API_BASE_URL } from '../../constants/config';
 import { router } from 'expo-router';
-
 import FlightRouteMap from '../../components/FlightRouteMap';
-import RouteResultCard from '../../components/transport/RouteResultCard';
+import AirportMap from '../../components/AirportMap';
 import CheckInManager from '../../components/CheckInManager';
+import RouteResultCard from '../../components/transport/RouteResultCard';
 import type { SavedRoute, Stop } from '../../services/transportTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AIRPORTS from '../../assets/data/airports.json';
 
 export default function MainScreen() {
-    const { boardingPass, setBoardingPass, clearBoardingPass } = useBoardingPass();
+    const { boardingPass, setBoardingPass, clearBoardingPass, setSelectedAirport: setContextSelectedAirport } = useBoardingPass();
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [showScanner, setShowScanner] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -33,12 +33,31 @@ export default function MainScreen() {
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [tripRoute, setTripRoute] = useState<SavedRoute | null>(null);
     const [hasReachedAirport, setHasReachedAirport] = useState(false);
+    const [resolvedAirport, setResolvedAirport] = useState<any>(null);
+
+    // Pre-fetch airport coordinates from the backend DB by IATA code
+    const prefetchAirportFromDB = async (code: string) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/airports/${encodeURIComponent(code)}`);
+            if (!response.ok) return;
+            const airport = await response.json();
+            if (airport && airport.iata) {
+                setResolvedAirport(airport);
+            }
+        } catch (error) {
+            console.error('Error pre-fetching airport:', error);
+        }
+    };
 
     const handleAirportSelect = async (airport: any) => {
         try {
             await AsyncStorage.setItem('current_target_airport', JSON.stringify(airport));
             setSelectedAirport(airport);
+            setContextSelectedAirport(airport); // Sync to context so tips tab can use it
             setDropdownOpen(false); // Close dropdown
+
+            // Pre-fetch airport data from DB immediately
+            prefetchAirportFromDB(airport.code);
 
             // Create valid Stops for the route
             const myLocationStop: Stop = {
@@ -88,6 +107,9 @@ export default function MainScreen() {
     // Auto-create trip when Boarding Pass is added
     useEffect(() => {
         if (boardingPass && boardingPass.departureAirport) {
+            // Pre-fetch departure airport data from DB immediately
+            prefetchAirportFromDB(boardingPass.departureAirport);
+
             // Find airport by ID (code) or Name match
             const airport = AIRPORTS.find(a =>
                 a.code === boardingPass.departureAirport ||
@@ -230,7 +252,7 @@ export default function MainScreen() {
             }
 
             const boardingPass = await parseResponse.json();
-            console.log('Parsed boarding pass:', boardingPass);
+            console.log('[DEBUG] Full Parsed Boarding Pass (Go Backend):', JSON.stringify(boardingPass, null, 2));
 
             let flightIdent = boardingPass.flight_number;
             // If we have a carrier (e.g. "S4") and a numeric flight number (e.g. "0183"),
@@ -249,20 +271,14 @@ export default function MainScreen() {
             };
 
             try {
-                // 1. Try constructed ident (e.g. S4183)
-                flightInfo = await fetchInfo(flightIdent);
-
-                // 2. Fallback: Try with space (e.g. S4 183)
-                if (!flightInfo && boardingPass.carrier && !isNaN(Number(boardingPass.flight_number))) {
-                    const altIdent = `${boardingPass.carrier} ${parseInt(boardingPass.flight_number, 10)}`;
-                    console.log('Trying fallback ident:', altIdent);
-                    flightInfo = await fetchInfo(altIdent);
-                }
-
-                // 3. Fallback: Try raw flight number from barcode
-                if (!flightInfo && boardingPass.flight_number !== flightIdent) {
-                    console.log('Trying raw flight number:', boardingPass.flight_number);
-                    flightInfo = await fetchInfo(boardingPass.flight_number);
+                const infoResponse = await fetch(
+                    `${API_BASE_URL}/api/flights/${encodeURIComponent(flightIdent)}/info`
+                );
+                if (infoResponse.ok) {
+                    flightInfo = await infoResponse.json();
+                    console.log('[DEBUG] Flight Info (Python Backend):', JSON.stringify(flightInfo, null, 2));
+                } else {
+                    console.warn('[DEBUG] Flight Info Fetch Failed:', infoResponse.status);
                 }
 
                 // 4. DEMO HARDCODED FALLBACK (If API fails completely for this specific demo flight)
@@ -287,10 +303,64 @@ export default function MainScreen() {
                 console.warn('Flight info fetch error:', infoErr);
             }
 
-            const airTimeMinutes = calculateAirTimeMinutes(
-                flightInfo.dep_time || '',
-                flightInfo.arr_time || ''
-            );
+            // Extract times: first try /info, then fall back to /schedule endpoint
+            let depTime = flightInfo.dep_time || '';
+            let arrTime = flightInfo.arr_time || '';
+            let depTimezone = flightInfo.dep_timezone || '';
+            let arrTimezone = flightInfo.arr_timezone || '';
+
+            // If /info didn't return times, fall back to the /schedule endpoint
+            // Also retry /info with raw flight_number if first attempt failed
+            if (!depTime || !arrTime) {
+                console.log('[DEBUG] No times from /info, falling back to /schedule...');
+                try {
+                    const scheduleResponse = await fetch(
+                        `${API_BASE_URL}/api/flights/${encodeURIComponent(flightIdent)}/schedule`
+                    );
+                    if (scheduleResponse.ok) {
+                        const schedule = await scheduleResponse.json();
+                        depTime = depTime || schedule.dep_time || '';
+                        arrTime = arrTime || schedule.arr_time || '';
+                        depTimezone = depTimezone || schedule.dep_timezone || '';
+                        arrTimezone = arrTimezone || schedule.arr_timezone || '';
+                        console.log('[DEBUG] Schedule fallback:', schedule);
+                    }
+                } catch (scheduleErr) {
+                    console.warn('Schedule fallback error:', scheduleErr);
+                }
+            }
+
+            // If /info didn't return aircraft/operator info, retry once (network resilience)
+            if (!flightInfo.aircraft_type && !flightInfo.operator) {
+                console.log('[DEBUG] No aircraft info from /info, retrying once...');
+                try {
+                    const retryResponse = await fetch(
+                        `${API_BASE_URL}/api/flights/${encodeURIComponent(flightIdent)}/info`
+                    );
+                    if (retryResponse.ok) {
+                        const retryInfo = await retryResponse.json();
+                        if (retryInfo.aircraft_type || retryInfo.operator) {
+                            flightInfo = { ...flightInfo, ...retryInfo };
+                            // Also update times if we got them from retry
+                            depTime = depTime || retryInfo.dep_time || '';
+                            arrTime = arrTime || retryInfo.arr_time || '';
+                            depTimezone = depTimezone || retryInfo.dep_timezone || '';
+                            arrTimezone = arrTimezone || retryInfo.arr_timezone || '';
+                            console.log('[DEBUG] Retry /info succeeded:', JSON.stringify(retryInfo, null, 2));
+                        }
+                    }
+                } catch (retryErr) {
+                    console.warn('[DEBUG] Retry /info failed:', retryErr);
+                }
+            }
+
+            console.log('[DEBUG] Final Extracted Times:', {
+                depTime,
+                arrTime,
+                source: flightInfo.dep_time ? 'FlightInfo' : 'ScheduleFallback'
+            });
+
+            const airTimeMinutes = calculateAirTimeMinutes(depTime, arrTime);
 
             const cabinCode = boardingPass.cabin_class || '';
             const rawSeat = boardingPass.seat || '';
@@ -308,14 +378,19 @@ export default function MainScreen() {
                 cabinClassCode: cabinCode,
                 cabinClassName: mapCabinClass(cabinCode),
                 boardingZone: '',
-                departureTime: flightInfo.dep_time || '',
-                arrivalTime: flightInfo.arr_time || '',
-                departureTimezone: flightInfo.dep_timezone || '',
-                arrivalTimezone: flightInfo.arr_timezone || '',
+                departureTime: depTime,
+                arrivalTime: arrTime,
+                departureTimezone: depTimezone,
+                arrivalTimezone: arrTimezone,
                 airTimeMinutes: airTimeMinutes,
                 // FlightAware general info
-                operator: flightInfo.operator || boardingPass.carrier || 'Unknown Airline',
-                aircraftType: flightInfo.aircraft_type || 'Unknown Aircraft',
+                operator: flightInfo.operator || boardingPass.operator || boardingPass.carrier || 'Unknown Airline',
+                aircraftType: flightInfo.aircraft_type || boardingPass.aircraft_type || 'Unknown Aircraft',
+                // Gate and terminal information
+                originGate: flightInfo.origin?.gate || boardingPass.gate || boardingPass.origin_gate || '',
+                originTerminal: flightInfo.origin?.terminal || boardingPass.terminal || boardingPass.origin_terminal || '',
+                destinationGate: flightInfo.destination?.gate || boardingPass.destination_gate || '',
+                destinationTerminal: flightInfo.destination?.terminal || boardingPass.destination_terminal || '',
             });
         } catch (error: any) {
             console.error('Upload error:', error);
@@ -324,6 +399,12 @@ export default function MainScreen() {
             setLoading(false);
         }
     };
+
+
+
+
+
+
 
     const openScanner = async () => {
         if (!hasPermission) {
@@ -341,7 +422,7 @@ export default function MainScreen() {
         <View style={styles.container}>
             {/* Main content */}
             <View style={styles.contentWrapper}>
-
+                {/* Main AIR content */}
                 <ScrollView
                     style={{ width: '100%' }}
                     contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
@@ -416,13 +497,29 @@ export default function MainScreen() {
                                             </TouchableOpacity>
                                         </>
                                     ) : (
-                                        <CheckInManager
-                                            onCheckInDone={() => {
-                                                // Identify what "done" means; for now just an alert or console
-                                                Alert.alert("Check-in", "Check-in process marked as done!");
-                                            }}
-                                            onBack={() => setHasReachedAirport(false)}
-                                        />
+                                        <View style={{ flex: 1 }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 8 }}>
+                                                <Text style={{ color: '#fff', fontSize: 18, fontWeight: '700' }}>Airport Map</Text>
+                                                <TouchableOpacity
+                                                    style={{ backgroundColor: '#333', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8 }}
+                                                    onPress={() => setHasReachedAirport(false)}
+                                                >
+                                                    <Text style={{ color: '#ef5350', fontWeight: '600', fontSize: 13 }}>← Back</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                            <View style={styles.mapWrapper}>
+                                                <AirportMap
+                                                    initialAirport={resolvedAirport ? { code: resolvedAirport.iata, city: resolvedAirport.city } : (boardingPass ? { code: boardingPass.departureAirport, city: boardingPass.departureAirport } : selectedAirport)}
+                                                />
+                                            </View>
+                                            <View style={{ padding: 16 }}>
+                                                <CheckInManager
+                                                    onCheckInDone={() => {
+                                                        Alert.alert("Check-in", "Check-in process marked as done!");
+                                                    }}
+                                                />
+                                            </View>
+                                        </View>
                                     )}
                                 </View>
                             )}
@@ -445,7 +542,6 @@ export default function MainScreen() {
                             {loading && <ActivityIndicator style={{ marginTop: 16 }} size="small" color="#d32f2f" />}
                         </View>
                     )}
-
                     {/* Flight Route Map / Airport Selection - Hide if Boarding Pass exists */}
                     {!boardingPass && (
                         <>
@@ -510,6 +606,7 @@ export default function MainScreen() {
                                                 onRemove={() => {
                                                     setTripRoute(null);
                                                     setSelectedAirport(null);
+                                                    setContextSelectedAirport(null); // Clear from context too
                                                     AsyncStorage.removeItem('current_target_airport');
                                                 }}
                                             />
@@ -521,14 +618,35 @@ export default function MainScreen() {
                                             </TouchableOpacity>
                                         </>
                                     ) : (
-                                        <CheckInManager
-                                            onBack={() => setHasReachedAirport(false)}
-                                        />
+                                        <View style={{ flex: 1 }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 8 }}>
+                                                <Text style={{ color: '#fff', fontSize: 18, fontWeight: '700' }}>Airport Map</Text>
+                                                <TouchableOpacity
+                                                    style={{ backgroundColor: '#333', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8 }}
+                                                    onPress={() => setHasReachedAirport(false)}
+                                                >
+                                                    <Text style={{ color: '#ef5350', fontWeight: '600', fontSize: 13 }}>← Back</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                            <View style={styles.mapWrapper}>
+                                                <AirportMap
+                                                    initialAirport={resolvedAirport ? { code: resolvedAirport.iata, city: resolvedAirport.city } : selectedAirport}
+                                                />
+                                            </View>
+                                            <View style={{ padding: 16 }}>
+                                                <CheckInManager
+                                                    onCheckInDone={() => {
+                                                        Alert.alert("Check-in", "Check-in process marked as done!");
+                                                    }}
+                                                />
+                                            </View>
+                                        </View>
                                     )}
                                 </View>
                             )}
                         </>
                     )}
+
                 </ScrollView>
             </View>
 
@@ -703,11 +821,17 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 20,
     },
+    mapWrapper: {
+        height: 300,
+        borderRadius: 8,
+        overflow: 'hidden',
+    },
     routeMapWrapper: {
         height: 300,
         borderRadius: 8,
         overflow: 'hidden',
     },
+
     boxSubtitle: {
         fontSize: 14,
         color: '#666',
@@ -972,10 +1096,48 @@ const styles = StyleSheet.create({
         color: '#999',
         marginTop: 4,
     },
+    matchedArticleContainer: {
+        width: '100%',
+        marginTop: 24,
+        paddingHorizontal: 4,
+    },
+    matchedArticleTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 12,
+        marginLeft: 4,
+    },
+    articleCard: {
+        backgroundColor: '#fff',
+        borderRadius: 16,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#e0e0e0',
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+    },
+    articleImage: {
+        width: '100%',
+        height: 150,
+        backgroundColor: '#f0f0f0',
+    },
+    articleContent: {
+        padding: 16,
+    },
+    articleTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 8,
+    },
+    articleText: {
+        fontSize: 14,
+        lineHeight: 20,
+        color: '#666',
+    },
 });
 
-function formatTime(isoString: string) {
-    if (!isoString) return '';
-    const date = new Date(isoString);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-}

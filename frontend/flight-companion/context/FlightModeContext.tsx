@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
-type FlightMode = 'AIR' | 'GRD' | 'TOUR';
+type FlightMode = 'AIR' | 'TOUR';
 
 interface FlightModeContextType {
     mode: FlightMode;

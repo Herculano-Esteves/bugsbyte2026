@@ -9,24 +9,21 @@ import {
     ActivityIndicator,
     ScrollView,
 } from 'react-native';
-import { useFlightMode } from '../../context/FlightModeContext';
 import { useBoardingPass, mapCabinClass } from '../../context/BoardingPassContext';
 import { CameraView, Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL, GO_API_BASE_URL } from '../../constants/config';
 import { router } from 'expo-router';
-import AirportMap from '../../components/AirportMap';
+
 import FlightRouteMap from '../../components/FlightRouteMap';
 import RouteResultCard from '../../components/transport/RouteResultCard';
 import CheckInManager from '../../components/CheckInManager';
-import TourPlanner from '../../components/TourPlanner';
 import type { SavedRoute, Stop } from '../../services/transportTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AIRPORTS from '../../assets/data/airports.json';
 
 export default function MainScreen() {
-    const { mode, setMode } = useFlightMode();
     const { boardingPass, setBoardingPass, clearBoardingPass } = useBoardingPass();
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [showScanner, setShowScanner] = useState(false);
@@ -345,245 +342,194 @@ export default function MainScreen() {
             {/* Main content */}
             <View style={styles.contentWrapper}>
 
-                {mode === 'AIR' ? (
-                    <ScrollView
-                        style={{ width: '100%' }}
-                        contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        {boardingPass ? (
-                            <>
-                                <TouchableOpacity
-                                    style={styles.flightCard}
-                                    onPress={() => router.push('/(tabs)/boardingpass')}
-                                    activeOpacity={0.7}
-                                >
-                                    <View style={styles.flightCardHeader}>
-                                        <Text style={styles.flightCardCarrier}>{boardingPass.carrier}</Text>
-                                        <Text style={styles.flightCardFlight}>{boardingPass.flightNumber}</Text>
-                                    </View>
-
-                                    <View style={styles.flightCardRoute}>
-                                        <Text style={styles.flightCardAirport}>{boardingPass.departureAirport}</Text>
-                                        <View style={styles.flightCardLine} />
-                                        <Ionicons name="airplane" size={18} color="#007AFF" />
-                                        <View style={styles.flightCardLine} />
-                                        <Text style={styles.flightCardAirport}>{boardingPass.arrivalAirport}</Text>
-                                    </View>
-
-                                    <View style={styles.flightCardDetails}>
-                                        <Text style={styles.flightCardDetail}>Seat {boardingPass.seat}</Text>
-                                        <Text style={styles.flightCardDetail}>{boardingPass.cabinClassName}</Text>
-                                    </View>
-
-                                    <Text style={styles.flightCardHint}>Tap for details</Text>
-
-                                    <TouchableOpacity
-                                        style={styles.rescanButton}
-                                        onPress={(e) => {
-                                            e.stopPropagation();
-                                            clearBoardingPass();
-                                            setTripRoute(null);
-                                            setSelectedAirport(null);
-                                            setHasReachedAirport(false);
-                                        }}
-                                    >
-                                        <Ionicons name="refresh-outline" size={16} color="#d32f2f" />
-                                        <Text style={styles.rescanText}>Scan new</Text>
-                                    </TouchableOpacity>
-                                </TouchableOpacity>
-
-                                {/* Trip to Airport Card for Boarding Pass */}
-                                {tripRoute && (
-                                    <View style={styles.tripCardWrapper}>
-                                        {!hasReachedAirport ? (
-                                            <>
-                                                <Text style={{
-                                                    alignSelf: 'flex-start',
-                                                    marginLeft: 8,
-                                                    marginBottom: 8,
-                                                    fontSize: 16,
-                                                    fontWeight: 'bold',
-                                                    color: '#333'
-                                                }}>
-                                                    Trip to Airport
-                                                </Text>
-                                                <RouteResultCard
-                                                    saved={tripRoute}
-                                                // No remove button when linked to boarding pass
-                                                />
-                                                <TouchableOpacity
-                                                    style={styles.reachedButton}
-                                                    onPress={() => setHasReachedAirport(true)}
-                                                >
-                                                    <Text style={styles.reachedButtonText}>Reached Airport 🏁</Text>
-                                                </TouchableOpacity>
-                                            </>
-                                        ) : (
-                                            <CheckInManager
-                                                onCheckInDone={() => {
-                                                    // Identify what "done" means; for now just an alert or console
-                                                    Alert.alert("Check-in", "Check-in process marked as done!");
-                                                }}
-                                                onBack={() => setHasReachedAirport(false)}
-                                            />
-                                        )}
-                                    </View>
-                                )}
-                            </>
-                        ) : (
-                            <View style={styles.scannerContainer}>
-                                <Text style={styles.scannerTitle}>Get ticket from:</Text>
-                                <View style={styles.buttonRow}>
-                                    <TouchableOpacity style={styles.actionButton} onPress={openScanner}>
-                                        <Ionicons name="camera-outline" size={36} color="#333" />
-                                        <Text style={styles.actionButtonText}>Camera</Text>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity style={styles.actionButton} onPress={pickImage}>
-                                        <Ionicons name="image-outline" size={36} color="#333" />
-                                        <Text style={styles.actionButtonText}>File</Text>
-                                    </TouchableOpacity>
+                <ScrollView
+                    style={{ width: '100%' }}
+                    contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
+                    showsVerticalScrollIndicator={false}
+                >
+                    {boardingPass ? (
+                        <>
+                            <TouchableOpacity
+                                style={styles.flightCard}
+                                onPress={() => router.push('/(tabs)/boardingpass')}
+                                activeOpacity={0.7}
+                            >
+                                <View style={styles.flightCardHeader}>
+                                    <Text style={styles.flightCardCarrier}>{boardingPass.carrier}</Text>
+                                    <Text style={styles.flightCardFlight}>{boardingPass.flightNumber}</Text>
                                 </View>
 
-                                {loading && <ActivityIndicator style={{ marginTop: 16 }} size="small" color="#d32f2f" />}
-                            </View>
-                        )}
+                                <View style={styles.flightCardRoute}>
+                                    <Text style={styles.flightCardAirport}>{boardingPass.departureAirport}</Text>
+                                    <View style={styles.flightCardLine} />
+                                    <Ionicons name="airplane" size={18} color="#007AFF" />
+                                    <View style={styles.flightCardLine} />
+                                    <Text style={styles.flightCardAirport}>{boardingPass.arrivalAirport}</Text>
+                                </View>
 
-                        {/* Flight Route Map / Airport Selection - Hide if Boarding Pass exists */}
-                        {!boardingPass && (
-                            <>
-                                {!hasReachedAirport && (
-                                    <View style={styles.routeMapBox}>
-                                        <Text style={styles.boxTitle}>I don't have the ticket yet</Text>
-                                        <Text style={styles.boxSubtitle}>Select your destination airport to plan a trip</Text>
+                                <View style={styles.flightCardDetails}>
+                                    <Text style={styles.flightCardDetail}>Seat {boardingPass.seat}</Text>
+                                    <Text style={styles.flightCardDetail}>{boardingPass.cabinClassName}</Text>
+                                </View>
 
-                                        {/* Dropdown Trigger */}
-                                        <TouchableOpacity
-                                            style={styles.dropdownTrigger}
-                                            onPress={() => setDropdownOpen(!isDropdownOpen)}
-                                            activeOpacity={0.8}
-                                        >
-                                            <View style={styles.triggerContent}>
-                                                <Ionicons name="airplane-outline" size={20} color="#666" />
-                                                <Text style={[
-                                                    styles.triggerText,
-                                                    !selectedAirport && { color: '#999' }
-                                                ]}>
-                                                    {selectedAirport ? `${selectedAirport.city} (${selectedAirport.code})` : 'Select destination airport...'}
-                                                </Text>
-                                            </View>
-                                            <Ionicons
-                                                name={isDropdownOpen ? "chevron-up" : "chevron-down"}
-                                                size={20}
-                                                color="#666"
+                                <Text style={styles.flightCardHint}>Tap for details</Text>
+
+                                <TouchableOpacity
+                                    style={styles.rescanButton}
+                                    onPress={(e) => {
+                                        e.stopPropagation();
+                                        clearBoardingPass();
+                                        setTripRoute(null);
+                                        setSelectedAirport(null);
+                                        setHasReachedAirport(false);
+                                    }}
+                                >
+                                    <Ionicons name="refresh-outline" size={16} color="#d32f2f" />
+                                    <Text style={styles.rescanText}>Scan new</Text>
+                                </TouchableOpacity>
+                            </TouchableOpacity>
+
+                            {/* Trip to Airport Card for Boarding Pass */}
+                            {tripRoute && (
+                                <View style={styles.tripCardWrapper}>
+                                    {!hasReachedAirport ? (
+                                        <>
+                                            <Text style={{
+                                                alignSelf: 'flex-start',
+                                                marginLeft: 8,
+                                                marginBottom: 8,
+                                                fontSize: 16,
+                                                fontWeight: 'bold',
+                                                color: '#333'
+                                            }}>
+                                                Trip to Airport
+                                            </Text>
+                                            <RouteResultCard
+                                                saved={tripRoute}
+                                            // No remove button when linked to boarding pass
                                             />
-                                        </TouchableOpacity>
+                                            <TouchableOpacity
+                                                style={styles.reachedButton}
+                                                onPress={() => setHasReachedAirport(true)}
+                                            >
+                                                <Text style={styles.reachedButtonText}>Reached Airport 🏁</Text>
+                                            </TouchableOpacity>
+                                        </>
+                                    ) : (
+                                        <CheckInManager
+                                            onCheckInDone={() => {
+                                                // Identify what "done" means; for now just an alert or console
+                                                Alert.alert("Check-in", "Check-in process marked as done!");
+                                            }}
+                                            onBack={() => setHasReachedAirport(false)}
+                                        />
+                                    )}
+                                </View>
+                            )}
+                        </>
+                    ) : (
+                        <View style={styles.scannerContainer}>
+                            <Text style={styles.scannerTitle}>Get ticket from:</Text>
+                            <View style={styles.buttonRow}>
+                                <TouchableOpacity style={styles.actionButton} onPress={openScanner}>
+                                    <Ionicons name="camera-outline" size={36} color="#333" />
+                                    <Text style={styles.actionButtonText}>Camera</Text>
+                                </TouchableOpacity>
 
-                                        {/* Dropdown List */}
-                                        {isDropdownOpen && (
-                                            <View style={styles.dropdownList}>
-                                                {AIRPORTS.map((airport) => (
-                                                    <TouchableOpacity
-                                                        key={airport.code}
-                                                        style={styles.dropdownItem}
-                                                        onPress={() => handleAirportSelect(airport)}
-                                                    >
-                                                        <View style={styles.airportIconBadge}>
-                                                            <Text style={styles.airportCodeText}>{airport.code}</Text>
-                                                        </View>
-                                                        <View style={{ flex: 1 }}>
-                                                            <Text style={styles.airportNameText}>{airport.city}</Text>
-                                                            <Text style={styles.airportFullText}>{airport.name}</Text>
-                                                        </View>
-                                                        <Ionicons name="chevron-forward" size={20} color="#ccc" />
-                                                    </TouchableOpacity>
-                                                ))}
-                                            </View>
-                                        )}
-                                    </View>
-                                )}
-
-                                {/* Trip Card showing automatically after selection */}
-                                {tripRoute && (
-                                    <View style={styles.tripCardWrapper}>
-                                        {!hasReachedAirport ? (
-                                            <>
-                                                <RouteResultCard
-                                                    saved={tripRoute}
-                                                    onRemove={() => {
-                                                        setTripRoute(null);
-                                                        setSelectedAirport(null);
-                                                        AsyncStorage.removeItem('current_target_airport');
-                                                    }}
-                                                />
-                                                <TouchableOpacity
-                                                    style={styles.reachedButton}
-                                                    onPress={() => setHasReachedAirport(true)}
-                                                >
-                                                    <Text style={styles.reachedButtonText}>Reached Airport 🏁</Text>
-                                                </TouchableOpacity>
-                                            </>
-                                        ) : (
-                                            <CheckInManager
-                                                onBack={() => setHasReachedAirport(false)}
-                                            />
-                                        )}
-                                    </View>
-                                )}
-                            </>
-                        )}
-                    </ScrollView>
-
-                ) : mode === 'TOUR' ? (
-                    <View style={styles.tourContainer}>
-                        <TourPlanner />
-                    </View>
-                ) : (
-                    <View style={styles.grdContainer}>
-                        {/* Airport Map Box */}
-                        <View style={styles.mapBox}>
-                            <Text style={styles.boxTitle}>Airport Locator</Text>
-                            <View style={styles.mapWrapper}>
-                                <AirportMap />
+                                <TouchableOpacity style={styles.actionButton} onPress={pickImage}>
+                                    <Ionicons name="image-outline" size={36} color="#333" />
+                                    <Text style={styles.actionButtonText}>File</Text>
+                                </TouchableOpacity>
                             </View>
+
+                            {loading && <ActivityIndicator style={{ marginTop: 16 }} size="small" color="#d32f2f" />}
                         </View>
-                    </View>
-                )}
-            </View>
+                    )}
 
-            {/* Bottom mode toggle – sits above the tab bar */}
-            <View style={styles.bottomToggle}>
-                <TouchableOpacity
-                    style={[styles.modeButton, mode === 'AIR' && styles.activeModeButton]}
-                    onPress={() => setMode('AIR')}
-                >
-                    <Text style={[styles.modeButtonText, mode === 'AIR' && styles.activeModeButtonText]}>
-                        AIR
-                    </Text>
-                </TouchableOpacity>
+                    {/* Flight Route Map / Airport Selection - Hide if Boarding Pass exists */}
+                    {!boardingPass && (
+                        <>
+                            {!hasReachedAirport && (
+                                <View style={styles.routeMapBox}>
+                                    <Text style={styles.boxTitle}>I don't have the ticket yet</Text>
+                                    <Text style={styles.boxSubtitle}>Select your destination airport to plan a trip</Text>
 
-                <View style={styles.separator} />
+                                    {/* Dropdown Trigger */}
+                                    <TouchableOpacity
+                                        style={styles.dropdownTrigger}
+                                        onPress={() => setDropdownOpen(!isDropdownOpen)}
+                                        activeOpacity={0.8}
+                                    >
+                                        <View style={styles.triggerContent}>
+                                            <Ionicons name="airplane-outline" size={20} color="#666" />
+                                            <Text style={[
+                                                styles.triggerText,
+                                                !selectedAirport && { color: '#999' }
+                                            ]}>
+                                                {selectedAirport ? `${selectedAirport.city} (${selectedAirport.code})` : 'Select destination airport...'}
+                                            </Text>
+                                        </View>
+                                        <Ionicons
+                                            name={isDropdownOpen ? "chevron-up" : "chevron-down"}
+                                            size={20}
+                                            color="#666"
+                                        />
+                                    </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={[styles.modeButton, mode === 'GRD' && styles.activeModeButton]}
-                    onPress={() => setMode('GRD')}
-                >
-                    <Text style={[styles.modeButtonText, mode === 'GRD' && styles.activeModeButtonText]}>
-                        GRD
-                    </Text>
-                </TouchableOpacity>
+                                    {/* Dropdown List */}
+                                    {isDropdownOpen && (
+                                        <View style={styles.dropdownList}>
+                                            {AIRPORTS.map((airport) => (
+                                                <TouchableOpacity
+                                                    key={airport.code}
+                                                    style={styles.dropdownItem}
+                                                    onPress={() => handleAirportSelect(airport)}
+                                                >
+                                                    <View style={styles.airportIconBadge}>
+                                                        <Text style={styles.airportCodeText}>{airport.code}</Text>
+                                                    </View>
+                                                    <View style={{ flex: 1 }}>
+                                                        <Text style={styles.airportNameText}>{airport.city}</Text>
+                                                        <Text style={styles.airportFullText}>{airport.name}</Text>
+                                                    </View>
+                                                    <Ionicons name="chevron-forward" size={20} color="#ccc" />
+                                                </TouchableOpacity>
+                                            ))}
+                                        </View>
+                                    )}
+                                </View>
+                            )}
 
-                <View style={styles.separator} />
-
-                <TouchableOpacity
-                    style={[styles.modeButton, mode === 'TOUR' && styles.activeModeButton]}
-                    onPress={() => setMode('TOUR')}
-                >
-                    <Text style={[styles.modeButtonText, mode === 'TOUR' && styles.activeModeButtonText]}>
-                        TOUR
-                    </Text>
-                </TouchableOpacity>
+                            {/* Trip Card showing automatically after selection */}
+                            {tripRoute && (
+                                <View style={styles.tripCardWrapper}>
+                                    {!hasReachedAirport ? (
+                                        <>
+                                            <RouteResultCard
+                                                saved={tripRoute}
+                                                onRemove={() => {
+                                                    setTripRoute(null);
+                                                    setSelectedAirport(null);
+                                                    AsyncStorage.removeItem('current_target_airport');
+                                                }}
+                                            />
+                                            <TouchableOpacity
+                                                style={styles.reachedButton}
+                                                onPress={() => setHasReachedAirport(true)}
+                                            >
+                                                <Text style={styles.reachedButtonText}>Reached Airport 🏁</Text>
+                                            </TouchableOpacity>
+                                        </>
+                                    ) : (
+                                        <CheckInManager
+                                            onBack={() => setHasReachedAirport(false)}
+                                        />
+                                    )}
+                                </View>
+                            )}
+                        </>
+                    )}
+                </ScrollView>
             </View>
 
             {/* Camera Modal */}
@@ -732,41 +678,17 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
 
-    grdBox: {
-        backgroundColor: '#fbe9e7',
-    },
 
-    grdContainer: {
-        width: '100%',
-        gap: 20,
-    },
 
-    tourContainer: {
-        width: '100%',
-        flex: 1,
-    },
 
-    mapBox: {
-        backgroundColor: '#fff',
-        borderRadius: 12,
-        padding: 16,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-        width: '100%',
-    },
+
+
+
     boxTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 12,
         color: '#333',
-    },
-    mapWrapper: {
-        height: 400,
-        borderRadius: 8,
-        overflow: 'hidden',
     },
 
     routeMapBox: {

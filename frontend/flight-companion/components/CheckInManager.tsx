@@ -12,7 +12,8 @@ export default function CheckInManager({ onCheckInDone, onBack }: CheckInManager
     <View style={styles.container}>
       {onBack && (
         <TouchableOpacity style={styles.backButton} onPress={onBack}>
-          <Ionicons name="arrow-back" size={24} color="#666" />
+          <Ionicons name="arrow-back" size={20} color="#d32f2f" />
+          <Text style={styles.backButtonText}>Go Back</Text>
         </TouchableOpacity>
       )}
       <View style={styles.iconContainer}>
@@ -90,8 +91,17 @@ const styles = StyleSheet.create({
     top: 16,
     left: 16,
     zIndex: 999,
-    padding: 8,
-    backgroundColor: 'rgba(0,0,0,0.05)', // visual cue
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor: '#ffebee', // Light red background
     borderRadius: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  backButtonText: {
+    color: '#d32f2f',
+    fontWeight: '600',
+    fontSize: 14,
   },
 });

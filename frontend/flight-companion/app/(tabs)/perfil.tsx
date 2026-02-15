@@ -11,6 +11,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { useAuth } from '../../context/AuthContext';
+import { API_BASE_URL } from '../../constants/config';
 
 export default function ProfileScreen() {
     const { user, isGuest, logout } = useAuth();
@@ -69,6 +70,26 @@ export default function ProfileScreen() {
             .slice(0, 2);
     };
 
+    const [totalArticles, setTotalArticles] = React.useState(0);
+
+    React.useEffect(() => {
+        // Fetch total articles count
+        const fetchItems = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/items`);
+                if (response.ok) {
+                    const items = await response.json();
+                    setTotalArticles(items.length);
+                }
+            } catch (e) {
+                console.log("Failed to fetch items count", e);
+                // Fallback to rough estimate or mock count if needed
+                setTotalArticles(10);
+            }
+        };
+        fetchItems();
+    }, []);
+
     return (
         <View style={styles.container}>
             {/* Header with gradient */}
@@ -119,9 +140,9 @@ export default function ProfileScreen() {
                     <Text style={styles.sectionTitle}>Activity</Text>
                     <View style={styles.card}>
                         <InfoRow
-                            icon="📊"
-                            label="Items Sent"
-                            value={user.sent_items.length.toString()}
+                            icon="📚"
+                            label="Read Articles"
+                            value={`${user.read_articles ? user.read_articles.length : 0} / ${totalArticles}`}
                         />
                     </View>
                 </View>

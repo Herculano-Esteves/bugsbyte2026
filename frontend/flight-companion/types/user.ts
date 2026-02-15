@@ -4,7 +4,7 @@ export interface User {
   email: string;
   address: string;
   ticket_info: any;
-  sent_items: number[];
+  read_articles: number[];
 }
 
 export interface LoginCredentials {

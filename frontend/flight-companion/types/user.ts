@@ -25,3 +25,11 @@ export interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
 }
+
+export interface VisitedAirport {
+  airport_iata: string;
+  name: string;
+  city: string;
+  country: string;
+  visit_count: number;
+}

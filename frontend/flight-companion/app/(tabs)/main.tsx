@@ -15,15 +15,19 @@ import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL, GO_API_BASE_URL } from '../../constants/config';
 import { router } from 'expo-router';
+import FlightRouteMap from '../../components/FlightRouteMap';
 import AirportMap from '../../components/AirportMap';
-
+import CheckInManager from '../../components/CheckInManager';
 import RouteResultCard from '../../components/transport/RouteResultCard';
 import type { SavedRoute, Stop } from '../../services/transportTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AIRPORTS from '../../assets/data/airports.json';
+import { useAuth } from '../../context/AuthContext';
+import { authService } from '../../services/auth';
 
 export default function MainScreen() {
     const { boardingPass, setBoardingPass, clearBoardingPass, setSelectedAirport: setContextSelectedAirport } = useBoardingPass();
+    const { user, isGuest } = useAuth();
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [showScanner, setShowScanner] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -393,6 +397,22 @@ export default function MainScreen() {
                 destinationGate: flightInfo.destination?.gate || boardingPass.destination_gate || '',
                 destinationTerminal: flightInfo.destination?.terminal || boardingPass.destination_terminal || '',
             });
+
+            // Record visited airports for authenticated users
+            if (user && !isGuest) {
+                const depAirport = boardingPass.departure_airport;
+                const arrAirport = boardingPass.arrival_airport;
+                if (depAirport) {
+                    authService.recordAirportVisit(user.id, depAirport).catch(e =>
+                        console.warn('Failed to record departure airport visit:', e)
+                    );
+                }
+                if (arrAirport) {
+                    authService.recordAirportVisit(user.id, arrAirport).catch(e =>
+                        console.warn('Failed to record arrival airport visit:', e)
+                    );
+                }
+            }
         } catch (error: any) {
             console.error('Upload error:', error);
             Alert.alert('Error', error.message || 'Failed to parse barcode from image.');
@@ -608,13 +628,12 @@ export default function MainScreen() {
                             {loading && <ActivityIndicator style={{ marginTop: 16 }} size="small" color="#d32f2f" />}
                         </View>
                     )}
-
                     {/* Flight Route Map / Airport Selection - Hide if Boarding Pass exists */}
                     {!boardingPass && (
                         <>
                             {!hasReachedAirport && (
                                 <View style={styles.routeMapBox}>
-                                    <Text style={styles.boxTitle}>I don´t have the ticket yet</Text>
+                                    <Text style={styles.boxTitle}>I don't have the ticket yet</Text>
                                     <Text style={styles.boxSubtitle}>Select your destination airport to plan a trip</Text>
 
                                     {/* Dropdown Trigger */}
@@ -776,9 +795,9 @@ export default function MainScreen() {
                             )}
                         </>
                     )}
+
                 </ScrollView>
             </View>
-
 
             {/* Camera Modal */}
             <Modal visible={showScanner} animationType="slide" onRequestClose={() => setShowScanner(false)}>
@@ -796,7 +815,7 @@ export default function MainScreen() {
                     </TouchableOpacity>
                 </View>
             </Modal>
-        </View>
+        </View >
     );
 }
 
@@ -926,36 +945,17 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
 
-    grdBox: {
-        backgroundColor: '#fbe9e7',
-    },
 
-    grdContainer: {
-        width: '100%',
-        gap: 20,
-    },
 
-    mapBox: {
-        backgroundColor: '#fff',
-        borderRadius: 12,
-        padding: 16,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
-        width: '100%',
-    },
+
+
+
+
     boxTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 12,
         color: '#333',
-    },
-    mapWrapper: {
-        height: 400,
-        borderRadius: 8,
-        overflow: 'hidden',
     },
 
     routeMapBox: {
@@ -970,11 +970,17 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 20,
     },
+    mapWrapper: {
+        height: 300,
+        borderRadius: 8,
+        overflow: 'hidden',
+    },
     routeMapWrapper: {
         height: 300,
         borderRadius: 8,
         overflow: 'hidden',
     },
+
     boxSubtitle: {
         fontSize: 14,
         color: '#666',

@@ -106,6 +106,42 @@ export default function BoardingPassScreen() {
                         <DetailItem label="Class" value={boardingPass.cabinClassName} />
                     </View>
 
+                    {/* Aircraft & Operator Info (if available) */}
+                    {(boardingPass.aircraftType || boardingPass.operator) && (
+                        <>
+                            <View style={styles.dottedDivider} />
+                            <View style={styles.detailsGrid}>
+                                {boardingPass.aircraftType && (
+                                    <DetailItem label="Aircraft" value={boardingPass.aircraftType} />
+                                )}
+                                {boardingPass.operator && (
+                                    <DetailItem label="Operator" value={boardingPass.operator} />
+                                )}
+                            </View>
+                        </>
+                    )}
+
+                    {/* Gate & Terminal Info (if available) */}
+                    {(boardingPass.originGate || boardingPass.originTerminal || boardingPass.destinationGate || boardingPass.destinationTerminal) && (
+                        <>
+                            <View style={styles.dottedDivider} />
+                            <View style={styles.detailsGrid}>
+                                {boardingPass.originGate && (
+                                    <DetailItem label="Departure Gate" value={boardingPass.originGate} />
+                                )}
+                                {boardingPass.originTerminal && (
+                                    <DetailItem label="Departure Terminal" value={boardingPass.originTerminal} />
+                                )}
+                                {boardingPass.destinationGate && (
+                                    <DetailItem label="Arrival Gate" value={boardingPass.destinationGate} />
+                                )}
+                                {boardingPass.destinationTerminal && (
+                                    <DetailItem label="Arrival Terminal" value={boardingPass.destinationTerminal} />
+                                )}
+                            </View>
+                        </>
+                    )}
+
                     {/* Divider */}
                     <View style={styles.dottedDivider} />
 

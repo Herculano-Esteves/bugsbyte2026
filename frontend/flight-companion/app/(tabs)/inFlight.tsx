@@ -43,7 +43,6 @@ export default function InFlightScreen() {
     const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
     const [loading, setLoading] = useState(true);
-    // Debug logs state removed as it was unused
     const [allArticles, setAllArticles] = useState<Article[]>([]);
     const { user, updateUser } = useAuth();
 
@@ -73,10 +72,8 @@ export default function InFlightScreen() {
 
     useEffect(() => {
         const fetchArticles = async () => {
-            // addLog removed
             try {
                 const response = await axios.get(`${API_BASE_URL}/api/items`, { timeout: 5000 });
-                // addLog removed
                 const items = response.data.map((item: any) => ({
                     id: item.id,
                     title: item.title,
@@ -89,12 +86,8 @@ export default function InFlightScreen() {
                 setAllArticles(items);
                 findCarrierArticle(items, yourCarrier);
                 findAircraftArticle(items, yourAircraft);
-                // addLog removed
             } catch (error: any) {
                 console.log('Error fetching articles, falling back to mock data:', error);
-                const errorMsg = error.message || 'Unknown error';
-                // addLog removed
-                // addLog removed
                 setAllArticles(mockArticles);
                 findCarrierArticle(mockArticles, yourCarrier);
                 findAircraftArticle(mockArticles, yourAircraft);
@@ -112,7 +105,7 @@ export default function InFlightScreen() {
     // Fetch destination tips when boarding pass or selected airport changes
     useEffect(() => {
         const fetchDestinationTips = async () => {
-            if (!boardingPass?.arrivalAirport) {
+            if (!tipsAirportCode) {
                 setDestinationTips(null);
                 return;
             }
@@ -129,7 +122,7 @@ export default function InFlightScreen() {
         };
 
         fetchDestinationTips();
-    }, [boardingPass?.arrivalAirport]);
+    }, [boardingPass?.arrivalAirport, selectedAirport?.code]);
 
     const [alsoImportantArticles, setAlsoImportantArticles] = useState<Article[]>([]);
 
@@ -175,7 +168,6 @@ export default function InFlightScreen() {
             if (prioritizedIds.includes(art.id)) return true;
 
             // EXCLUDE other carriers and aircraft
-            // We identify them by checking standard tags
             const isCarrierOrAircraft = art.public_tags.some(t => {
                 const lower = t.toLowerCase();
                 return lower.includes('carrier') || lower.includes('airline') || lower.includes('aircraft');
@@ -193,7 +185,7 @@ export default function InFlightScreen() {
 
             if (isSafety) return true;
 
-            // Check for related tags in title, public_tags, or hidden_tags
+            // Check for related tags
             const isRelated = contextTags.has(art.title.toLowerCase()) ||
                 art.public_tags.some(t => contextTags.has(t.toLowerCase())) ||
                 art.hidden_tags.some(t => contextTags.has(t.toLowerCase()));
@@ -205,12 +197,11 @@ export default function InFlightScreen() {
             const aPrio = prioritizedIds.indexOf(a.id);
             const bPrio = prioritizedIds.indexOf(b.id);
 
-            // If both are prioritized, maintain order in prioritizedIds (lower index = higher priority)
             if (aPrio !== -1 && bPrio !== -1) return aPrio - bPrio;
-            if (aPrio !== -1) return -1; // a is prioritized, b is not -> a comes first
-            if (bPrio !== -1) return 1;  // b is prioritized, a is not -> b comes first
+            if (aPrio !== -1) return -1;
+            if (bPrio !== -1) return 1;
 
-            return 0; // Keep original order
+            return 0;
         });
 
         setAlsoImportantArticles(interesting);
@@ -250,14 +241,13 @@ export default function InFlightScreen() {
             }
         }
 
-
         if (targetTag) {
             const found = articles.find(article =>
                 article.hidden_tags.some(tag => tag.toLowerCase() === targetTag.toLowerCase())
             );
             setCarrierArticle(found || null);
         } else {
-            setCarrierArticle(null); // Clear if no tag found 
+            setCarrierArticle(null);
         }
     };
 
@@ -338,7 +328,7 @@ export default function InFlightScreen() {
 
     const renderCard = (article: Article | null, type: 'carrier' | 'aircraft' | 'destination') => {
         if (!article) {
-            if (type === 'destination') return null; // Don't show "not found" for destination, just hide or show placeholder logic handles it
+            if (type === 'destination') return null;
             return <Text style={{ color: '#11181C' }}>{type === 'carrier' ? 'Carrier' : 'Aircraft'} info not found.</Text>;
         }
 
@@ -351,7 +341,6 @@ export default function InFlightScreen() {
                 <ImageWithLoader uri={article.image} style={styles.cardImage} />
                 <View style={styles.textContainer}>
                     <Text style={[styles.cardTitle, { color: '#11181C' }]}>{article.title}</Text>
-                    {/* Text and Tags removed from preview as requested */}
                 </View>
             </TouchableOpacity>
         );

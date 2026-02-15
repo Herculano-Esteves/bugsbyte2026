@@ -169,34 +169,11 @@ export default function MainScreen() {
 
     return (
         <View style={styles.container}>
-            {/* Full-width header toggle */}
-            <View style={styles.header}>
-                <TouchableOpacity
-                    style={[styles.modeButton, mode === 'AIR' && styles.activeModeButton]}
-                    onPress={() => setMode('AIR')}
-                >
-                    <Text style={[styles.modeButtonText, mode === 'AIR' && styles.activeModeButtonText]}>
-                        AIR
-                    </Text>
-                </TouchableOpacity>
-
-                <View style={styles.separator} />
-
-                <TouchableOpacity
-                    style={[styles.modeButton, mode === 'GRD' && styles.activeModeButton]}
-                    onPress={() => setMode('GRD')}
-                >
-                    <Text style={[styles.modeButtonText, mode === 'GRD' && styles.activeModeButtonText]}>
-                        GRD
-                    </Text>
-                </TouchableOpacity>
-            </View>
-
             {/* Main content */}
             <View style={styles.contentWrapper}>
 
                 {mode === 'AIR' ? (
-                    <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }}>
+                    <ScrollView style={{ width: '100%' }} showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center', paddingBottom: 140 }}>
                         {boardingPass ? (
                             <TouchableOpacity
                                 style={styles.flightCard}
@@ -277,6 +254,29 @@ export default function MainScreen() {
                 )}
             </View>
 
+            {/* Bottom mode toggle – sits above the tab bar */}
+            <View style={styles.bottomToggle}>
+                <TouchableOpacity
+                    style={[styles.modeButton, mode === 'AIR' && styles.activeModeButton]}
+                    onPress={() => setMode('AIR')}
+                >
+                    <Text style={[styles.modeButtonText, mode === 'AIR' && styles.activeModeButtonText]}>
+                        AIR
+                    </Text>
+                </TouchableOpacity>
+
+                <View style={styles.separator} />
+
+                <TouchableOpacity
+                    style={[styles.modeButton, mode === 'GRD' && styles.activeModeButton]}
+                    onPress={() => setMode('GRD')}
+                >
+                    <Text style={[styles.modeButtonText, mode === 'GRD' && styles.activeModeButtonText]}>
+                        GRD
+                    </Text>
+                </TouchableOpacity>
+            </View>
+
             {/* Camera Modal */}
             <Modal visible={showScanner} animationType="slide" onRequestClose={() => setShowScanner(false)}>
                 <View style={styles.modalContainer}>
@@ -303,17 +303,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
 
-    header: {
+    bottomToggle: {
         flexDirection: 'row',
         width: '100%',
-        height: 64,
+        height: 52,
         backgroundColor: '#fff',
-        borderBottomWidth: 2,
-        borderBottomColor: '#ef5350',
-        overflow: 'hidden',
-        elevation: 3,
+        borderTopWidth: 2,
+        borderTopColor: '#ef5350',
+        position: 'absolute',
+        bottom: 70,
+        left: 0,
+        right: 0,
+        elevation: 5,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
+        shadowOffset: { width: 0, height: -2 },
         shadowOpacity: 0.15,
         shadowRadius: 3,
         zIndex: 10,
@@ -353,7 +356,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 32,
         paddingHorizontal: 20,
-        paddingBottom: 100,
+        paddingBottom: 0,
     },
 
     title: {

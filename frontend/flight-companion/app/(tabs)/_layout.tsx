@@ -46,7 +46,7 @@ function TabsLayout() {
                             onPress={handleCenterPress}
                         >
                             <Image source={icons.main} style={styles.centerIconImage} />
-                            <Text style={styles.tabLabel}>Companion</Text>
+                            <Text style={styles.tabLabel}>Home</Text>
                         </TouchableOpacity>
 
                         <TabButton label="Search" icon={icons.search} onPress={() => props.navigation.navigate('search')} />
@@ -103,12 +103,14 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         resizeMode: 'contain',
+        tintColor: '#ccc',
     },
     tabButton: { alignItems: 'center' },
     tabIconImage: {
         width: 28,
         height: 28,
         resizeMode: 'contain',
+        tintColor: '#ccc',
     },
     tabLabel: { fontSize: 10, marginTop: 4, color: '#ccc' },
 });

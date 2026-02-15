@@ -71,12 +71,15 @@ interface BoardingPassContextType {
     setBoardingPass: (data: BoardingPassData) => void;
     updateBoardingZone: (zone: string) => void;
     clearBoardingPass: () => void;
+    selectedAirport: { code: string; city: string } | null;
+    setSelectedAirport: (airport: { code: string; city: string } | null) => void;
 }
 
 const BoardingPassContext = createContext<BoardingPassContextType | undefined>(undefined);
 
 export function BoardingPassProvider({ children }: { children: ReactNode }) {
     const [boardingPass, setBoardingPassState] = useState<BoardingPassData | null>(null);
+    const [selectedAirport, setSelectedAirportState] = useState<{ code: string; city: string } | null>(null);
 
     const setBoardingPass = (data: BoardingPassData) => {
         setBoardingPassState(data);
@@ -88,6 +91,11 @@ export function BoardingPassProvider({ children }: { children: ReactNode }) {
 
     const clearBoardingPass = () => {
         setBoardingPassState(null);
+        setSelectedAirportState(null); // Also clear selected airport
+    };
+
+    const setSelectedAirport = (airport: { code: string; city: string } | null) => {
+        setSelectedAirportState(airport);
     };
 
     return (
@@ -96,6 +104,8 @@ export function BoardingPassProvider({ children }: { children: ReactNode }) {
             setBoardingPass,
             updateBoardingZone,
             clearBoardingPass,
+            selectedAirport,
+            setSelectedAirport,
         }}>
             {children}
         </BoardingPassContext.Provider>

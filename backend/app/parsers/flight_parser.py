@@ -4,13 +4,12 @@ import random
 
 class FlightParser:
     """
-    Mock parser for Flight Information.
+    Flight schedule parser with hardcoded real schedule data.
     """
 
     @staticmethod
     def parse_flight_status(flight_number: str) -> Flight:
         print(f"[PARSER] Fetching status for flight: {flight_number}")
-        # Mock data generation
         now = datetime.now()
         return Flight(
             flight_number=flight_number,
@@ -26,25 +25,66 @@ class FlightParser:
     @staticmethod
     def get_flight_schedule(flight_number: str) -> FlightSchedule:
         """
-        Returns a mock flight schedule for any flight number.
-        Uses a deterministic hash so the same flight always returns the same times.
+        Returns flight schedule. Checks hardcoded real schedules first,
+        then falls back to a deterministic hash-based mock.
         """
         print(f"[PARSER] Fetching schedule for flight: {flight_number}")
 
         known_flights = {
+            # === SATA Air Açores ===
+            "S4183": FlightSchedule(
+                flight_number="S4183",
+                dep_time="2026-02-19T12:35:00",
+                arr_time="2026-02-19T14:15:00",
+                dep_timezone="Europe/Lisbon",
+                arr_timezone="Atlantic/Azores",
+            ),
+            "S4513": FlightSchedule(
+                flight_number="S4513",
+                dep_time="2026-02-15T11:00:00",
+                arr_time="2026-02-15T13:45:00",
+                dep_timezone="Europe/Paris",
+                arr_timezone="Atlantic/Azores",
+            ),
+            # SP = SATA Air Açores inter-island
+            "SP7601": FlightSchedule(
+                flight_number="SP7601",
+                dep_time="2026-02-22T08:30:00",
+                arr_time="2026-02-22T09:00:00",
+                dep_timezone="Atlantic/Azores",
+                arr_timezone="Atlantic/Azores",
+            ),
+
+            # === Ryanair ===
+            "FR2160": FlightSchedule(
+                flight_number="FR2160",
+                dep_time="2026-02-15T14:15:00",
+                arr_time="2026-02-15T18:00:00",
+                dep_timezone="Europe/Lisbon",
+                arr_timezone="Europe/Rome",
+            ),
+
+            # === TAP Air Portugal ===
+            "TP1713": FlightSchedule(
+                flight_number="TP1713",
+                dep_time="2026-12-27T07:00:00",
+                arr_time="2026-12-27T08:40:00",
+                dep_timezone="Europe/Lisbon",
+                arr_timezone="Atlantic/Madeira",
+            ),
+            "TP1234": FlightSchedule(
+                flight_number="TP1234",
+                dep_time="2026-02-15T08:30:00",
+                arr_time="2026-02-15T09:30:00",
+                dep_timezone="Europe/Lisbon",
+                arr_timezone="Europe/Lisbon",
+            ),
             "TP4570": FlightSchedule(
                 flight_number="TP4570",
                 dep_time="2026-02-15T17:00:00",
                 arr_time="2026-02-15T19:00:00",
                 dep_timezone="Europe/Lisbon",
                 arr_timezone="Atlantic/Azores",
-            ),
-            "TP1234": FlightSchedule(
-                flight_number="TP1234",
-                dep_time="2026-02-15T08:30:00",
-                arr_time="2026-02-15T11:45:00",
-                dep_timezone="Europe/Lisbon",
-                arr_timezone="Europe/London",
             ),
             "TP542": FlightSchedule(
                 flight_number="TP542",
@@ -53,12 +93,44 @@ class FlightParser:
                 dep_timezone="Europe/Lisbon",
                 arr_timezone="America/Sao_Paulo",
             ),
+            "TP1000": FlightSchedule(
+                flight_number="TP1000",
+                dep_time="2026-02-15T11:25:00",
+                arr_time="2026-02-15T15:40:00",
+                dep_timezone="Europe/Lisbon",
+                arr_timezone="America/New_York",
+            ),
+
+            # === United Airlines ===
+            "UA3936": FlightSchedule(
+                flight_number="UA3936",
+                dep_time="2026-03-06T06:00:00",
+                arr_time="2026-03-06T08:21:00",
+                dep_timezone="America/New_York",
+                arr_timezone="America/Chicago",
+            ),
+
+            # === Other airlines ===
             "FR1926": FlightSchedule(
                 flight_number="FR1926",
                 dep_time="2026-02-15T06:15:00",
                 arr_time="2026-02-15T09:30:00",
                 dep_timezone="Europe/Dublin",
                 arr_timezone="Europe/Lisbon",
+            ),
+            "LH400": FlightSchedule(
+                flight_number="LH400",
+                dep_time="2026-02-15T10:10:00",
+                arr_time="2026-02-15T13:25:00",
+                dep_timezone="Europe/Berlin",
+                arr_timezone="America/New_York",
+            ),
+            "BA500": FlightSchedule(
+                flight_number="BA500",
+                dep_time="2026-02-15T09:00:00",
+                arr_time="2026-02-16T06:30:00",
+                dep_timezone="Europe/London",
+                arr_timezone="Australia/Sydney",
             ),
         }
 

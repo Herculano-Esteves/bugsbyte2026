@@ -35,7 +35,7 @@ export default function InFlightScreen() {
     const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
     // Get boarding pass data
-    const { boardingPass } = useBoardingPass();
+    const { boardingPass, selectedAirport } = useBoardingPass();
 
     // Use flight data or fallback to defaults if not scanning
     const yourCarrier = boardingPass?.operator || boardingPass?.carrier || '';
@@ -49,6 +49,7 @@ export default function InFlightScreen() {
     const [loading, setLoading] = useState(true);
     // Debug logs state removed as it was unused
     const [allArticles, setAllArticles] = useState<Article[]>([]);
+    const { user, login, updateUser } = useAuth(); // Get user and login to refresh state if needed
 
     // Tips state
     const [destinationTips, setDestinationTips] = useState<any>(null);
@@ -92,7 +93,10 @@ export default function InFlightScreen() {
         fetchArticles();
     }, []);
 
-    // Fetch destination tips when boarding pass changes
+    // Determine which airport to fetch tips for: boarding pass arrival or manually selected airport
+    const tipsAirportCode = boardingPass?.arrivalAirport || selectedAirport?.code || null;
+
+    // Fetch destination tips when boarding pass or selected airport changes
     useEffect(() => {
         const fetchDestinationTips = async () => {
             if (!boardingPass?.arrivalAirport) {
@@ -102,7 +106,7 @@ export default function InFlightScreen() {
 
             setTipsLoading(true);
             try {
-                const response = await axios.get(`${API_BASE_URL}/api/tips?destination=${boardingPass.arrivalAirport}`, { timeout: 5000 });
+                const response = await axios.get(`${API_BASE_URL}/api/tips?destination=${tipsAirportCode}`, { timeout: 5000 });
                 setDestinationTips(response.data);
             } catch (error: any) {
                 console.log('Error fetching tips:', error);
@@ -328,7 +332,7 @@ export default function InFlightScreen() {
         return (
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => setSelectedArticle(article)}
+                onPress={() => handleOpenArticle(article)}
                 style={[styles.card, { backgroundColor: theme.background, borderColor: colorScheme === 'dark' ? '#333' : '#eee' }]}
             >
                 <ImageWithLoader uri={article.image} style={styles.cardImage} />
@@ -408,7 +412,7 @@ export default function InFlightScreen() {
                         >
                             <Ionicons name="location-outline" size={48} color={theme.tint} />
                             <Text style={{ color: theme.text, fontSize: 16, marginTop: 12, fontWeight: '600', textAlign: 'center' }}>
-                                Scan a boarding pass to see tips & tricks for your destination
+                                Scan a boarding pass or select an airport to see tips & tricks
                             </Text>
                             <Text style={{ color: '#888', fontSize: 13, marginTop: 4, textAlign: 'center' }}>
                                 Get local insights, safety tips, and travel advice
@@ -487,7 +491,7 @@ export default function InFlightScreen() {
                                                 return (
                                                     <TouchableOpacity
                                                         key={id}
-                                                        onPress={() => setSelectedArticle(fleetItem)}
+                                                        onPress={() => handleOpenArticle(fleetItem)}
                                                         style={[styles.fleetLinkButton, { borderColor: theme.tint }]}
                                                     >
                                                         <Text style={[styles.fleetLinkText, { color: theme.tint }]}>

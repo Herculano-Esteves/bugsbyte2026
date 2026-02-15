@@ -4,6 +4,7 @@ import axios from 'axios';
 import { mockArticles, Article } from '../../constants/mockSearchData';
 import { Colors } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+import { useAuth } from '../../context/AuthContext';
 import { API_BASE_URL } from '../../constants/config';
 
 const ImageWithLoader = ({ uri, style }: { uri: string, style: any }) => {
@@ -36,9 +37,32 @@ export default function SearchScreen() {
     const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
     const [loading, setLoading] = useState(true);
     const [debugLogs, setDebugLogs] = useState<string[]>([]);
+    const { user, updateUser } = useAuth();
 
     const addLog = (message: string) => {
         setDebugLogs(prev => [`[${new Date().toLocaleTimeString()}] ${message}`, ...prev]);
+    };
+
+    const handleOpenArticle = async (article: Article) => {
+        setSelectedArticle(article);
+
+        if (user) {
+            try {
+                // Call API to mark as read
+                await axios.post(`${API_BASE_URL}/api/users/${user.id}/articles/${article.id}/read`);
+
+                // Optimistically update local user state if needed
+                if (user.read_articles && !user.read_articles.includes(article.id)) {
+                    const updatedUser = {
+                        ...user,
+                        read_articles: [...user.read_articles, article.id]
+                    };
+                    updateUser(updatedUser);
+                }
+            } catch (error) {
+                console.log("Failed to track read article", error);
+            }
+        }
     };
 
     useEffect(() => {
@@ -97,7 +121,7 @@ export default function SearchScreen() {
     const renderItem = ({ item }: { item: Article }) => (
         <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => setSelectedArticle(item)}
+            onPress={() => handleOpenArticle(item)}
             style={[styles.card, { backgroundColor: theme.background, borderColor: colorScheme === 'dark' ? '#333' : '#eee' }]}
         >
             <ImageWithLoader uri={item.image} style={styles.cardImage} />
@@ -204,7 +228,7 @@ export default function SearchScreen() {
                                                 return (
                                                     <TouchableOpacity
                                                         key={id}
-                                                        onPress={() => setSelectedArticle(fleetItem)}
+                                                        onPress={() => handleOpenArticle(fleetItem)}
                                                         style={[styles.fleetLinkButton, { borderColor: theme.tint }]}
                                                     >
                                                         <Text style={[styles.fleetLinkText, { color: theme.tint }]}>

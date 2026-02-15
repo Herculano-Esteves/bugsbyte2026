@@ -481,6 +481,158 @@
         "source": "WikiVoyage"
       }
     ],
+    "FNC": [
+      {
+        "title": "Stay safe",
+        "content": "Funchal and Madeira are very safe destinations with low crime rates. The main risks are natural — steep terrain, slippery levada paths, and unpredictable mountain weather. Always wear proper footwear for hiking and check weather conditions before heading into the mountains.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "warning",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Stay safe - Tip 2",
+        "content": "Be very cautious on the levada walks — some sections have steep drop-offs without guardrails. Carry a flashlight for tunnel sections. Swimming in the ocean can be dangerous due to strong currents; stick to the natural volcanic pools (like Porto Moniz) which are much safer.",
+        "category": "scam",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "critical",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See",
+        "content": "Monte Palace Tropical Garden is a stunning botanical garden high above Funchal, reachable by the famous cable car (Teleférico do Funchal). The garden features exotic plants, koi ponds, tile panels depicting Portuguese history, and spectacular views over the city and bay. Allow at least 2 hours to explore.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 2",
+        "content": "The Old Town (Zona Velha) is Funchal's most charming neighbourhood, famous for its painted doors art project — over 200 doors have been transformed into works of art by local and international artists. Rua de Santa Maria is the main street to explore, lined with restaurants and bars.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 3",
+        "content": "Levada walks are Madeira's signature hiking experience. These irrigation channels crisscross the island through lush laurel forests (a UNESCO World Heritage Site). Popular routes include Levada das 25 Fontes (25 Fountains), Levada do Caldeirão Verde, and the easier Levada dos Balcões with panoramic viewpoints.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "See - Tip 4",
+        "content": "Câmara de Lobos, a picturesque fishing village just west of Funchal, was a favourite painting spot of Winston Churchill. The colourful boats in the harbour and the dramatic Cabo Girão cliff (one of Europe's highest sea cliffs at 580m) nearby make it a must-visit.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do",
+        "content": "Take the famous toboggan ride (Carreiros do Monte) — traditional wicker basket sleds that slide down the steep streets from Monte to Livramento, steered by two men in white outfits and straw hats. The 2km ride takes about 10 minutes and is an iconic Madeira experience. €30 for 2 people.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 2",
+        "content": "Dolphin and whale watching tours depart from Funchal marina year-round. Madeira's warm waters attract over 20 species of cetaceans. Common sightings include bottlenose dolphins, Atlantic spotted dolphins, and short-finned pilot whales. Several operators offer 2-3 hour trips from around €35.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Do - Tip 3",
+        "content": "Visit the Mercado dos Lavradores (Farmers' Market) in central Funchal. This Art Deco market is bursting with exotic tropical fruits unique to Madeira, fresh flowers, local spices, and a fish hall with impressive black scabbard fish (espada preta). Go in the morning for the best selection.",
+        "category": "place",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat",
+        "content": "Try Espetada — chunks of beef marinated in garlic, bay leaf and salt, skewered on a laurel wood stick and grilled over wood coals. Traditionally served hanging from a hook at the table. This is Madeira's most iconic dish and is found at nearly every traditional restaurant.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 2",
+        "content": "Bolo do Caco is a traditional Madeiran flatbread made with sweet potato, usually served warm with garlic butter. It's the perfect accompaniment to any meal and is available at most restaurants and bakeries. Some places serve it as a sandwich filled with octopus, ham, or steak.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 3",
+        "content": "Espada com banana (black scabbard fish with banana) is a uniquely Madeiran combination that sounds odd but is delicious. The deep-sea fish has a delicate flavour that pairs surprisingly well with fried banana. Also try lapas (grilled limpets) with garlic butter as a starter.",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Eat - Tip 4",
+        "content": "Poncha is Madeira's signature drink — a potent cocktail made with aguardente de cana (sugarcane rum), honey, and lemon or orange juice. It tastes deceptively smooth but is very strong. The best places to try it are the small bars in Câmara de Lobos and the Old Town. Be careful, it sneaks up on you!",
+        "category": "food",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand",
+        "content": "Funchal is the capital of the Autonomous Region of Madeira, a Portuguese archipelago in the Atlantic Ocean about 1,000km southwest of mainland Portugal. With a subtropical climate, it enjoys mild temperatures year-round (17-25°C), making it a popular winter sun destination. The island is known as the 'Pearl of the Atlantic' and the 'Floating Garden'.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      },
+      {
+        "title": "Understand - Tip 2",
+        "content": "Madeira is famous for its fortified wine (Madeira wine), which has been produced on the island since the Age of Exploration. Visit one of the wine lodges in Funchal, such as Blandy's or Pereira d'Oliveira, for tastings. Cristiano Ronaldo was born in Funchal — there's a museum and statue dedicated to him near the harbour.",
+        "category": "culture",
+        "location_type": "city",
+        "location_code": "FNC",
+        "country_code": "PT",
+        "severity": "info",
+        "source": "WikiVoyage"
+      }
+    ],
     "MAD": [
       {
         "title": "Stay safe",

@@ -124,5 +124,5 @@ class UserResponse(BaseModel):
     email: str
     address: str
     ticket_info: dict
-    sent_items: List[int] = []
+    read_articles: List[int] = []
 

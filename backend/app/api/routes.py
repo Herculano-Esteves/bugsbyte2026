@@ -177,6 +177,13 @@ async def get_user_details(user_id: int):
     """
     return UserLogic.get_user(user_id)
 
+@router.post("/users/{user_id}/articles/{article_id}/read")
+async def mark_article_read(user_id: int, article_id: int):
+    """
+    Mark an article as read for a user.
+    """
+    return UserLogic.mark_article_as_read(user_id, article_id)
+
 @router.get("/tips")
 async def get_tips(destination: str = None):
     """

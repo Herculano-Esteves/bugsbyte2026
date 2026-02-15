@@ -214,7 +214,21 @@ export default function RouteResultCard({ saved, onRemove }: Props) {
 
               <TouchableOpacity
                 style={styles.googleMapsBtn}
-                onPress={() => Linking.openURL(result.summary)}
+                onPress={() => {
+                  if (Platform.OS === 'android') {
+                    // Android-specific legacy URL to force Date/Time respect
+                    let saddr = `${query.from.lat},${query.from.lon}`;
+                    if (query.from.stop_id === 'MY_LOCATION') {
+                      saddr = 'Current+Location';
+                    }
+                    const daddr = `${query.to.lat},${query.to.lon}`;
+                    const url = `http://maps.google.com/maps?saddr=${saddr}&daddr=${daddr}&dirflg=r&ttype=dep&date=${query.date}&time=${query.time}`;
+                    Linking.openURL(url);
+                  } else {
+                    // iOS/Web uses Universal Link
+                    Linking.openURL(result.summary);
+                  }
+                }}
                 activeOpacity={0.8}
               >
                 <Text style={styles.googleMapsBtnText}>Open in Google Maps 🗺️</Text>

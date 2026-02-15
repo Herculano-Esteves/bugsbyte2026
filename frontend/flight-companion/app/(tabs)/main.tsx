@@ -7,6 +7,7 @@ import {
     Modal,
     Alert,
     ActivityIndicator,
+    ScrollView,
 } from 'react-native';
 import { useFlightMode } from '../../context/FlightModeContext';
 import { useBoardingPass, mapCabinClass } from '../../context/BoardingPassContext';
@@ -15,6 +16,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL, GO_API_BASE_URL } from '../../constants/config';
 import { router } from 'expo-router';
+import AirportMap from '../../components/AirportMap';
 
 export default function MainScreen() {
     const { mode, setMode } = useFlightMode();
@@ -249,8 +251,14 @@ export default function MainScreen() {
                         </View>
                     )
                 ) : (
-                    <View style={[styles.contentBox, styles.grdBox]}>
-                        <Text>Ground Content Here</Text>
+                    <View style={styles.grdContainer}>
+                        {/* Airport Map Box */}
+                        <View style={styles.mapBox}>
+                            <Text style={styles.boxTitle}>Airport Locator</Text>
+                            <View style={styles.mapWrapper}>
+                                <AirportMap />
+                            </View>
+                        </View>
                     </View>
                 )}
             </View>
@@ -397,6 +405,34 @@ const styles = StyleSheet.create({
 
     grdBox: {
         backgroundColor: '#fbe9e7',
+    },
+
+    grdContainer: {
+        width: '100%',
+        gap: 20,
+    },
+
+    mapBox: {
+        backgroundColor: '#fff',
+        borderRadius: 12,
+        padding: 16,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+        width: '100%',
+    },
+    boxTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 12,
+        color: '#333',
+    },
+    mapWrapper: {
+        height: 400,
+        borderRadius: 8,
+        overflow: 'hidden',
     },
 
     modalContainer: {

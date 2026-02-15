@@ -12,6 +12,10 @@ from typing import List
 
 router = APIRouter()
 
+# Include airport routes
+from app.api.airports import router as airports_router
+router.include_router(airports_router, tags=["airports"])
+
 @router.get("/items", response_model=List[Item])
 async def get_all_items():
     """

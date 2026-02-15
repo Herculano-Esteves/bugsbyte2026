@@ -16,7 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { API_BASE_URL, GO_API_BASE_URL } from '../../constants/config';
 import { router } from 'expo-router';
 import AirportMap from '../../components/AirportMap';
-import FlightRouteMap from '../../components/FlightRouteMap';
+
 import RouteResultCard from '../../components/transport/RouteResultCard';
 import type { SavedRoute, Stop } from '../../services/transportTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -398,6 +398,12 @@ export default function MainScreen() {
             setLoading(false);
         }
     };
+
+
+
+
+
+
 
     const openScanner = async () => {
         if (!hasPermission) {
@@ -1089,10 +1095,48 @@ const styles = StyleSheet.create({
         color: '#999',
         marginTop: 4,
     },
+    matchedArticleContainer: {
+        width: '100%',
+        marginTop: 24,
+        paddingHorizontal: 4,
+    },
+    matchedArticleTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 12,
+        marginLeft: 4,
+    },
+    articleCard: {
+        backgroundColor: '#fff',
+        borderRadius: 16,
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#e0e0e0',
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+    },
+    articleImage: {
+        width: '100%',
+        height: 150,
+        backgroundColor: '#f0f0f0',
+    },
+    articleContent: {
+        padding: 16,
+    },
+    articleTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 8,
+    },
+    articleText: {
+        fontSize: 14,
+        lineHeight: 20,
+        color: '#666',
+    },
 });
 
-function formatTime(isoString: string) {
-    if (!isoString) return '';
-    const date = new Date(isoString);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-}

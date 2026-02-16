@@ -5,19 +5,19 @@
 ![React Native](https://img.shields.io/badge/react_native-0.74%2B-61DAFB.svg?style=flat-square&logo=react&logoColor=black)
 ![Expo](https://img.shields.io/badge/expo-51.0%2B-000020.svg?style=flat-square&logo=expo&logoColor=white)
 ![Status](https://img.shields.io/badge/status-active-success.svg?style=flat-square)
+![Go](https://img.shields.io/badge/go-1.18%2B-000020.svg?style=flat-square&logo=go&logoColor=white)
 
-**Flight Companion** is a comprehensive mobile application designed to transform the travel experience. From the moment you step into the airport to your final destination, this app serves as your intelligent personal assistant, providing real-time flight updates, smart itinerary planning, and essential information whenever you need it.
+**Flight Companion** is a mobile application developed in 48 hours for the BugsByte 2026 Hackathon. It assists travelers by consolidating flight tracking and trip planning into a single interface.
 
 ---
 
 ## Overview
 
-Traveling can be stressful—navigating airports, tracking flight changes, and planning transport in a new city. **Flight Companion** solves this by consolidating all your travel needs into one seamless interface. Features like **real-time flight tracking**, **automated ticket parsing**, and an **offline-capable AI chatbot** ensure you are never lost, even without an internet connection at 30,000 feet.
+We built this project to solve common travel frustrations. **Flight Companion** parses boarding passes to track flights, offers a chatbot for travel questions, and provides destination guides. It demonstrates how modern tools can be combined to create a helpful travel assistant.
 
-## 📸 Screenshots
+## Screenshots
 
 <p align="center">
-  <!-- Replace with actual screenshots -->
   <img src="images_project/homePage.jpg" alt="Home Screen" width="200" style="border-radius: 10px; margin: 10px;" />
   <img src="images_project/flight.jpg" alt="Flight Tracking" width="200" style="border-radius: 10px; margin: 10px;" />
   <img src="images_project/planer.jpg" alt="AI Assistant" width="200" style="border-radius: 10px; margin: 10px;" />
@@ -25,31 +25,22 @@ Traveling can be stressful—navigating airports, tracking flight changes, and p
 
 ## Key Features
 
-### Real-Time Flight Tracking
-Stay updated with live information about your flight.
-- **Live Status:** Receive instant updates on delays, gate changes, and boarding times.
-- **Airport Insights:** Get detailed information about amenities and weather at your departure and arrival airports.
+### Ticket Scanning
+- **Barcode Scan:** Scans boarding passes to automatically import flight details.
 
-### Smart Ticket Parsing
-Forget manually entering details.
-- **Scan & Go:** Simply scan your boarding pass (QR or Barcode) to automatically import all your flight details.
-- **Digital Wallet:** Keep all your tickets in one secure, easily accessible place.
+### Travel Assistant (Chatbot)
+- **Interactive Chat:** Helps answer questions about your trip.
+- **Context-Aware:** Uses your itinerary to provide relevant answers.
 
-### Hybrid AI Assistant
-Your personal travel concierge, powered by advanced AI.
-- **Online & Offline:** While connected, enjoy full conversational capabilities. In the air? Access cached essential info and flight details without needing WiFi.
-- **Context-Aware:** The AI understands your specific itinerary and can answer questions like "What's my gate?" or "How long until I land?"
-
-### Tourist & Transport Planner
-Explore your destination like a local.
-- **City Guides:** customized itineraries for key destinations (e.g., Porto).
-- **Public Transport Integration:** Determine the best routes to your hotel or next adventure with integrated transport schedules.
+### Trip Planner
+- **City Guides:** Simple itineraries for destinations like Porto.
+- **Transport:** Routes to hotels or points of interest.
 
 ---
 
-## Technology Stack
+## Tech Stack
 
-We leverage a robust, modern tech stack to ensure performance and reliability.
+The project was built using:
 
 ### **Frontend (Mobile App)**
 - **Framework:** [React Native](https://reactnative.dev/) with [Expo](https://expo.dev/)
@@ -61,19 +52,19 @@ We leverage a robust, modern tech stack to ensure performance and reliability.
 - **Framework:** [FastAPI](https://fastapi.tiangolo.com/) (Python)
 - **Data Processing:** Pandas, NumPy
 - **Web Scraping:** BeautifulSoup4 (for retrieving real-time airport/flight data)
+- **Scraper:** Go
 - **Database:** SQLite
 - **Testing:** Pytest
 
-## 🔮 Future Roadmap
+## Future Roadmap
 
-- [ ] **Global Flight API Integration**: Connect with FlightAware or AviationStack for worldwide real-time data.
-- [ ] **Social Sharing**: Allow users to share live itineraries with friends and family.
-- [ ] **Multi-Language Support**: Expand accessibility for international travelers.
-- [ ] **Wearable App**: Companion app for smartwatches to show gate and boarding info at a glance.
+- [ ] **Extended API Support**: Improve data reliability with official flight APIs.
+- [ ] **Sharing**: Add ability to share trips with friends.
+- [ ] **Language Support**: Add more languages.
 
 ---
 
-## 👥 The Team
+## The Team
 
 Flight Companion was created by:
 
@@ -91,6 +82,7 @@ Follow these instructions to set up the project locally.
 ### Prerequisites
 - **Node.js** & **npm**
 - **Python 3.9+**
+- **Go 1.18+**
 - **Expo Go** app on your mobile device (optional, for testing)
 
 ### 1. Clone the Repository
@@ -122,7 +114,18 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 *Note: The server will be accessible at `http://<YOUR_LOCAL_IP>:8000`.*
 
-### 3. Frontend Setup
+### 3. Go Scraper Setup
+This microservice handles barcode and PKPass file parsing.
+
+```bash
+cd backend/"Flight info get"
+
+# Run the server
+go run main.go
+```
+*Note: This service runs on port 8080.*
+
+### 4. Frontend Setup
 The mobile application interface.
 
 ```bash

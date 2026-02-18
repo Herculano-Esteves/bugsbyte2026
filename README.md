@@ -23,6 +23,18 @@ We built this project to solve common travel frustrations. **Flight Companion** 
   <img src="images_project/planer.jpg" alt="AI Assistant" width="200" style="border-radius: 10px; margin: 10px;" />
 </p>
 
+## Video Showcase
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=pTjHLOc0qTQ">
+    <img src="https://img.youtube.com/vi/pTjHLOc0qTQ/maxresdefault.jpg" alt="Watch Flight Companion Demo" width="600" style="border-radius: 10px;" />
+  </a>
+  <br>
+  <a href="https://www.youtube.com/watch?v=pTjHLOc0qTQ">View on YouTube</a>
+</p>
+
+---
+
 ## Key Features
 
 ### Ticket Scanning
